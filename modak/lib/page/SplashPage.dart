@@ -19,7 +19,7 @@ class SplashPageState extends State<SplashPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset('image/logo.png'),
+                  Image.asset('image/logo.png',width: 48.0, height: 48.0,),
                   Text(
                     "Modak",
                     style: TextStyle(fontSize: 48.0, color: Colors.white),
