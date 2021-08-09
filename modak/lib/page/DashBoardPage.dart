@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:modak/component/TodayCompingWidget.dart';
+import 'package:modak/component/TodayCampingWidget.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override
