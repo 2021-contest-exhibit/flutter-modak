@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modak/component/TodayCompingWidget.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override
@@ -62,6 +63,35 @@ class DashBoardPageState extends State<DashBoardPage> {
               children: [
                 Text(
                   '오늘의 캠핑 추천',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 36,
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: TodayCompingWidget(
+              recipeList: [
+                Camping('test'),
+                Camping('test'),
+                Camping('test'),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 36,
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Row(
+              children: [
+                Text(
+                  '나만의 캠핑 추천',
                   style: TextStyle(
                     fontSize: 24.0,
                   ),
