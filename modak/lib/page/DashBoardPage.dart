@@ -13,93 +13,131 @@ class DashBoardPageState extends State<DashBoardPage> {
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
     final double _height = MediaQuery.of(context).size.height;
     final double _titleHeight = 48.0;
+    final double _contentHeight = _height - _statusBarHeight - _titleHeight;
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: _titleHeight,
-            margin:
-                EdgeInsets.only(top: _statusBarHeight, left: 4.0, right: 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.menu),
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.search),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 36,
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              children: [
-                Text(
-                  'Modak',
-                  style: TextStyle(
-                    fontSize: 48,
+      body: Container(
+        child: Column(
+          children: [
+            Container(
+              height: _titleHeight,
+              margin:
+                  EdgeInsets.only(top: _statusBarHeight, left: 4.0, right: 4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.menu),
                   ),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 36,
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              children: [
-                Text(
-                  '오늘의 캠핑 추천',
-                  style: TextStyle(
-                    fontSize: 24.0,
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.search),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 36,
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: TodayCompingWidget(
-              recipeList: [
-                Camping('test'),
-                Camping('test'),
-                Camping('test'),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 36,
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              children: [
-                Text(
-                  '나만의 캠핑 추천',
-                  style: TextStyle(
-                    fontSize: 24.0,
+            Container(
+              height: _contentHeight,
+              child: ListView(
+                children: [
+                  const SizedBox(
+                    height: 36,
                   ),
-                )
-              ],
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Modak',
+                          style: TextStyle(
+                            fontSize: 48,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 36,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          '오늘의 캠핑 추천',
+                          style: TextStyle(
+                            fontSize: 24.0,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 36,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TodayCompingWidget(
+                      recipeList: [
+                        Camping('test'),
+                        Camping('test'),
+                        Camping('test'),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 36,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          '나만의 캠핑 추천',
+                          style: TextStyle(
+                            fontSize: 24.0,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: 1,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          height: 50,
+                          padding: const EdgeInsets.all(12.0),
+                          alignment: Alignment.bottomLeft,
+                          decoration: const BoxDecoration(
+                            color: Color(0x887f7f7f),
+                            borderRadius: const BorderRadius.all(
+                              const Radius.circular(5.0),
+                            ),
+                          ),
+                          child: Text(
+                            "test",
+                            style: const TextStyle(
+                              color: const Color(0xffffffff),
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
