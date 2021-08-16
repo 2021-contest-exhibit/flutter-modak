@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modak/page/DashBoardPage.dart';
+import 'package:modak/page/MainPage.dart';
 import 'package:modak/page/SplashPage.dart';
 
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/splash': (context) => SplashPage(),
-        '/': (context) => DashBoardPage(),
+        '/dashboard': (context) => DashBoardPage(),
+        '/': (context) => MainPage(),
       },
     );
   }
