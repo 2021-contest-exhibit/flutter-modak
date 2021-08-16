@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modak/DTO/Camping.dart';
+import 'package:modak/component/RecommandCampingWidget.dart';
 import 'package:modak/component/TodayCampingWidget.dart';
 
 class DashBoardPage extends StatefulWidget {
@@ -105,33 +107,26 @@ class DashBoardPageState extends State<DashBoardPage> {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 36,
+                  ),
                   Container(
-                    height: 40,
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: 1,
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: 50,
-                          padding: const EdgeInsets.all(12.0),
-                          alignment: Alignment.bottomLeft,
-                          decoration: const BoxDecoration(
-                            color: Color(0x887f7f7f),
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(5.0),
-                            ),
-                          ),
-                          child: Text(
-                            "test",
-                            style: const TextStyle(
-                              color: const Color(0xffffffff),
-                              fontSize: 18.0,
-                            ),
-                          ),
-                        );
-                      },
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        RecommandCampingWidget(
+                          campingList: [
+                            Camping("test"),
+                            Camping("test"),
+                            Camping("test"),
+                          ],
+                        )
+                      ],
                     ),
+                  ),
+                  const SizedBox(
+                    height: 64,
                   ),
                 ],
               ),
