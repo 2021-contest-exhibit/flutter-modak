@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modak/DTO/Camping.dart';
 
-class Camping {
-  String name;
-
-  Camping(this.name);
-}
 
 class TodayCompingWidget extends StatefulWidget {
   List<Camping> recipeList;
