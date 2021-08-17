@@ -68,7 +68,8 @@ class SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           const SizedBox(
             height: 40.0,
@@ -90,6 +91,9 @@ class SettingPageState extends State<SettingPage> {
             height: 20.0,
           ),
           _menuButton(Icon(Icons.info), "버전정보"),
+          const SizedBox(
+            height: 120,
+          ),
         ],
       ),
     );
