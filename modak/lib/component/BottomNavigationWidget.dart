@@ -137,6 +137,7 @@ class _BNCustomPainter extends CustomPainter {
     path_0.quadraticBezierTo(size.width*0.4375000 + (size.width * 0.25 * _index),size.height*0.2500000,size.width + (size.width * 0.25 * _index),size.height*0.2500000);
     path_0.lineTo(size.width,size.height);
     path_0.lineTo(0,size.height);
+    canvas.drawShadow(path_0, Colors.black, 100.0, false);
     path_0.close();
 
     canvas.drawPath(path_0, paint_0);
