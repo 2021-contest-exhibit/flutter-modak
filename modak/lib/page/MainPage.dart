@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modak/component/BottomNavigationWidget.dart';
 import 'package:modak/page/DashBoardPage.dart';
+import 'package:modak/page/SettingPage.dart';
 
 class MainPage extends StatefulWidget {
   final PageController pageController = PageController(initialPage: 0);
@@ -19,6 +20,7 @@ class MainPageState extends State<MainPage> {
           PageView(
             children: [
               DashBoardPage(),
+              SettingPage(),
             ],
           ),
           Positioned(

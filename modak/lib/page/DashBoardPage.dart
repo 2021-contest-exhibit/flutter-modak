@@ -45,6 +45,7 @@ class DashBoardPageState extends State<DashBoardPage> {
             Container(
               height: _contentHeight,
               child: ListView(
+                physics: BouncingScrollPhysics(),
                 children: [
                   const SizedBox(
                     height: 36,
@@ -126,7 +127,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 64,
+                    height: 120,
                   ),
                 ],
               ),
