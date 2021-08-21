@@ -17,51 +17,49 @@ class SettingPage extends StatefulWidget {
 }
 
 class SettingPageState extends State<SettingPage> {
-
   Widget _menuButton(Icon icon, String title) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: InkWell(
-          onTap: () {
-
-          },
-          child: Ink(
-            height: 64,
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Stack(
-              children: [
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [icon],
+        onTap: () {},
+        child: Ink(
+          height: 64,
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Stack(
+            children: [
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [icon],
+                ),
+              ),
+              Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                Center(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            decoration: const BoxDecoration(
-                color: Color(0xffffffff),
-                borderRadius: const BorderRadius.all(
-                  const Radius.circular(5.0),
+              )
+            ],
+          ),
+          decoration: const BoxDecoration(
+              color: Color(0xffffffff),
+              borderRadius: const BorderRadius.all(
+                const Radius.circular(5.0),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x22000000),
+                  offset: Offset(2.0, 2.0),
+                  blurRadius: 2.0,
+                  spreadRadius: 0.1,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x22000000),
-                    offset: Offset(2.0, 2.0),
-                    blurRadius: 2.0,
-                    spreadRadius: 0.1,
-                  ),
-                ]),
-          )),
+              ]),
+        ),
+      ),
     );
   }
 
