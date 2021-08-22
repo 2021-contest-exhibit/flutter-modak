@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modak/component/BottomNavigationWidget.dart';
 import 'package:modak/page/DashBoardPage.dart';
 import 'package:modak/page/MapPage.dart';
+import 'package:modak/page/MatchingPage.dart';
 import 'package:modak/page/SettingPage.dart';
 
 class MainPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class MainPageState extends State<MainPage> {
           PageView(
             children: [
               DashBoardPage(),
+              MatchingPage(),
               MapPage(),
               SettingPage(),
             ],
