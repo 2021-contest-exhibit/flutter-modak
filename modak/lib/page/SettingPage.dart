@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/UserBloc.dart';
+import 'package:modak/bloc/UserEvent.dart';
+import 'package:modak/bloc/UserState.dart';
 import 'package:modak/component/ProfileWidget.dart';
 import 'package:modak/dto/User.dart';
+import 'package:modak/repository/UserRepository.dart';
 
 void main() {
   runApp(
@@ -63,6 +68,14 @@ class SettingPageState extends State<SettingPage> {
     );
   }
 
+
+  @override
+  void initState() {
+    BlocProvider.of<UserBloc>(context).add(
+      SelectUserEvent(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +85,22 @@ class SettingPageState extends State<SettingPage> {
           const SizedBox(
             height: 40.0,
           ),
-          ProfileWidget(user: User("ysy3350", 1)),
+          Container(
+            height: 220,
+            child: BlocBuilder<UserBloc, UserState>(
+                builder: (_, state) {
+                  if (state is Empty) {
+                    return Container();
+                  }else if (state is Loading){
+                    return Center(child: CircularProgressIndicator());
+                  }else if (state is Error) {
+                    return Text("Error: " + state.message);
+                  }else if (state is Loaded) {
+                    return ProfileWidget(user: state.user);
+                  }
+                  return Container();
+                }),
+          ),
           const SizedBox(
             height: 40.0,
           ),
