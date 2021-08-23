@@ -7,7 +7,7 @@ void main() {
     home: Scaffold(
       body: Center(
         child: ProfileWidget(
-          user: User("ysy3350", 10),
+          user: User(userid: "ysy3350", level: 1),
         ),
       ),
     ),
