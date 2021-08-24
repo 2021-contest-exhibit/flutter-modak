@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "492446546559",
+    "project_id": "modak-2dd28",
+    "storage_bucket": "modak-2dd28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492446546559:android:7e4078f58ca38c4e6d9d4a",
+        "android_client_info": {
+          "package_name": "com.modak.modak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492446546559-gb08eplolvaod40get4btusuam763tt7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.modak.modak",
+            "certificate_hash": "962c50a87a2fd13dc0ef361b0b7114e4a22e2a3c"
+          }
+        },
+        {
+          "client_id": "492446546559-n9r2p7g1ihaq50iuosd3muevnpvqf48j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASR7g__QHCao49fWE9qCZY7qTwFosCAYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492446546559-n9r2p7g1ihaq50iuosd3muevnpvqf48j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
