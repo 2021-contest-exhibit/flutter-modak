@@ -1,11 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserRepository {
+  final FirebaseAuth auth;
+
+  UserRepository({required this.auth});
 
   Future<Map<String, dynamic>> selectUser() async {
-    await Future.delayed(Duration(seconds: 1 ));
-    return {
-      'userid': 'ysy3350',
-    };
-  }
+    await Future.delayed(Duration(seconds: 1));
+    final userCredential = auth.signInWithEmailAndPassword(
+        email: 'test@test.com', password: 'test123');
 
+    return userCredential.then((value) => {'userid': value.user!.email});
+
+    // return {
+    //   'userid': 'ysy3350',
+    // };
+  }
 }
