@@ -15,9 +15,9 @@ void main() {
 }
 
 class ProfileWidget extends StatefulWidget {
-  User user;
+  User? user;
 
-  ProfileWidget({required this.user});
+  ProfileWidget({this.user});
 
   @override
   ProfileWidgetState createState() => ProfileWidgetState();
@@ -53,9 +53,9 @@ class ProfileWidgetState extends State<ProfileWidget> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           const SizedBox(height: 4,),
-                          Text(widget.user.userid, style: const TextStyle(fontSize: 28.0),),
+                          Text((widget.user!.userid != null ? (widget.user!.userid): ""), style: const TextStyle(fontSize: 28.0),),
                           const SizedBox(height: 4,),
-                          Text('Lv. ${widget.user.level.toString()}', style: const TextStyle(fontSize: 18.0, color: Color(0xff87360C)),)
+                          Text('Lv. ${widget.user!.level != null ? widget.user!.level.toString() : "0"}', style: const TextStyle(fontSize: 18.0, color: Color(0xff87360C)),)
                         ],
                       )
                     ],

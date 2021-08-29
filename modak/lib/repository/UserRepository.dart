@@ -10,7 +10,8 @@ class UserRepository {
     final userCredential = auth.signInWithEmailAndPassword(
         email: 'test@test.com', password: 'test123');
 
-    return userCredential.then((value) => {'userid': value.user!.email});
+    // return userCredential.then((value) => {'userid': value.user!.email, 'level': 4});
+    return userCredential.then((value) => {});
 
     // return {
     //   'userid': 'ysy3350',

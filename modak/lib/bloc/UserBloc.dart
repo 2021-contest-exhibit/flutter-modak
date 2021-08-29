@@ -21,7 +21,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       yield Loading();
 
       var user = await this.repository.selectUser();
-
+      print(user);
       yield Loaded(user: User.fromJson(user));
 
     } catch (e) {
