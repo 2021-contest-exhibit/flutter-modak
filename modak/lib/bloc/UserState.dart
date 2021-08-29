@@ -23,9 +23,9 @@ class Error extends UserState {
 }
 
 class Loaded extends UserState {
-  final User user;
+  final User? user;
 
-  Loaded({required this.user});
+  Loaded({this.user});
 
   @override
   List<Object?> get props => [this.user];
