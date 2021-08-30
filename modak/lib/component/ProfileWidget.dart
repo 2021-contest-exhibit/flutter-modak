@@ -24,7 +24,6 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class ProfileWidgetState extends State<ProfileWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,29 +36,83 @@ class ProfileWidgetState extends State<ProfileWidget> {
             top: 48.0,
             bottom: 48.0,
             child: Container(
-              padding: const EdgeInsets.only(left: 180.0, right: 5.0, top: 5.0, bottom: 5.0),
+              padding: const EdgeInsets.only(
+                  left: 170.0, right: 5.0, top: 5.0, bottom: 5.0),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(Icons.logout)
-                    ],
+                  Visibility(
+                    visible: widget.user!.userid != null,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [Icon(Icons.logout)],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const SizedBox(height: 4,),
-                          Text((widget.user!.userid != null ? (widget.user!.userid): ""), style: const TextStyle(fontSize: 28.0),),
-                          const SizedBox(height: 4,),
-                          Text('Lv. ${widget.user!.level != null ? widget.user!.level.toString() : "0"}', style: const TextStyle(fontSize: 18.0, color: Color(0xff87360C)),)
-                        ],
-                      )
-                    ],
+                  Visibility(
+                    visible: widget.user!.userid != null,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Text(
+                              (widget.user!.userid != null
+                                  ? (widget.user!.userid)
+                                  : ""),
+                              style: const TextStyle(fontSize: 28.0),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Text(
+                              'Lv. ${widget.user!.level != null ? widget.user!.level.toString() : "0"}',
+                              style: const TextStyle(
+                                  fontSize: 18.0, color: Color(0xff87360C)),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
+                  Visibility(
+                    visible: widget.user!.userid == null,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 32.0,),
+                        Container(
+                          width: 120.0,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/login');
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "로그인",
+                                  style: TextStyle(
+                                      fontSize: 18.0, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                return Color(0xff87360C);
+                              }),
+                              foregroundColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                return Colors.white;
+                              }),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
               decoration: BoxDecoration(
@@ -74,7 +127,10 @@ class ProfileWidgetState extends State<ProfileWidget> {
             bottom: 30.0,
             child: Container(
               width: 160,
-              child: Icon(Icons.person_outline, size: 64,),
+              child: Icon(
+                Icons.person_outline,
+                size: 64,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:modak/page/DashBoardPage.dart';
+import 'package:modak/page/LoginPage.dart';
 import 'package:modak/page/MainPage.dart';
 import 'package:modak/page/SplashPage.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/splash': (context) => SplashPage(),
         '/dashboard': (context) => DashBoardPage(),
+        '/login': (context) => LoginPage(),
         '/': (context) => MainPage(),
       },
     );
