@@ -25,6 +25,7 @@ class MainPageState extends State<MainPage> {
       body: Stack(
         children: [
           PageView(
+            controller: widget.pageController,
             children: [
               DashBoardPage(),
               MatchingPage(),
@@ -37,7 +38,7 @@ class MainPageState extends State<MainPage> {
           ),
           Positioned(
             bottom: 0,
-            child: BottomNavigationWidget(),
+            child: BottomNavigationWidget(pageController: widget.pageController,),
           )
         ],
       ),
