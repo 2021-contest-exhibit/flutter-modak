@@ -2,18 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  final PageController pageController = PageController(initialPage: 0);
   runApp(MaterialApp(
     home: Scaffold(
       backgroundColor: Colors.black54,
       body: Center(
-        child: BottomNavigationWidget(),
+        child: BottomNavigationWidget(pageController: pageController,),
       ),
     ),
   ));
 }
 
 class BottomNavigationWidget extends StatefulWidget {
-  int? _index = 0;
+  final PageController pageController;
+
+   BottomNavigationWidget({required this.pageController});
 
   @override
   BottomNavigationWidgetState createState() => BottomNavigationWidgetState();
@@ -23,13 +26,17 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
 
   void moveToPage(int index) {
     setState(() {
-      widget._index = index;
+      widget.pageController.animateToPage(index, duration: Duration(milliseconds: 150), curve: Curves.fastOutSlowIn);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    widget.pageController.addListener(() {
+      setState(() {
+      });
+    });
     return Container(
       width: size.width,
       height: 80,
@@ -37,7 +44,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         children: [
           CustomPaint(
             size: Size(size.width, 100),
-            painter: _BNCustomPainter(widget._index??0),
+            painter: _BNCustomPainter((widget.pageController.page??0).round()),
           ),
 
           Positioned(
@@ -53,58 +60,50 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                   IconButton(
                     icon: Icon(
                       Icons.home_outlined,
-                      color: (widget._index??0).round() == 0
+                      color: (widget.pageController.page??0).round() == 0
                           ? Theme.of(context).primaryColor
                           : Colors.black,
                     ),
-                    iconSize: (widget._index??0).round() == 0 ? 36 : 32,
+                    iconSize: (widget.pageController.page??0).round() == 0 ? 36 : 32,
                     onPressed: () {
-                      setState(() {
-                        moveToPage(0);
-                      });
+                      moveToPage(0);
                     },
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.people_outline,
-                      color: (widget._index??0).round() == 1
+                      color: (widget.pageController.page??0).round() == 1
                           ? Theme.of(context).primaryColor
                           : Colors.black,
                     ),
-                    iconSize: (widget._index??0).round() == 1 ? 36 : 32,
+                    iconSize: (widget.pageController.page??0).round() == 1 ? 36 : 32,
                     onPressed: () {
-                      setState(() {
-                        moveToPage(1);
-                      });
+                      moveToPage(1);
                     },
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.location_on_outlined,
-                      color: (widget._index??0).round() == 2
+                      color: (widget.pageController.page??0).round() == 2
                           ? Theme.of(context).primaryColor
                           : Colors.black,
                     ),
-                    iconSize: (widget._index??0).round() == 2 ? 36 : 32,
+                    iconSize: (widget.pageController.page??0).round() == 2 ? 36 : 32,
                     onPressed: () {
-                      setState(() {
-                        moveToPage(2);
-                      });
+                      moveToPage(2);
                     },
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.more_horiz,
-                      color: (widget._index??0).round() == 3
+                      color: (widget.pageController.page??0).round() == 3
                           ? Theme.of(context).primaryColor
                           : Colors.black,
                     ),
-                    iconSize: (widget._index??0).round() == 3 ? 36 : 32,
+                    iconSize: (widget.pageController.page??0).round() == 3 ? 36 : 32,
                     alignment: Alignment.center,
                     onPressed: () {
-                      setState(() {
-                        moveToPage(3);
-                      });
+                      moveToPage(3);
                     },
                   ),
                 ],
