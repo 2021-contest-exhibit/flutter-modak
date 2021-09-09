@@ -9,13 +9,11 @@ class MapPage extends StatefulWidget {
 class MapPageState extends State<MapPage> {
 
   Widget floatingControlButton(Widget icon) {
-    return Positioned(
-      child: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: Colors.black,
-          mini: true,
-          child: icon
-      ),
+    return FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.black,
+        mini: true,
+        child: icon
     );
   }
 
