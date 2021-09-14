@@ -38,6 +38,9 @@ dependencies:
 
   google_maps_flutter:
 
+  sqflite:
+  path:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
