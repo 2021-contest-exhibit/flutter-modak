@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modak/dto/SavedUser.dart';
 import 'package:modak/dto/User.dart';
 import 'package:modak/main.dart';
 import 'package:path/path.dart';
@@ -7,8 +8,7 @@ import 'package:sqflite/sqflite.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DBRepository().saveUser(User(userid: "test", level: 0));
-  await DBRepository().saveUser(User(userid: "test2", level: 1));
+  await DBRepository().saveUser(SavedUser(email: "test@test.com", password: "test123"));
   print(await DBRepository().loadUser());
 
   runApp(MaterialApp(
@@ -21,14 +21,15 @@ main() async {
 }
 
 class DBRepository {
-  Future saveUser(User user) async {
+  Future saveUser(SavedUser user) async {
     final Database database = await openDatabase(
       join(await getDatabasesPath(), 'modak.db'),
       onCreate: (db, version) {
+        print('version: $version');
         return db.execute(
-            'create table user (userid text primary key, level integer)');
+            'create table user (email text primary key, password text)');
       },
-      version: 2,
+      version: 1,
     );
 
     await database.delete('user');
@@ -37,7 +38,7 @@ class DBRepository {
 
   }
 
-  Future<User> loadUser() async {
+  Future<SavedUser?> loadUser() async {
     print("load..");
     final Database database = await openDatabase(
       join(await getDatabasesPath(), 'modak.db'),
@@ -46,6 +47,10 @@ class DBRepository {
 
     var users = await database.query('user');
 
-    return User(userid: users[0]['userid'].toString(), level: int.parse(users[0]['level'].toString()));
+    if (users.length <= 0 || users[0]['email'] == null || users[0]['password'] == null) {
+      return null;
+    }
+
+    return SavedUser(email: users[0]['email'].toString(), password: users[0]['password'].toString());
   }
 }

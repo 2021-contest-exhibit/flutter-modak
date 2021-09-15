@@ -8,6 +8,7 @@ import 'package:modak/page/DashBoardPage.dart';
 import 'package:modak/page/MapPage.dart';
 import 'package:modak/page/MatchingPage.dart';
 import 'package:modak/page/SettingPage.dart';
+import 'package:modak/repository/DBRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
 
 class MainPage extends StatefulWidget {
@@ -31,7 +32,7 @@ class MainPageState extends State<MainPage> {
               MatchingPage(),
               MapPage(),
               BlocProvider(
-                create: (_) => UserBloc(repository: UserRepository(auth: widget.auth)),
+                create: (_) => UserBloc(userRepository: UserRepository(auth: widget.auth), dbRepository: DBRepository()),
                 child: SettingPage(),
               ),
             ],

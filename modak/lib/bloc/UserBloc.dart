@@ -2,12 +2,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/UserEvent.dart';
 import 'package:modak/bloc/UserState.dart';
 import 'package:modak/dto/User.dart';
+import 'package:modak/repository/DBRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  final UserRepository repository;
+  final UserRepository userRepository;
+  final DBRepository dbRepository;
 
-  UserBloc({required this.repository}) : super(Empty());
+  UserBloc({required this.userRepository, required this.dbRepository}) : super(Empty());
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
@@ -20,9 +22,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       yield Loading();
 
-      var user = await this.repository.selectUser();
-      print(user);
-      yield Loaded(user: User.fromJson(user));
+      var lastUser = await this.dbRepository.loadUser();
+
+      if (lastUser == null) {
+        yield Error(message: 'last user null');
+      }else{
+        var user = await this.userRepository.login(lastUser.email, lastUser.password);
+        print(user);
+        yield Loaded(user: User.fromJson(user));
+      }
 
     } catch (e) {
       yield Error(message: e.toString());
