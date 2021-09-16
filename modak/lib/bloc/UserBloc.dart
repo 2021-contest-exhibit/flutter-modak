@@ -15,6 +15,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Stream<UserState> mapEventToState(UserEvent event) async* {
     if (event is SelectUserEvent) {
       yield* _mapSelectUserEvent(event);
+    } else if (event is LoginUserEvent) {
+      yield* _mapLoginUserEvent(event);
     }
   }
 
@@ -30,6 +32,25 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         var user = await this.userRepository.login(lastUser.email, lastUser.password);
         print(user);
         yield Loaded(user: User.fromJson(user));
+      }
+
+    } catch (e) {
+      yield Error(message: e.toString());
+    }
+  }
+
+  Stream<UserState> _mapLoginUserEvent(LoginUserEvent event) async* {
+    try {
+      yield Loading();
+
+      var user = await this.userRepository.login(event.user.email, event.user.password);
+
+      await this.dbRepository.saveUser(event.user);
+
+      if (user["userid"] != "" && user["level"] != "") {
+        yield Loaded(user: User.fromJson(user));
+      } else {
+        yield Error(message: 'login fail');
       }
 
     } catch (e) {
