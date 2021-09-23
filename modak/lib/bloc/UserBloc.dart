@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/UserEvent.dart';
 import 'package:modak/bloc/UserState.dart';
@@ -17,7 +19,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       yield* _mapSelectUserEvent(event);
     } else if (event is LoginUserEvent) {
       yield* _mapLoginUserEvent(event);
+    } else if (event is LogoutUserEvent) {
+      yield* _mapLogoutUserEvent(event);
     }
+  }
+
+  Stream<UserState> _mapLogoutUserEvent(LogoutUserEvent event) async* {
+    yield Loading();
+
+    await this.userRepository.logout();
+
+    yield Loaded();
   }
 
   Stream<UserState> _mapSelectUserEvent(SelectUserEvent event) async* {

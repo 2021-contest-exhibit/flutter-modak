@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/UserBloc.dart';
+import 'package:modak/bloc/UserEvent.dart';
 import 'package:modak/dto/User.dart';
 
 void main() {
@@ -41,14 +44,23 @@ class ProfileWidgetState extends State<ProfileWidget> {
               child: Column(
                 children: [
                   Visibility(
-                    visible: widget.user!.userid != null,
+                    visible: widget.user != null,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [Icon(Icons.logout)],
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            BlocProvider.of<UserBloc>(context).add(
+                              LogoutUserEvent(),
+                            );
+                          },
+                          icon: Icon(Icons.logout),
+                        ),
+                      ],
                     ),
                   ),
                   Visibility(
-                    visible: widget.user!.userid != null,
+                    visible: widget.user != null,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -59,7 +71,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
                               height: 4,
                             ),
                             Text(
-                              (widget.user!.userid != null
+                              (widget.user != null
                                   ? (widget.user!.userid)
                                   : ""),
                               style: const TextStyle(fontSize: 28.0),
@@ -68,7 +80,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
                               height: 4,
                             ),
                             Text(
-                              'Lv. ${widget.user!.level != null ? widget.user!.level.toString() : "0"}',
+                              'Lv. ${widget.user != null ? widget.user!.level.toString() : "0"}',
                               style: const TextStyle(
                                   fontSize: 18.0, color: Color(0xff87360C)),
                             )
@@ -78,10 +90,12 @@ class ProfileWidgetState extends State<ProfileWidget> {
                     ),
                   ),
                   Visibility(
-                    visible: widget.user!.userid == null,
+                    visible: widget.user == null,
                     child: Column(
                       children: [
-                        const SizedBox(height: 32.0,),
+                        const SizedBox(
+                          height: 32.0,
+                        ),
                         Container(
                           width: 120.0,
                           child: OutlinedButton(
@@ -94,7 +108,8 @@ class ProfileWidgetState extends State<ProfileWidget> {
                                 Text(
                                   "로그인",
                                   style: TextStyle(
-                                      fontSize: 18.0, fontWeight: FontWeight.bold),
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
