@@ -22,4 +22,8 @@ class UserRepository {
 
     return userCredential.then((value) => {'userid': value.user!.email, 'level': 4});
   }
+
+  Future logout() async {
+    auth.signOut();
+  }
 }
