@@ -13,7 +13,6 @@ import 'package:modak/repository/UserRepository.dart';
 
 class MainPage extends StatefulWidget {
   final PageController pageController = PageController(initialPage: 0);
-  final auth = FirebaseAuth.instance;
 
   @override
   State createState() => MainPageState();
@@ -31,15 +30,14 @@ class MainPageState extends State<MainPage> {
               DashBoardPage(),
               MatchingPage(),
               MapPage(),
-              BlocProvider(
-                create: (_) => UserBloc(userRepository: UserRepository(auth: widget.auth), dbRepository: DBRepository()),
-                child: SettingPage(),
-              ),
+              SettingPage(),
             ],
           ),
           Positioned(
             bottom: 0,
-            child: BottomNavigationWidget(pageController: widget.pageController,),
+            child: BottomNavigationWidget(
+              pageController: widget.pageController,
+            ),
           )
         ],
       ),

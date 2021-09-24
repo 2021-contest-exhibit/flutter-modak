@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/UserBloc.dart';
+import 'package:modak/bloc/UserEvent.dart';
+import 'package:modak/dto/SavedUser.dart';
 
 void main() {
   runApp(
@@ -118,7 +122,12 @@ class LoginPageState extends State<LoginPage> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20.0),
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                print("click");
+                BlocProvider.of<UserBloc>(context).add(
+                  LoginUserEvent(user: SavedUser(email: "test@test.com", password: "test123")),
+                );
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
