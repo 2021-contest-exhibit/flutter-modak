@@ -14,6 +14,9 @@ void main() {
 }
 
 class LoginPage extends StatefulWidget {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   LoginPageState createState() => LoginPageState();
 }
@@ -66,6 +69,7 @@ class LoginPageState extends State<LoginPage> {
                   ),
                 ]),
             child: TextField(
+              controller: widget._emailController,
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 hintText: '이메일을 입력해주세요.',
@@ -101,6 +105,7 @@ class LoginPageState extends State<LoginPage> {
                   ),
                 ]),
             child: TextField(
+              controller: widget._passwordController,
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 hintText: '비밀번호를 입력해주세요.',
@@ -123,10 +128,14 @@ class LoginPageState extends State<LoginPage> {
             margin: const EdgeInsets.symmetric(horizontal: 20.0),
             child: OutlinedButton(
               onPressed: () {
-                print("click");
                 BlocProvider.of<UserBloc>(context).add(
-                  LoginUserEvent(user: SavedUser(email: "test@test.com", password: "test123")),
+                  LoginUserEvent(
+                      user: SavedUser(
+                    email: widget._emailController.text,
+                    password: widget._passwordController.text,
+                  )),
                 );
+                Navigator.pop(context);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +169,10 @@ class LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: () {},
                 child: Center(
-                  child: Icon(Icons.email, color: Colors.black,),
+                  child: Icon(
+                    Icons.email,
+                    color: Colors.black,
+                  ),
                 ),
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.resolveWith((states) {
@@ -174,7 +186,10 @@ class LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: () {},
                 child: Center(
-                  child: Icon(Icons.email, color: Colors.black,),
+                  child: Icon(
+                    Icons.email,
+                    color: Colors.black,
+                  ),
                 ),
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.resolveWith((states) {
@@ -188,7 +203,10 @@ class LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: () {},
                 child: Center(
-                  child: Icon(Icons.email, color: Colors.black,),
+                  child: Icon(
+                    Icons.email,
+                    color: Colors.black,
+                  ),
                 ),
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.resolveWith((states) {
@@ -204,7 +222,12 @@ class LoginPageState extends State<LoginPage> {
           const SizedBox(
             height: 6.0,
           ),
-          TextButton(onPressed: () {}, child: Text("회원가입", style: TextStyle(color: Color(0xff87360C)),))
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                "회원가입",
+                style: TextStyle(color: Color(0xff87360C)),
+              ))
         ],
       ),
     );
