@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/bloc/UserEvent.dart';
+import 'package:modak/bloc/UserState.dart';
 import 'package:modak/dto/SavedUser.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,7 +129,8 @@ class LoginPageState extends State<LoginPage> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20.0),
             child: OutlinedButton(
-              onPressed: () {
+              onPressed: () async{
+                print("button click");
                 BlocProvider.of<UserBloc>(context).add(
                   LoginUserEvent(
                       user: SavedUser(
@@ -135,7 +138,17 @@ class LoginPageState extends State<LoginPage> {
                     password: widget._passwordController.text,
                   )),
                 );
-                Navigator.pop(context);
+                await BlocProvider.of<UserBloc>(context).stream.map((state) {
+                  print("state: ${state}");
+                  if (state is Empty) {
+                  }else if (state is Loading){
+                    print("loading");
+                  }else if (state is Error) {
+                    print("error");
+                  }else if (state is Loaded) {
+                    Navigator.pop(context);
+                  }
+                }).last;
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -232,4 +245,5 @@ class LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
 }

@@ -54,4 +54,14 @@ class DBRepository {
     return SavedUser(email: users[0]['email'].toString(), password: users[0]['password'].toString());
   }
 
+  Future deleteUser() async {
+    final Database database = await openDatabase(
+      join(await getDatabasesPath(), 'modak.db'),
+      version: 1,
+    );
+
+    var res = await database.delete('user');
+    print("res: $res");
+  }
+
 }

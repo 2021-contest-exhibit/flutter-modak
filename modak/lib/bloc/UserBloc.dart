@@ -29,6 +29,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Stream<UserState> _mapLogoutUserEvent(LogoutUserEvent event) async* {
     yield Loading();
 
+    await this.dbRepository.deleteUser();
+
     await this.userRepository.logout();
 
     yield Loaded();
@@ -43,7 +45,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       var loginedUser = await this.userRepository.login(user.email, user.password);
       yield Loaded(user: User.fromJson(loginedUser));
     } else {
-      yield Error(message: "user not found");
+      yield Loaded();
     }
 
   }
