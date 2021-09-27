@@ -21,6 +21,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       yield* _mapLoginUserEvent(event);
     } else if (event is LogoutUserEvent) {
       yield* _mapLogoutUserEvent(event);
+    } else if (event is CheckUserEvent) {
+      yield* _mapCheckUserEvent(event);
     }
   }
 
@@ -32,23 +34,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     yield Loaded();
   }
 
-  Stream<UserState> _mapSelectUserEvent(SelectUserEvent event) async* {
-    try {
-      yield Loading();
+  Stream<UserState> _mapCheckUserEvent(CheckUserEvent event) async*{
+    yield Loading();
 
-      var lastUser = await this.dbRepository.loadUser();
+    var user = await this.dbRepository.loadUser();
 
-      if (lastUser == null) {
-        yield Error(message: 'last user null');
-      }else{
-        var user = await this.userRepository.login(lastUser.email, lastUser.password);
-        print(user);
-        yield Loaded(user: User.fromJson(user));
-      }
-
-    } catch (e) {
-      yield Error(message: e.toString());
+    if (user != null && user.email != "" && user.password != ""){
+      var loginedUser = await this.userRepository.login(user.email, user.password);
+      yield Loaded(user: User.fromJson(loginedUser));
+    } else {
+      yield Error(message: "user not found");
     }
+
+  }
+
+  Stream<UserState> _mapSelectUserEvent(SelectUserEvent event) async* {
   }
 
   Stream<UserState> _mapLoginUserEvent(LoginUserEvent event) async* {
