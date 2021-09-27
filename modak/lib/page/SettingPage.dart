@@ -72,7 +72,7 @@ class SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     BlocProvider.of<UserBloc>(context).add(
-      SelectUserEvent(),
+      CheckUserEvent(),
     );
   }
 
