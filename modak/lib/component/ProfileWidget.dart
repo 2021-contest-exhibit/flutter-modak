@@ -48,14 +48,20 @@ class ProfileWidgetState extends State<ProfileWidget> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        IconButton(
-                          onPressed: () {
+                        InkWell(
+                          child: Container(
+                            padding: EdgeInsets.all(6.0),
+                            child: Icon(
+                              Icons.logout,
+                              size: 18,
+                            ),
+                          ),
+                          onTap: () {
                             BlocProvider.of<UserBloc>(context).add(
                               LogoutUserEvent(),
                             );
                           },
-                          icon: Icon(Icons.logout),
-                        ),
+                        )
                       ],
                     ),
                   ),
