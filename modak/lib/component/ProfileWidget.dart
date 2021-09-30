@@ -40,11 +40,27 @@ class ProfileWidgetState extends State<ProfileWidget> {
               padding: const EdgeInsets.only(left: 180.0, right: 5.0, top: 5.0, bottom: 5.0),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(Icons.logout)
-                    ],
+                  Visibility(
+                    visible: widget.user != null,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          child: Container(
+                            padding: EdgeInsets.all(6.0),
+                            child: Icon(
+                              Icons.logout,
+                              size: 18,
+                            ),
+                          ),
+                          onTap: () {
+                            BlocProvider.of<UserBloc>(context).add(
+                              LogoutUserEvent(),
+                            );
+                          },
+                        )
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
