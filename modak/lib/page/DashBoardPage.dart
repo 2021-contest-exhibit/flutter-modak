@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:modak/DTO/Camping.dart';
 import 'package:modak/component/RecommandCampingWidget.dart';
 import 'package:modak/component/TodayCampingWidget.dart';
+import 'package:modak/dto/Camping.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override
@@ -58,6 +58,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                           'Modak',
                           style: TextStyle(
                             fontSize: 48,
+                            fontWeight: FontWeight.bold,
                           ),
                         )
                       ],
@@ -74,6 +75,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                           '오늘의 캠핑 추천',
                           style: TextStyle(
                             fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         )
                       ],
@@ -86,9 +88,9 @@ class DashBoardPageState extends State<DashBoardPage> {
                     margin: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: TodayCompingWidget(
                       recipeList: [
-                        Camping('test'),
-                        Camping('test'),
-                        Camping('test'),
+                        Camping(title: "백운계곡캠핑장", discription: "글램핑과 캠핑을 골라 즐길 수 있는 백운계곡캠핑..."),
+                        Camping(title: "백운계곡캠핑장", discription: "글램핑과 캠핑을 골라 즐길 수 있는 백운계곡캠핑..."),
+                        Camping(title: "백운계곡캠핑장", discription: "글램핑과 캠핑을 골라 즐길 수 있는 백운계곡캠핑..."),
                       ],
                     ),
                   ),
@@ -103,6 +105,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                           '나만의 캠핑 추천',
                           style: TextStyle(
                             fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         )
                       ],
@@ -118,9 +121,9 @@ class DashBoardPageState extends State<DashBoardPage> {
                       children: [
                         RecommandCampingWidget(
                           campingList: [
-                            Camping("test"),
-                            Camping("test"),
-                            Camping("test"),
+                            Camping(title: "김삿갓 계곡 캠핑장", discription: "#봄#여름#가을#겨울#친절한#여유있는#깨끗한#온수 잘 나오는"),
+                            Camping(title: "김삿갓 계곡 캠핑장", discription: "#봄#여름#가을#겨울#친절한#여유있는#깨끗한#온수 잘 나오는"),
+                            Camping(title: "김삿갓 계곡 캠핑장", discription: "#봄#여름#가을#겨울#친절한#여유있는#깨끗한#온수 잘 나오는"),
                           ],
                         )
                       ],
