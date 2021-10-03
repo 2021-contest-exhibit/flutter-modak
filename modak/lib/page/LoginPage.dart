@@ -27,6 +27,7 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       body: Column(
         children: [
           const SizedBox(
@@ -236,7 +237,9 @@ class LoginPageState extends State<LoginPage> {
             height: 6.0,
           ),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, "/login/signup");
+              },
               child: Text(
                 "회원가입",
                 style: TextStyle(color: Color(0xff87360C)),
