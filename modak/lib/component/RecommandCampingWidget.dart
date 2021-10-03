@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:modak/DTO/Camping.dart';
+import 'package:modak/dto/Camping.dart';
 
 class RecommandCampingWidget extends StatefulWidget {
   List<Camping> campingList;
@@ -19,20 +19,77 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
       child: InkWell(
         onTap: () {},
         child: Container(
-          padding: const EdgeInsets.all(12.0),
           alignment: Alignment.bottomLeft,
           decoration: const BoxDecoration(
-            color: Color(0x887f7f7f),
+            color: Color(0xffffffff),
             borderRadius: const BorderRadius.all(
               const Radius.circular(5.0),
             ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x22000000),
+                  offset: Offset(2.0, 2.0),
+                  blurRadius: 2.0,
+                  spreadRadius: 0.1,
+                ),
+              ]
           ),
-          child: Text(
-            camping.name,
-            style: const TextStyle(
-              color: const Color(0xffffffff),
-              fontSize: 18.0,
-            ),
+          child: Row(
+            children: [
+              Container(
+                width: 200.0,
+                height: 150.0,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
+                  child: Image.network(
+                    "https://www.gocamping.or.kr/upload/camp/7150/thumb/thumb_720_60497nQtHJrTdiezfiaLBaGE.jpg",
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(12.0),
+                width: 170,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20.0,),
+                    Text(
+                      camping.title,
+                      style: const TextStyle(
+                        color: const Color(0xff000000),
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20.0,),
+                    Flexible(
+                      child: Text(
+                        camping.discription,
+                        maxLines: 2,
+                        style: const TextStyle(
+                          color: const Color(0xff8f8f8f),
+                          fontSize: 8.0,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12.0,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(Icons.favorite, color: Colors.red, size: 18.0,),
+                        const SizedBox(width: 2.0,),
+                        Text(
+                          "228"
+
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),

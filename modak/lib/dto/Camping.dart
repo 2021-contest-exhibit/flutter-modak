@@ -1,5 +1,6 @@
 class Camping {
-  String name;
+  String title;
+  String discription;
 
-  Camping(this.name);
+  Camping({required this.title, required this.discription});
 }
