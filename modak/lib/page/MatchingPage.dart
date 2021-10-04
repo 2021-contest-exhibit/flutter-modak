@@ -22,7 +22,7 @@ class MatchingPageState extends State<MatchingPage> {
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
     final double _height = MediaQuery.of(context).size.height;
     final double _titleHeight = 48.0;
-    final double _contentHeight = _height - _statusBarHeight - _titleHeight;
+    final double _contentHeight = _height - _statusBarHeight - _titleHeight - 100;
     final double _contentWidth = _width;
     return Scaffold(
       body: Container(
@@ -84,68 +84,49 @@ class MatchingPageState extends State<MatchingPage> {
                 ],
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             Visibility(
               visible: widget._selectedIndex == 0,
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  children: [
-                    MatchingItemWidget(),
-                  ],
+                height: _contentHeight,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return MatchingItemWidget();
+                  },
+                  itemCount: 4,
+                  physics: BouncingScrollPhysics(),
                 ),
               ),
             ),
             Visibility(
               visible: widget._selectedIndex == 1,
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 24),
-                    padding: const EdgeInsets.all(12.0),
-                    alignment: Alignment.bottomLeft,
-                    height: 300,
-                    decoration: const BoxDecoration(
-                      color: Color(0x887f7f7f),
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(5.0),
-                      ),
-                    ),
-                    child: Text(
-                      "참여한 캠핑",
-                      style: const TextStyle(
-                        color: const Color(0xffffffff),
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                ],
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.0),
+                height: _contentHeight,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return MatchingItemWidget();
+                  },
+                  itemCount: 4,
+                  physics: BouncingScrollPhysics(),
+                ),
               ),
             ),
             Visibility(
               visible: widget._selectedIndex == 2,
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 24),
-                    padding: const EdgeInsets.all(12.0),
-                    alignment: Alignment.bottomLeft,
-                    height: 300,
-                    decoration: const BoxDecoration(
-                      color: Color(0x887f7f7f),
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(5.0),
-                      ),
-                    ),
-                    child: Text(
-                      "내캠핑",
-                      style: const TextStyle(
-                        color: const Color(0xffffffff),
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                ],
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.0),
+                height: _contentHeight,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return MatchingItemWidget();
+                  },
+                  itemCount: 4,
+                  physics: BouncingScrollPhysics(),
+                ),
               ),
             ),
           ],
