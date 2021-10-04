@@ -42,6 +42,11 @@ class DBRepository {
     print("load..");
     final Database database = await openDatabase(
       join(await getDatabasesPath(), 'modak.db'),
+      onCreate: (db, version) {
+        print('version: $version');
+        return db.execute(
+            'create table user (email text primary key, password text)');
+      },
       version: 1,
     );
 
