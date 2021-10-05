@@ -20,6 +20,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 24.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
