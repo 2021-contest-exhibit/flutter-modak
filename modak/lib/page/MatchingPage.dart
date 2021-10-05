@@ -84,9 +84,6 @@ class MatchingPageState extends State<MatchingPage> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 20.0,
-            ),
             Visibility(
               visible: widget._selectedIndex == 0,
               child: Container(
