@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: Color(0xff87360C)
         ),
         initialRoute: '/splash',
         routes: {
