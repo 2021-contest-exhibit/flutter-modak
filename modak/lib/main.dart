@@ -6,6 +6,7 @@ import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/page/DashBoardPage.dart';
 import 'package:modak/page/LoginPage.dart';
 import 'package:modak/page/MainPage.dart';
+import 'package:modak/page/PaymentPage.dart';
 import 'package:modak/page/SignUpPage.dart';
 import 'package:modak/page/SplashPage.dart';
 import 'package:modak/repository/DBRepository.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => LoginPage(),
           '/login/signup': (context) => SignUpPage(),
           '/': (context) => MainPage(),
+          '/payment': (context) => PaymentPage(),
         },
       ),
     );

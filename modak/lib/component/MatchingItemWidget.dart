@@ -73,7 +73,9 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                   ],
                 ),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/payment");
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
