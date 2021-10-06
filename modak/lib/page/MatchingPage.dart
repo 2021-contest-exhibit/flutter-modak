@@ -22,7 +22,7 @@ class MatchingPageState extends State<MatchingPage> {
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
     final double _height = MediaQuery.of(context).size.height;
     final double _titleHeight = 48.0;
-    final double _contentHeight = _height - _statusBarHeight - _titleHeight - 100;
+    final double _contentHeight = _height - _statusBarHeight - 100;
     final double _contentWidth = _width;
     return Scaffold(
       body: Container(
