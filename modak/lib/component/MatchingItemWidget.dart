@@ -20,6 +20,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 24.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -72,7 +73,9 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                   ],
                 ),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/payment");
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
