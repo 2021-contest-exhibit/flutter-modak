@@ -18,11 +18,12 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
       height: 180,
       margin: const EdgeInsets.only(right: 24.0, top: 12.0, bottom: 12.0),
       child: InkWell(
-        onTap: () {},
-        child: Container(
+        onTap: () {
+          Navigator.pushNamed(context, '/camping/detail');
+        },
+        child: Ink(
           width: 120,
           height: 180,
-          alignment: Alignment.bottomLeft,
           decoration: const BoxDecoration(
             color: Color(0xffffffff),
             borderRadius: const BorderRadius.all(
