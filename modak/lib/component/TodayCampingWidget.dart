@@ -19,7 +19,7 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
       margin: const EdgeInsets.only(right: 24.0, top: 12.0, bottom: 12.0),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, '/camping/detail');
+          Navigator.pushNamed(context, '/camping_detail');
         },
         child: Ink(
           width: 120,
