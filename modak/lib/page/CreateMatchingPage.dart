@@ -32,9 +32,14 @@ class CreateMatchingPageState extends State<CreateMatchingPage> {
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.arrow_back,
-                    size: 36.0,
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: 36.0,
+                    ),
                   )
                 ],
               ),
