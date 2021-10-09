@@ -41,6 +41,8 @@ dependencies:
   sqflite:
   path:
 
+  table_calendar:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
