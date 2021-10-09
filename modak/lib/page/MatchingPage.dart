@@ -136,7 +136,9 @@ class MatchingPageState extends State<MatchingPage> {
             bottom: 82.0,
             right: 24.0,
             child: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/create_matching');
+              },
               child: Icon(Icons.add),
               backgroundColor: Theme.of(context).primaryColor,
             ),

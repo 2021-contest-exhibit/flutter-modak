@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/page/CapingDetailPage.dart';
+import 'package:modak/page/CreateMatchingPage.dart';
 import 'package:modak/page/DashBoardPage.dart';
 import 'package:modak/page/LoginPage.dart';
 import 'package:modak/page/MainPage.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => MainPage(),
           '/payment': (context) => PaymentPage(),
           '/camping_detail': (context) => CampingDetailPage(),
+          '/create_matching': (context) => CreateMatchingPage(),
         },
       ),
     );
