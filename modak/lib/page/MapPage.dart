@@ -40,7 +40,7 @@ class MapPageState extends State<MapPage> {
                   }),
                 ),
                 onPressed: () {
-
+                  Navigator.pushNamed(context, '/camping_search');
                 },
                 child: Row(
                   children: [Icon(Icons.search, color: Colors.black,)],
