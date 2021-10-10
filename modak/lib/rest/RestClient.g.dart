@@ -8,7 +8,7 @@ part of 'RestClient.dart';
 
 class _RestClient implements RestClient {
   _RestClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://10.0.2.2:8080/modak';
+    baseUrl ??= 'http://localhost:8080/modak';
   }
 
   final Dio _dio;
@@ -34,6 +34,21 @@ class _RestClient implements RestClient {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseGetCampings.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ResponseGetCampingsRegions> getCampingsRegions() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseGetCampingsRegions>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/campings/regions',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ResponseGetCampingsRegions.fromJson(_result.data!);
     return value;
   }
 
