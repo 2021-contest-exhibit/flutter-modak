@@ -39,13 +39,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => UserBloc(userRepository: UserRepository(auth: auth), dbRepository: DBRepository())),
-        BlocProvider(create: (_) => CampingAPIBloc(apiRepository: APIRepository(dio: dio, restClient: restClient))),
+        BlocProvider(
+            create: (_) => UserBloc(
+                userRepository: UserRepository(auth: auth),
+                dbRepository: DBRepository())),
+        BlocProvider(
+            create: (_) => CampingAPIBloc(
+                apiRepository:
+                    APIRepository(dio: dio, restClient: restClient))),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primaryColor: Color(0xff87360C)
+          primaryColor: Color(0xff87360C),
+          fontFamily: 'BMDOHYEON_ttf',
         ),
         initialRoute: '/splash',
         routes: {

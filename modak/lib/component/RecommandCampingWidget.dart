@@ -13,6 +13,7 @@ class RecommandCampingWidget extends StatefulWidget {
 
 class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
   Widget _campingItemWidget(Camping camping) {
+    final _width = MediaQuery.of(context).size.width;
     return Container(
       height: 150,
       margin: const EdgeInsets.symmetric(vertical: 18.0),
@@ -38,7 +39,7 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
           child: Row(
             children: [
               Container(
-                width: 200.0,
+                width: (_width-40) * 45/100,
                 height: 150.0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
@@ -50,7 +51,7 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
               ),
               Container(
                 padding: EdgeInsets.all(12.0),
-                width: 170,
+                width: (_width-40) * 55/100,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,

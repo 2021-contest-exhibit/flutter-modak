@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,7 @@ class ProfileWidget extends StatefulWidget {
 class ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
     return Container(
       height: 220,
       child: Stack(
@@ -39,9 +41,10 @@ class ProfileWidgetState extends State<ProfileWidget> {
             top: 48.0,
             bottom: 48.0,
             child: Container(
-              padding: const EdgeInsets.only(
-                  left: 170.0, right: 5.0, top: 5.0, bottom: 5.0),
+              padding: EdgeInsets.only(
+                  left: (_width-10) * 40 / 100, right: 5.0, top: 5.0, bottom: 5.0),
               child: Column(
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Visibility(
                     visible: widget.user != null,
@@ -76,19 +79,30 @@ class ProfileWidgetState extends State<ProfileWidget> {
                             const SizedBox(
                               height: 4,
                             ),
-                            Text(
-                              (widget.user != null
-                                  ? (widget.user!.userid)
-                                  : ""),
-                              style: const TextStyle(fontSize: 28.0),
+                            Container(
+                              width: (_width-10) * 40 / 100,
+                              child: AutoSizeText(
+                                (widget.user != null
+                                    ? (widget.user!.userid)
+                                    : ""),
+                                style: const TextStyle(fontSize: 40.0, ),
+                                minFontSize: 12.0,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
                             ),
                             const SizedBox(
                               height: 4,
                             ),
-                            Text(
-                              'Lv. ${widget.user != null ? widget.user!.level.toString() : "0"}',
-                              style: const TextStyle(
-                                  fontSize: 18.0, color: Color(0xff87360C)),
+                            Container(
+                              width: (_width-10) * 15 / 100,
+                              child: AutoSizeText(
+                                'Lv. ${widget.user != null ? widget.user!.level.toString() : "0"}',
+                                style: const TextStyle(
+                                    fontSize: 18.0, color: Color(0xff87360C)),
+                                minFontSize: 12.0,
+                                maxLines: 1,
+                              ),
                             )
                           ],
                         )
@@ -147,7 +161,8 @@ class ProfileWidgetState extends State<ProfileWidget> {
             top: 30.0,
             bottom: 30.0,
             child: Container(
-              width: 160,
+              width: (_width-10) * 40 / 100,
+              height: (_width-10) * 40 / 100,
               child: Icon(
                 Icons.person_outline,
                 size: 64,
