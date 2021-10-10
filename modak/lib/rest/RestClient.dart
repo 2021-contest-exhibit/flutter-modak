@@ -1,4 +1,5 @@
 import 'package:modak/rest/ResponseGetCampings.dart';
+import 'package:modak/rest/ResponseGetCampingsEnvironments.dart';
 import 'package:modak/rest/ResponseGetCampingsRegions.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
@@ -19,4 +20,7 @@ abstract class RestClient {
 
   @GET("/campings/regions")
   Future<ResponseGetCampingsRegions> getCampingsRegions();
+
+  @GET("/campings/environments")
+  Future<ResponseGetCampingsEnvironments> getCampingsEnvironments();
 }
