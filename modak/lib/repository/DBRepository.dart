@@ -27,12 +27,14 @@ class DBRepository {
       onCreate: (db, version) {
         print('version: $version');
         return db.execute(
-            'create table user (email text primary key, password text)');
+            'create database if not exists modak');
       },
       version: 1,
     );
+    
+    await database.execute('drop table if exists user');
+    await database.execute('create table if not exists user (email text primary key, password text)');
 
-    await database.delete('user');
     await database.insert('user', user.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
     print("saved");
 
@@ -45,7 +47,7 @@ class DBRepository {
       onCreate: (db, version) {
         print('version: $version');
         return db.execute(
-            'create table user (email text primary key, password text)');
+            'create database if not exists modak');
       },
       version: 1,
     );
