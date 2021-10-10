@@ -13,6 +13,12 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
   Stream<CampingAPIState> mapEventToState(CampingAPIEvent event) async*{
     if (event is GetCampingsEvent) {
       yield* _mapGetCampingsEvent(event);
+    } else if(event is GetCampingsEnvironmentsEvent) {
+      yield* _mapGetCampingsEnvironmentsEvent(event);
+    } else if(event is GetCampingsOperationTypesEvent) {
+      yield* _mapGetCampingsOperationTypesEvent(event);
+    } else if(event is GetCampingsRegionsEvent) {
+      yield* _mapGetCampingsRegionsEvent(event);
     }
   }
 
@@ -28,6 +34,63 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
 
     if (response != null) {
       print("response: ${response.content[1].name}");
+      yield Loaded();
+    }else {
+      print("error");
+      yield Error();
+    }
+  }
+
+  Stream<CampingAPIState> _mapGetCampingsEnvironmentsEvent(GetCampingsEnvironmentsEvent event) async* {
+    print("_mapGetCampingsEnvironmentsEvent");
+    yield Loading();
+
+    var response = await apiRepository.getCampingsEnvironments().onError((error, stackTrace) {
+      print(error.toString());
+      print(stackTrace);
+      return null;
+    });
+
+    if (response != null) {
+      print("response: ${response.data}");
+      yield Loaded();
+    }else {
+      print("error");
+      yield Error();
+    }
+  }
+
+  Stream<CampingAPIState> _mapGetCampingsOperationTypesEvent(GetCampingsOperationTypesEvent event) async* {
+    print("_mapGetCampingsOperationTypesEvent");
+    yield Loading();
+
+    var response = await apiRepository.getCampingsOperationTypes().onError((error, stackTrace) {
+      print(error.toString());
+      print(stackTrace);
+      return null;
+    });
+
+    if (response != null) {
+      print("response: ${response.data}");
+      yield Loaded();
+    }else {
+      print("error");
+      yield Error();
+    }
+  }
+
+  Stream<CampingAPIState> _mapGetCampingsRegionsEvent(GetCampingsRegionsEvent event) async* {
+    print("_mapGetCampingsRegionsEvent");
+    yield Loading();
+
+    var response = await apiRepository.getCampingsRegions().onError((error, stackTrace) {
+      print(error.toString());
+      print(stackTrace);
+      return null;
+    });
+
+    if (response != null) {
+      print("response: ${response.data}");
       yield Loaded();
     }else {
       print("error");

@@ -2,6 +2,9 @@
 
 import 'package:dio/dio.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
+import 'package:modak/rest/ResponseGetCampingsEnvironments.dart';
+import 'package:modak/rest/ResponseGetCampingsOperationTypes.dart';
+import 'package:modak/rest/ResponseGetCampingsRegions.dart';
 import 'package:modak/rest/RestClient.dart';
 
 class APIRepository {
@@ -13,4 +16,17 @@ class APIRepository {
   Future<ResponseGetCampings?> getCampings({environmentName, operationType, regionContains}) {
     return restClient.getCampings(0, 10, environmentName, operationType, regionContains);
   }
+
+  Future<ResponseGetCampingsRegions?> getCampingsRegions() {
+    return restClient.getCampingsRegions();
+  }
+
+  Future<ResponseGetCampingsOperationTypes?> getCampingsOperationTypes() {
+    return restClient.getCampingsOperationTypes();
+  }
+
+  Future<ResponseGetCampingsEnvironments?> getCampingsEnvironments() {
+    return restClient.getCampingsEnvironments();
+  }
+
 }
