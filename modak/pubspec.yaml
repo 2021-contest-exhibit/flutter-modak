@@ -43,6 +43,12 @@ dependencies:
 
   table_calendar:
 
+  retrofit:
+  logger:
+  dio:
+
+  auto_size_text:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -53,6 +59,7 @@ dev_dependencies:
   build_runner:
   freezed:
   json_serializable:
+  retrofit_generator:
 
 # The following section is specific to Flutter.
 flutter:
@@ -66,6 +73,11 @@ flutter:
   assets:
     - image/logo.png
     - image/logo_black.png
+
+  fonts:
+    - family: BMDOHYEON_ttf
+      fonts:
+        - asset: fonts/BMDOHYEON_ttf.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
