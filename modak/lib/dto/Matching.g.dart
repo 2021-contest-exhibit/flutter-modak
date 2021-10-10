@@ -8,7 +8,7 @@ part of 'Matching.dart';
 
 _$_Matching _$_$_MatchingFromJson(Map<String, dynamic> json) {
   return _$_Matching(
-    user: json['user'] as String,
+    user: json['user'] as String?,
     campingId: json['campingId'] as int,
     startDate: DateTime.parse(json['startDate'] as String),
     endDate: DateTime.parse(json['endDate'] as String),

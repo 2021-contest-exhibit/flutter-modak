@@ -21,7 +21,7 @@ class _$MatchingTearOff {
   const _$MatchingTearOff();
 
   _Matching call(
-      {required String user,
+      {String? user,
       required int campingId,
       required DateTime startDate,
       required DateTime endDate,
@@ -45,7 +45,7 @@ const $Matching = _$MatchingTearOff();
 
 /// @nodoc
 mixin _$Matching {
-  String get user => throw _privateConstructorUsedError;
+  String? get user => throw _privateConstructorUsedError;
   int get campingId => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
@@ -62,7 +62,7 @@ abstract class $MatchingCopyWith<$Res> {
   factory $MatchingCopyWith(Matching value, $Res Function(Matching) then) =
       _$MatchingCopyWithImpl<$Res>;
   $Res call(
-      {String user,
+      {String? user,
       int campingId,
       DateTime startDate,
       DateTime endDate,
@@ -89,7 +89,7 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       campingId: campingId == freezed
           ? _value.campingId
           : campingId // ignore: cast_nullable_to_non_nullable
@@ -116,7 +116,7 @@ abstract class _$MatchingCopyWith<$Res> implements $MatchingCopyWith<$Res> {
       __$MatchingCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String user,
+      {String? user,
       int campingId,
       DateTime startDate,
       DateTime endDate,
@@ -144,7 +144,7 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       campingId: campingId == freezed
           ? _value.campingId
           : campingId // ignore: cast_nullable_to_non_nullable
@@ -169,7 +169,7 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Matching implements _Matching {
   _$_Matching(
-      {required this.user,
+      {this.user,
       required this.campingId,
       required this.startDate,
       required this.endDate,
@@ -179,7 +179,7 @@ class _$_Matching implements _Matching {
       _$_$_MatchingFromJson(json);
 
   @override
-  final String user;
+  final String? user;
   @override
   final int campingId;
   @override
@@ -236,7 +236,7 @@ class _$_Matching implements _Matching {
 
 abstract class _Matching implements Matching {
   factory _Matching(
-      {required String user,
+      {String? user,
       required int campingId,
       required DateTime startDate,
       required DateTime endDate,
@@ -245,7 +245,7 @@ abstract class _Matching implements Matching {
   factory _Matching.fromJson(Map<String, dynamic> json) = _$_Matching.fromJson;
 
   @override
-  String get user => throw _privateConstructorUsedError;
+  String? get user => throw _privateConstructorUsedError;
   @override
   int get campingId => throw _privateConstructorUsedError;
   @override
