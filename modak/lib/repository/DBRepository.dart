@@ -27,7 +27,7 @@ class DBRepository {
       onCreate: (db, version) {
         print('version: $version');
         return db.execute(
-            'create database if not exists modak');
+            'create table if not exists user (email text primary key, password text)');
       },
       version: 1,
     );
@@ -47,7 +47,7 @@ class DBRepository {
       onCreate: (db, version) {
         print('version: $version');
         return db.execute(
-            'create database if not exists modak');
+            'create table if not exists user (email text primary key, password text)');
       },
       version: 1,
     );
