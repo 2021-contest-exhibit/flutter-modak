@@ -53,7 +53,7 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
 
     if (response != null) {
       print("response: ${response.data}");
-      yield Loaded();
+      yield Loaded(dataEnvironments:response.data);
     }else {
       print("error");
       yield Error();
@@ -72,7 +72,7 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
 
     if (response != null) {
       print("response: ${response.data}");
-      yield Loaded();
+      yield Loaded(dataOperationTypes:response.data);
     }else {
       print("error");
       yield Error();
@@ -91,7 +91,7 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
 
     if (response != null) {
       print("response: ${response.data}");
-      yield Loaded();
+      yield Loaded(dataRegions:response.data);
     }else {
       print("error");
       yield Error();

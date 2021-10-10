@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/CampingAPIBloc.dart';
+import 'package:modak/bloc/CampingAPIEvent.dart';
+import 'package:modak/bloc/CampingAPIState.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -17,6 +21,22 @@ class CampingSearchPage extends StatefulWidget {
 }
 
 class CampingSearchPageState extends State<CampingSearchPage> {
+
+  @override
+  void initState() {
+    BlocProvider.of<CampingAPIBloc>(context).add(
+      GetCampingsEnvironmentsEvent(),
+    );
+
+    BlocProvider.of<CampingAPIBloc>(context).add(
+      GetCampingsOperationTypesEvent(),
+    );
+
+    BlocProvider.of<CampingAPIBloc>(context).add(
+      GetCampingsRegionsEvent(),
+    );
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +76,22 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                 )
             ),
           ),
-
+          Container(
+            height: 100,
+            child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
+              builder: (_, state) {
+                if (state is Empty) {
+                  return Container();
+                } else if (state is Loading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is Error) {
+                  return Text("Error: ");
+                } else if (state is Loaded) {
+                  return Text(state.dataEnvironments.toString() + "\n" + state.dataRegions.toString() + "\n" + state.dataOperationTypes.toString());
+                }
+                return Container();
+              }),
+          )
         ]
       )
 

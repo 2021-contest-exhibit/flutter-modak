@@ -14,8 +14,14 @@ class Loading extends CampingAPIState {
 }
 
 class Loaded extends CampingAPIState {
+  final List<String>? dataEnvironments;
+  final List<String>? dataOperationTypes;
+  final List<String>? dataRegions;
+
+  Loaded({this.dataEnvironments, this.dataOperationTypes, this.dataRegions});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [this.dataEnvironments, this.dataOperationTypes, this.dataRegions];
 }
 
 class Error extends CampingAPIState {
