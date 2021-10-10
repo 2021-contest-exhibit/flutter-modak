@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/CampingAPIBloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
+import 'package:modak/page/CampingSearchPage.dart';
 import 'package:modak/page/CapingDetailPage.dart';
 import 'package:modak/page/CreateMatchingPage.dart';
 import 'package:modak/page/DashBoardPage.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
           '/payment': (context) => PaymentPage(),
           '/camping_detail': (context) => CampingDetailPage(),
           '/create_matching': (context) => CreateMatchingPage(),
+          '/camping_search': (context) => CampingSearchPage(),
         },
       ),
     );

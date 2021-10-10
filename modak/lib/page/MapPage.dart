@@ -8,8 +8,9 @@ class MapPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapPage> {
-  Widget floatingControlButton(Widget icon) {
+  Widget floatingControlButton(Widget icon, String tagName) {
     return FloatingActionButton(
+        heroTag: tagName,
         onPressed: () {},
         backgroundColor: Colors.black,
         mini: true,
@@ -40,7 +41,7 @@ class MapPageState extends State<MapPage> {
                   }),
                 ),
                 onPressed: () {
-
+                  Navigator.pushNamed(context, '/camping_search');
                 },
                 child: Row(
                   children: [Icon(Icons.search, color: Colors.black,)],
@@ -57,9 +58,9 @@ class MapPageState extends State<MapPage> {
                   'image/logo.png',
                   width: 16.0,
                   height: 16.0,
-                )),
-                floatingControlButton(Icon(Icons.ac_unit)),
-                floatingControlButton(Icon(Icons.ac_unit)),
+                ), '1'),
+                floatingControlButton(Icon(Icons.ac_unit), '2'),
+                floatingControlButton(Icon(Icons.ac_unit), '3'),
               ],
             ),
           ),
