@@ -26,4 +26,12 @@ class UserRepository {
   Future logout() async {
     auth.signOut();
   }
+
+  String? getUserToken() {
+    if (auth.currentUser != null) {
+      return auth.currentUser!.uid;
+    } else {
+      return null;
+    }
+  }
 }

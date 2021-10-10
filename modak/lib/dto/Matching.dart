@@ -6,7 +6,7 @@ part 'Matching.g.dart';
 @freezed
 class Matching with _$Matching{
   factory Matching({
-    required String user,
+    String? user,
     required int campingId,
     required DateTime startDate,
     required DateTime endDate,

@@ -20,7 +20,7 @@ class FireStoreRepository {
 
   FireStoreRepository({required this.store});
 
-  Future<String> saveMatching(Matching matching) {
+  Future<String?> saveMatching(Matching matching) {
     CollectionReference matchings = store.collection("matchings");
     
     return matchings.add(matching.toJson()).then((value) {
