@@ -25,16 +25,10 @@ class CampingSearchPageState extends State<CampingSearchPage> {
   @override
   void initState() {
     BlocProvider.of<CampingAPIBloc>(context).add(
-      GetCampingsEnvironmentsEvent(),
+      GetCampingsFilterDataEvent(),
     );
 
-    BlocProvider.of<CampingAPIBloc>(context).add(
-      GetCampingsOperationTypesEvent(),
-    );
 
-    BlocProvider.of<CampingAPIBloc>(context).add(
-      GetCampingsRegionsEvent(),
-    );
 
   }
 
@@ -87,7 +81,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                 } else if (state is Error) {
                   return Text("Error: ");
                 } else if (state is Loaded) {
-                  return Text(state.dataEnvironments.toString() + "\n" + state.dataRegions.toString() + "\n" + state.dataOperationTypes.toString());
+                  return Text(state.dataEnvironments![0].toString() + "\n" + state.dataRegions![0].toString() + "\n" + state.dataOperationTypes![0].toString());
                 }
                 return Container();
               }),
