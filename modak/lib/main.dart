@@ -36,10 +36,12 @@ class MyApp extends StatelessWidget {
   final dio = Dio();
   late final restClient;
   late final userRepository;
+  late final apiRepository;
 
   MyApp() {
     restClient = RestClient(dio);
     userRepository = UserRepository(auth: auth);
+    apiRepository = APIRepository(dio: dio, restClient: restClient);
   }
 
   @override
@@ -48,15 +50,15 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (_) => UserBloc(
-                userRepository: userRepository,
-                dbRepository: DBRepository())),
+                userRepository: userRepository, dbRepository: DBRepository())),
         BlocProvider(
-            create: (_) => CampingAPIBloc(
-                apiRepository:
-                    APIRepository(dio: dio, restClient: restClient))),
+            create: (_) => CampingAPIBloc(apiRepository: apiRepository)),
         BlocProvider(
             create: (_) => ModakBloc(
-                fireStoreRepository: FireStoreRepository(store: store), userRepository: userRepository))
+                  fireStoreRepository: FireStoreRepository(store: store),
+                  userRepository: userRepository,
+                  apiRepository: apiRepository,
+                )),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

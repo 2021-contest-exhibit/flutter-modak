@@ -16,15 +16,16 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<ResponseGetCampings> getCampings(
-      page, size, environmentName, operationType, regionContains) async {
+  Future<ResponseGetCampings> getCampings(page, size, environmentName,
+      operationType, regionContains, contentId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'size': size,
       r'environmentName': environmentName,
       r'operationType': operationType,
-      r'regionContains': regionContains
+      r'regionContains': regionContains,
+      r'contentId': contentId
     };
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(

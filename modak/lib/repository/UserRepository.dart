@@ -5,17 +5,6 @@ class UserRepository {
 
   UserRepository({required this.auth});
 
-  Future<Map<String, dynamic>> selectUser() async {
-    final userCredential = auth.signInWithEmailAndPassword(
-        email: 'test@test.com', password: 'test123');
-
-    return userCredential.then((value) => {'userid': value.user!.email, 'level': 4});
-
-    // return {
-    //   'userid': 'ysy3350',
-    // };
-  }
-
   Future<Map<String, dynamic>> login(String email, String password) async {
     final userCredential = auth.signInWithEmailAndPassword(
         email: email, password: password);
@@ -30,6 +19,14 @@ class UserRepository {
   String? getUserToken() {
     if (auth.currentUser != null) {
       return auth.currentUser!.uid;
+    } else {
+      return null;
+    }
+  }
+
+  String? getUserEmail() {
+    if (auth.currentUser != null) {
+      return auth.currentUser!.email;
     } else {
       return null;
     }

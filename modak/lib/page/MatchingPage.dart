@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/ModakBloc.dart';
+import 'package:modak/bloc/ModakEvent.dart';
+import 'package:modak/bloc/ModakState.dart';
 import 'package:modak/component/MatchingItemWidget.dart';
 
 class MatchingPage extends StatefulWidget {
@@ -24,6 +28,7 @@ class MatchingPageState extends State<MatchingPage> {
     final double _titleHeight = 48.0;
     final double _contentHeight = _height - _statusBarHeight - 100;
     final double _contentWidth = _width;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -92,12 +97,31 @@ class MatchingPageState extends State<MatchingPage> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20.0),
                     height: _contentHeight,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return MatchingItemWidget();
+                    child: BlocBuilder<ModakBloc, ModakState>(
+                      builder: (_, state) {
+                        if (state is Empty) {
+                          return Container();
+                        } else if (state is Loading) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (state is Error) {
+                          return Text("Error: " + state.message);
+                        } else if (state is MatchingLoaded) {
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return MatchingItemWidget(
+                                userName: state.matchings![index].email!,
+                                campingName:
+                                    state.matchings![index].content!.name!,
+                                startDate: state.matchings![index].startDate,
+                                endDate: state.matchings![index].endDate,
+                              );
+                            },
+                            itemCount: state.matchings!.length,
+                            physics: BouncingScrollPhysics(),
+                          );
+                        }
+                        return Container();
                       },
-                      itemCount: 4,
-                      physics: BouncingScrollPhysics(),
                     ),
                   ),
                 ),
@@ -108,9 +132,14 @@ class MatchingPageState extends State<MatchingPage> {
                     height: _contentHeight,
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        return MatchingItemWidget();
+                        return MatchingItemWidget(
+                          campingName: "",
+                          endDate: DateTime.now(),
+                          startDate: DateTime.now(),
+                          userName: "",
+                        );
                       },
-                      itemCount: 4,
+                      itemCount: 0,
                       physics: BouncingScrollPhysics(),
                     ),
                   ),
@@ -120,12 +149,31 @@ class MatchingPageState extends State<MatchingPage> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20.0),
                     height: _contentHeight,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return MatchingItemWidget();
+                    child: BlocBuilder<ModakBloc, ModakState>(
+                      builder: (_, state) {
+                        if (state is Empty) {
+                          return Container();
+                        } else if (state is Loading) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (state is Error) {
+                          return Text("Error: " + state.message);
+                        } else if (state is MatchingLoaded) {
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return MatchingItemWidget(
+                                userName: state.matchings![index].email!,
+                                campingName:
+                                state.matchings![index].content!.name!,
+                                startDate: state.matchings![index].startDate,
+                                endDate: state.matchings![index].endDate,
+                              );
+                            },
+                            itemCount: state.matchings!.length,
+                            physics: BouncingScrollPhysics(),
+                          );
+                        }
+                        return Container();
                       },
-                      itemCount: 4,
-                      physics: BouncingScrollPhysics(),
                     ),
                   ),
                 ),
@@ -146,5 +194,10 @@ class MatchingPageState extends State<MatchingPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent());
   }
 }

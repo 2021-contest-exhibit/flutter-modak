@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:modak/dto/User.dart';
+import 'package:modak/dto/ModakUser.dart';
 
 abstract class UserState extends Equatable {}
 
@@ -23,7 +23,7 @@ class Error extends UserState {
 }
 
 class Loaded extends UserState {
-  final User? user;
+  final ModakUser? user;
 
   Loaded({this.user});
 

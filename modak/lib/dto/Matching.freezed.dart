@@ -22,13 +22,17 @@ class _$MatchingTearOff {
 
   _Matching call(
       {String? user,
+      String? email,
       required int campingId,
+      Content? content,
       required DateTime startDate,
       required DateTime endDate,
       required DateTime createDate}) {
     return _Matching(
       user: user,
+      email: email,
       campingId: campingId,
+      content: content,
       startDate: startDate,
       endDate: endDate,
       createDate: createDate,
@@ -46,7 +50,9 @@ const $Matching = _$MatchingTearOff();
 /// @nodoc
 mixin _$Matching {
   String? get user => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   int get campingId => throw _privateConstructorUsedError;
+  Content? get content => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
   DateTime get createDate => throw _privateConstructorUsedError;
@@ -63,7 +69,9 @@ abstract class $MatchingCopyWith<$Res> {
       _$MatchingCopyWithImpl<$Res>;
   $Res call(
       {String? user,
+      String? email,
       int campingId,
+      Content? content,
       DateTime startDate,
       DateTime endDate,
       DateTime createDate});
@@ -80,7 +88,9 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
   @override
   $Res call({
     Object? user = freezed,
+    Object? email = freezed,
     Object? campingId = freezed,
+    Object? content = freezed,
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? createDate = freezed,
@@ -90,10 +100,18 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as String?,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       campingId: campingId == freezed
           ? _value.campingId
           : campingId // ignore: cast_nullable_to_non_nullable
               as int,
+      content: content == freezed
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as Content?,
       startDate: startDate == freezed
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -117,7 +135,9 @@ abstract class _$MatchingCopyWith<$Res> implements $MatchingCopyWith<$Res> {
   @override
   $Res call(
       {String? user,
+      String? email,
       int campingId,
+      Content? content,
       DateTime startDate,
       DateTime endDate,
       DateTime createDate});
@@ -135,7 +155,9 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = freezed,
+    Object? email = freezed,
     Object? campingId = freezed,
+    Object? content = freezed,
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? createDate = freezed,
@@ -145,10 +167,18 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as String?,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       campingId: campingId == freezed
           ? _value.campingId
           : campingId // ignore: cast_nullable_to_non_nullable
               as int,
+      content: content == freezed
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as Content?,
       startDate: startDate == freezed
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -170,7 +200,9 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
 class _$_Matching implements _Matching {
   _$_Matching(
       {this.user,
+      this.email,
       required this.campingId,
+      this.content,
       required this.startDate,
       required this.endDate,
       required this.createDate});
@@ -181,7 +213,11 @@ class _$_Matching implements _Matching {
   @override
   final String? user;
   @override
+  final String? email;
+  @override
   final int campingId;
+  @override
+  final Content? content;
   @override
   final DateTime startDate;
   @override
@@ -191,7 +227,7 @@ class _$_Matching implements _Matching {
 
   @override
   String toString() {
-    return 'Matching(user: $user, campingId: $campingId, startDate: $startDate, endDate: $endDate, createDate: $createDate)';
+    return 'Matching(user: $user, email: $email, campingId: $campingId, content: $content, startDate: $startDate, endDate: $endDate, createDate: $createDate)';
   }
 
   @override
@@ -200,9 +236,14 @@ class _$_Matching implements _Matching {
         (other is _Matching &&
             (identical(other.user, user) ||
                 const DeepCollectionEquality().equals(other.user, user)) &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)) &&
             (identical(other.campingId, campingId) ||
                 const DeepCollectionEquality()
                     .equals(other.campingId, campingId)) &&
+            (identical(other.content, content) ||
+                const DeepCollectionEquality()
+                    .equals(other.content, content)) &&
             (identical(other.startDate, startDate) ||
                 const DeepCollectionEquality()
                     .equals(other.startDate, startDate)) &&
@@ -218,7 +259,9 @@ class _$_Matching implements _Matching {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(user) ^
+      const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(campingId) ^
+      const DeepCollectionEquality().hash(content) ^
       const DeepCollectionEquality().hash(startDate) ^
       const DeepCollectionEquality().hash(endDate) ^
       const DeepCollectionEquality().hash(createDate);
@@ -237,7 +280,9 @@ class _$_Matching implements _Matching {
 abstract class _Matching implements Matching {
   factory _Matching(
       {String? user,
+      String? email,
       required int campingId,
+      Content? content,
       required DateTime startDate,
       required DateTime endDate,
       required DateTime createDate}) = _$_Matching;
@@ -247,7 +292,11 @@ abstract class _Matching implements Matching {
   @override
   String? get user => throw _privateConstructorUsedError;
   @override
+  String? get email => throw _privateConstructorUsedError;
+  @override
   int get campingId => throw _privateConstructorUsedError;
+  @override
+  Content? get content => throw _privateConstructorUsedError;
   @override
   DateTime get startDate => throw _privateConstructorUsedError;
   @override

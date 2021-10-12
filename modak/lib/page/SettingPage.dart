@@ -5,7 +5,7 @@ import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/bloc/UserEvent.dart';
 import 'package:modak/bloc/UserState.dart';
 import 'package:modak/component/ProfileWidget.dart';
-import 'package:modak/dto/User.dart';
+import 'package:modak/dto/ModakUser.dart';
 import 'package:modak/repository/UserRepository.dart';
 
 void main() {

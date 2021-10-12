@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/UserEvent.dart';
 import 'package:modak/bloc/UserState.dart';
-import 'package:modak/dto/User.dart';
+import 'package:modak/dto/ModakUser.dart';
 import 'package:modak/repository/DBRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
 
@@ -43,7 +43,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     if (user != null && user.email != "" && user.password != ""){
       var loginedUser = await this.userRepository.login(user.email, user.password);
-      yield Loaded(user: User.fromJson(loginedUser));
+      yield Loaded(user: ModakUser.fromJson(loginedUser));
     } else {
       yield Loaded();
     }
@@ -62,7 +62,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await this.dbRepository.saveUser(event.user);
 
       if (user["userid"] != "" && user["level"] != "") {
-        yield Loaded(user: User.fromJson(user));
+        yield Loaded(user: ModakUser.fromJson(user));
       } else {
         yield Error(message: 'login fail');
       }
