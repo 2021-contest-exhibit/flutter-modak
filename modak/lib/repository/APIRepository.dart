@@ -13,8 +13,8 @@ class APIRepository {
 
   APIRepository({required this.dio, required this.restClient});
 
-  Future<ResponseGetCampings?> getCampings({environmentName, operationType, regionContains}) {
-    return restClient.getCampings(0, 10, environmentName, operationType, regionContains);
+  Future<ResponseGetCampings?> getCampings({environmentName, operationType, regionContains, contentId}) {
+    return restClient.getCampings(0, 10, environmentName, operationType, regionContains, contentId);
   }
 
   Future<ResponseGetCampingsRegions?> getCampingsRegions() {

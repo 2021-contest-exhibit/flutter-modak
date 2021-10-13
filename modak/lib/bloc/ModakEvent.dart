@@ -9,8 +9,12 @@ class CreateMatchingEvent extends ModakEvent {
 
   CreateMatchingEvent({required this.matching});
 
+  @override
+  List<Object?> get props => [];
 
+}
 
+class LoadMatchingEvent extends ModakEvent {
   @override
   List<Object?> get props => [];
 

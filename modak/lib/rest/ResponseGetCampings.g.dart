@@ -23,24 +23,24 @@ Map<String, dynamic> _$ResponseGetCampingsToJson(
 Content _$ContentFromJson(Map<String, dynamic> json) {
   return Content(
     contentId: json['contentId'] as int,
-    name: json['name'] as String,
-    viewCount: json['viewCount'] as int,
-    addr: json['addr'] as String,
-    phoneNumber: json['phoneNumber'] as String,
-    type: json['type'] as String,
-    operationSeasons: json['operationSeasons'] as String,
-    operationDays: json['operationDays'] as String,
-    reservationWay: json['reservationWay'] as String,
-    nearbyFacilitiesAvailable: json['nearbyFacilitiesAvailable'] as String,
-    facilities: json['facilities'] as String,
-    longitude: json['longitude'] as String,
-    latitude: json['latitude'] as String,
-    operationType: json['operationType'] as String,
-    environments: (json['environments'] as List<dynamic>)
-        .map((e) => Environment.fromJson(e as Map<String, dynamic>))
+    name: json['name'] as String?,
+    viewCount: json['viewCount'] as int?,
+    addr: json['addr'] as String?,
+    phoneNumber: json['phoneNumber'] as String?,
+    type: json['type'] as String?,
+    operationSeasons: json['operationSeasons'] as String?,
+    operationDays: json['operationDays'] as String?,
+    reservationWay: json['reservationWay'] as String?,
+    nearbyFacilitiesAvailable: json['nearbyFacilitiesAvailable'] as String?,
+    facilities: json['facilities'] as String?,
+    longitude: json['longitude'] as String?,
+    latitude: json['latitude'] as String?,
+    operationType: json['operationType'] as String?,
+    environments: (json['environments'] as List<dynamic>?)
+        ?.map((e) => Environment.fromJson(e as Map<String, dynamic>))
         .toList(),
-    campingImages: (json['campingImages'] as List<dynamic>)
-        .map((e) => CampingImage.fromJson(e as Map<String, dynamic>))
+    campingImages: (json['campingImages'] as List<dynamic>?)
+        ?.map((e) => CampingImage.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }

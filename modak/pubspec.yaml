@@ -74,6 +74,8 @@ flutter:
   assets:
     - image/logo.png
     - image/logo_black.png
+    - image/google.png
+    - image/kakao-talk.png
 
   fonts:
     - family: BMDOHYEON_ttf

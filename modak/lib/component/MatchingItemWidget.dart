@@ -5,13 +5,20 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       body: Center(
-        child: MatchingItemWidget(),
+        child: MatchingItemWidget(campingName: "", endDate: DateTime.now(), startDate: DateTime.now(), userName: "",),
       ),
     ),
   ));
 }
 
 class MatchingItemWidget extends StatefulWidget {
+  final String userName;
+  final String campingName;
+  final DateTime startDate;
+  final DateTime endDate;
+
+  MatchingItemWidget({required this.userName, required this.campingName, required this.startDate, required this.endDate});
+
   @override
   MatchingItemWidgetState createState() => MatchingItemWidgetState();
 }
@@ -19,8 +26,9 @@ class MatchingItemWidget extends StatefulWidget {
 class MatchingItemWidgetState extends State<MatchingItemWidget> {
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
     return Container(
-      margin: const EdgeInsets.only(bottom: 24.0),
+      margin: const EdgeInsets.only(bottom: 56.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -39,7 +47,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                   width: 24,
                 ),
                 Text(
-                  "ysy3350",
+                  widget.userName,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ],
@@ -47,8 +55,9 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
           ),
           Image.network(
             "https://www.gocamping.or.kr/upload/camp/1335/thumb/thumb_720_3379YLFxXAtV0MZwiq1wms7p.jpg",
-            height: 388,
-            fit: BoxFit.fitHeight,
+            height: 240,
+            width: _width,
+            fit: BoxFit.fitWidth,
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
@@ -59,7 +68,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "별빛누리캠핑장",
+                      widget.campingName,
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16.0),
                     ),
@@ -67,7 +76,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                       height: 2.0,
                     ),
                     Text(
-                      "2021.07.01 ~ 2021.07.05",
+                      "${widget.startDate.year}.${widget.startDate.month}.${widget.startDate.day} ~ ${widget.endDate.year}.${widget.endDate.month}.${widget.endDate.day}",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -109,7 +118,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
       decoration: BoxDecoration(

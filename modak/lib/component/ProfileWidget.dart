@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/bloc/UserEvent.dart';
-import 'package:modak/dto/User.dart';
+import 'package:modak/dto/ModakUser.dart';
 
 void main() {
   runApp(MaterialApp(
     home: Scaffold(
       body: Center(
         child: ProfileWidget(
-          user: User(userid: "ysy3350", level: 1),
+          user: ModakUser(email: "ysy3350", uid: "",image: "", level: 1),
         ),
       ),
     ),
@@ -19,7 +19,7 @@ void main() {
 }
 
 class ProfileWidget extends StatefulWidget {
-  User? user;
+  ModakUser? user;
 
   ProfileWidget({this.user});
 
@@ -83,7 +83,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
                               width: (_width-10) * 40 / 100,
                               child: AutoSizeText(
                                 (widget.user != null
-                                    ? (widget.user!.userid)
+                                    ? (widget.user!.email)
                                     : ""),
                                 style: const TextStyle(fontSize: 40.0, ),
                                 minFontSize: 12.0,

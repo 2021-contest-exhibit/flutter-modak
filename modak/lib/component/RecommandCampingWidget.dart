@@ -59,7 +59,7 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
                   children: [
                     const SizedBox(height: 20.0,),
                     Text(
-                      camping.name,
+                      camping.name!,
                       style: const TextStyle(
                         color: const Color(0xff000000),
                         fontSize: 18.0,
@@ -69,7 +69,7 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
                     const SizedBox(height: 20.0,),
                     Flexible(
                       child: Text(
-                        camping.addr,
+                        camping.addr!,
                         maxLines: 2,
                         style: const TextStyle(
                           color: const Color(0xff8f8f8f),

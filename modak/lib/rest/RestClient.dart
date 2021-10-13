@@ -17,7 +17,8 @@ abstract class RestClient {
       @Query("size") int size,
       @Query("environmentName") String environmentName,
       @Query("operationType") String operationType,
-      @Query("regionContains") String regionContains);
+      @Query("regionContains") String regionContains,
+      @Query("contentId") int contentId);
 
   @GET("/campings/regions")
   Future<ResponseGetCampingsRegions> getCampingsRegions();

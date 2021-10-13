@@ -16,39 +16,39 @@ class ResponseGetCampings {
 @JsonSerializable()
 class Content {
   int contentId;
-  String name;
-  int viewCount;
-  String addr;
-  String phoneNumber;
-  String type;
-  String operationSeasons;
-  String operationDays;
-  String reservationWay;
-  String nearbyFacilitiesAvailable;
-  String facilities;
-  String longitude;
-  String latitude;
-  String operationType;
-  List<Environment> environments;
-  List<CampingImage> campingImages;
+  String? name;
+  int? viewCount;
+  String? addr;
+  String? phoneNumber;
+  String? type;
+  String? operationSeasons;
+  String? operationDays;
+  String? reservationWay;
+  String? nearbyFacilitiesAvailable;
+  String? facilities;
+  String? longitude;
+  String? latitude;
+  String? operationType;
+  List<Environment>? environments;
+  List<CampingImage>? campingImages;
 
   Content({
     required this.contentId,
-    required this.name,
-    required this.viewCount,
-    required this.addr,
-    required this.phoneNumber,
-    required this.type,
-    required this.operationSeasons,
-    required this.operationDays,
-    required this.reservationWay,
-    required this.nearbyFacilitiesAvailable,
-    required this.facilities,
-    required this.longitude,
-    required this.latitude,
-    required this.operationType,
-    required this.environments,
-    required this.campingImages,
+    this.name,
+    this.viewCount,
+    this.addr,
+    this.phoneNumber,
+    this.type,
+    this.operationSeasons,
+    this.operationDays,
+    this.reservationWay,
+    this.nearbyFacilitiesAvailable,
+    this.facilities,
+    this.longitude,
+    this.latitude,
+    this.operationType,
+    this.environments,
+    this.campingImages,
   });
 
   factory Content.fromJson(Map<String, dynamic> json) => _$ContentFromJson(json);

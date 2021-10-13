@@ -25,6 +25,16 @@ class LogoutUserEvent extends UserEvent {
 
 }
 
+class SignUpUserEvent extends UserEvent {
+  String email;
+  String password;
+
+  SignUpUserEvent({required this.email, required this.password});
+
+  @override
+  List<Object?> get props => [];
+}
+
 class CheckUserEvent extends UserEvent {
   @override
   List<Object?> get props => [];

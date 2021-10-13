@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modak/dto/SavedUser.dart';
-import 'package:modak/dto/User.dart';
+import 'package:modak/dto/ModakUser.dart';
 import 'package:modak/main.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';

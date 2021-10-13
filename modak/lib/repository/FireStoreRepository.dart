@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:modak/dto/Matching.dart';
+import 'package:modak/dto/ModakUser.dart';
+import 'package:modak/rest/ResponseGetCampings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,12 +32,33 @@ class FireStoreRepository {
 
   Future<List<Matching>?> loadMatching() {
     CollectionReference matchings = store.collection("matchings");
-    return matchings.orderBy("createDate", descending: true).limit(10).get().then((value) {
-      print(value.docs);
-      for (var doc in value.docs) {
-        print(doc.data());
-      }
+    return matchings.orderBy("createDate", descending: true).limit(10).get().then((value) async {
       return value.docs.map((e) => Matching.fromJson(e.data() as Map<String, dynamic>)).toList();
+    });
+  }
+
+  Future<List<Matching>?> loadMyMatching(String uid) {
+    CollectionReference matchings = store.collection("matchings");
+    return matchings.where("user", isEqualTo: uid).orderBy("createDate", descending: true).get().then((value) async {
+      return value.docs.map((e) {
+        return Matching.fromJson(e.data() as Map<String, dynamic>);
+      }).toList();
+    });
+  }
+
+  Future signUpUser(ModakUser user) async {
+    CollectionReference users = store.collection("users");
+    return users.add(user.toJson());
+  }
+
+  Future<ModakUser?> loadUser(String uid) async {
+    CollectionReference users = store.collection("users");
+    return users.where("uid", isEqualTo: uid).get().then((value) {
+      if (value.size > 0){
+        return ModakUser.fromJson(value.docs[0].data() as Map<String, dynamic>);
+      } else {
+        return null;
+      }
     });
   }
 
