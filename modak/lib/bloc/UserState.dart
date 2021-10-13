@@ -30,3 +30,8 @@ class Loaded extends UserState {
   @override
   List<Object?> get props => [this.user];
 }
+
+class SignUpSuccessed extends UserState {
+  @override
+  List<Object?> get props => [];
+}

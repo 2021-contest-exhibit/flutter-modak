@@ -11,7 +11,7 @@ void main() {
     home: Scaffold(
       body: Center(
         child: ProfileWidget(
-          user: ModakUser(userid: "ysy3350", level: 1),
+          user: ModakUser(email: "ysy3350", uid: "",image: "", level: 1),
         ),
       ),
     ),
@@ -83,7 +83,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
                               width: (_width-10) * 40 / 100,
                               child: AutoSizeText(
                                 (widget.user != null
-                                    ? (widget.user!.userid)
+                                    ? (widget.user!.email)
                                     : ""),
                                 style: const TextStyle(fontSize: 40.0, ),
                                 minFontSize: 12.0,

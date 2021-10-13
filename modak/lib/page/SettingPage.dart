@@ -68,7 +68,6 @@ class SettingPageState extends State<SettingPage> {
     );
   }
 
-
   @override
   void initState() {
     BlocProvider.of<UserBloc>(context).add(
@@ -88,18 +87,20 @@ class SettingPageState extends State<SettingPage> {
           Container(
             height: 220,
             child: BlocBuilder<UserBloc, UserState>(
-                builder: (_, state) {
-                  if (state is Empty) {
-                    return Container();
-                  }else if (state is Loading){
-                    return Center(child: CircularProgressIndicator());
-                  }else if (state is Error) {
-                    return Text("Error: " + state.message);
-                  }else if (state is Loaded) {
-                    return ProfileWidget(user: state.user);
-                  }
-                  return Container();
-                }),
+              builder: (_, state) {
+                if (state is Loading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return ProfileWidget(user: state is Loaded ? state.user : null);
+              },
+              buildWhen: (previous, current) {
+                if (current is Error) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(current.message)));
+                }
+                return true;
+              },
+            ),
           ),
           const SizedBox(
             height: 40.0,

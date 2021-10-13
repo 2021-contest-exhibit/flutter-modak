@@ -6,7 +6,9 @@ part 'ModakUser.g.dart';
 @freezed
 class ModakUser with _$ModakUser{
   factory ModakUser({
-    required String userid,
+    required String uid,
+    required String email,
+    required String image,
     required int level,
   }) = _ModakUser;
 

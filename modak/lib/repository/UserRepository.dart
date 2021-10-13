@@ -1,15 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modak/dto/ModakUser.dart';
 
 class UserRepository {
   final FirebaseAuth auth;
 
   UserRepository({required this.auth});
 
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<Map<String, dynamic>?> login(String email, String password) async {
     final userCredential = auth.signInWithEmailAndPassword(
         email: email, password: password);
 
-    return userCredential.then((value) => {'userid': value.user!.email, 'level': 4});
+    return userCredential.then((value) => ModakUser(uid: value.user!.uid, email: value.user!.email!, image: "", level: 1).toJson());
+  }
+
+  Future<User?> signUp(String email, String password) async {
+    return auth.createUserWithEmailAndPassword(email: email, password: password).then((value) {
+      return value.user;
+    });
   }
 
   Future logout() async {

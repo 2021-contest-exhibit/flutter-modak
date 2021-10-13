@@ -8,13 +8,17 @@ part of 'ModakUser.dart';
 
 _$_ModakUser _$_$_ModakUserFromJson(Map<String, dynamic> json) {
   return _$_ModakUser(
-    userid: json['userid'] as String,
+    uid: json['uid'] as String,
+    email: json['email'] as String,
+    image: json['image'] as String,
     level: json['level'] as int,
   );
 }
 
 Map<String, dynamic> _$_$_ModakUserToJson(_$_ModakUser instance) =>
     <String, dynamic>{
-      'userid': instance.userid,
+      'uid': instance.uid,
+      'email': instance.email,
+      'image': instance.image,
       'level': instance.level,
     };
