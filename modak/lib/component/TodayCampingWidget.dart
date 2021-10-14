@@ -71,17 +71,19 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
                 padding: EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        AutoSizeText(
-                          content.name??"",
-                          style: const TextStyle(
-                            color: const Color(0xff000000),
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                    Container(
+                      width: 124,
+                      child: AutoSizeText(
+                        content.name??"",
+                        minFontSize: 4.0,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          color: const Color(0xff000000),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0
                         ),
-                      ],
+                      ),
                     ),
                     const SizedBox(height: 2.0,),
                     Text(
