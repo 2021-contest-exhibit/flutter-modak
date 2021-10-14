@@ -1,8 +1,11 @@
 
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/CampingAPIEvent.dart';
 import 'package:modak/bloc/CampingAPIState.dart';
 import 'package:modak/repository/APIRepository.dart';
+import 'package:modak/rest/ResponseGetCampings.dart';
 
 class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
   final APIRepository apiRepository;
@@ -21,6 +24,8 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
       yield* _mapGetCampingsRegionsEvent(event);
     } else if(event is GetCampingsFilterDataEvent) {
       yield* _mapGetCampingsFilterDataEvent(event);
+    } else if(event is GetTodayCampingsEvent) {
+      yield* _mapGetTodayCampingsEvent(event);
     }
   }
 
@@ -128,6 +133,20 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     }else {
       print("error");
       yield Error();
+    }
+  }
+
+  Stream<CampingAPIState> _mapGetTodayCampingsEvent(GetTodayCampingsEvent event) async* {
+    var rnd = new Random();
+    List<Content> list = [];
+    for (; list.length < 3;) {
+      var response = await apiRepository.getCampings(contentId: rnd.nextInt(1000));
+      if (response != null && response.content.length > 0){
+        list.add(response.content[0]);
+      }
+    }
+    if (list.length > 0) {
+      yield TodayCampingsLoaded(campings: list);
     }
   }
 }
