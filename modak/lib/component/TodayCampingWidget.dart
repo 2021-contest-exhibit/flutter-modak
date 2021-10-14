@@ -1,6 +1,12 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/CampingAPIBloc.dart';
+import 'package:modak/bloc/CampingAPIEvent.dart';
+import 'package:modak/bloc/CampingAPIState.dart';
 import 'package:modak/dto/Camping.dart';
+import 'package:modak/rest/ResponseGetCampings.dart';
 
 class TodayCompingWidget extends StatefulWidget {
   List<Camping> recipeList;
@@ -12,14 +18,17 @@ class TodayCompingWidget extends StatefulWidget {
 }
 
 class _TodayCompingWidgetState extends State<TodayCompingWidget> {
-  Widget _campingItemWidget(index) {
+
+
+
+  Widget _campingItemWidget(index, Content content) {
     return Container(
       width: 140,
       height: 180,
       margin: const EdgeInsets.only(right: 24.0, top: 12.0, bottom: 12.0),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, '/camping_detail');
+          Navigator.pushNamed(context, '/camping_detail', arguments: content);
         },
         child: Ink(
           width: 120,
@@ -45,10 +54,10 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
                 height: 174,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0), bottomRight: Radius.circular(15.0)),
-                  child: Image.network(
-                    "https://www.gocamping.or.kr/upload/camp/7150/thumb/thumb_720_60497nQtHJrTdiezfiaLBaGE.jpg",
+                  child: (content.campingImages != null && content.campingImages!.length > 0) ? Image.network(
+                    content.campingImages![0].imageUrl,
                     fit: BoxFit.fitHeight,
-                  ),
+                  ) : Center(child: Image.asset('image/logo_black.png',width: 48.0, height: 48.0,)),
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -64,8 +73,8 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
                   children: [
                     Row(
                       children: [
-                        Text(
-                          widget.recipeList[index].title,
+                        AutoSizeText(
+                          content.name??"",
                           style: const TextStyle(
                             color: const Color(0xff000000),
                             fontSize: 12.0,
@@ -76,7 +85,7 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
                     ),
                     const SizedBox(height: 2.0,),
                     Text(
-                      widget.recipeList[index].discription,
+                      content.shortDescription!,
                       maxLines: 1,
                       style: const TextStyle(
                         color: const Color(0xff8f8f8f),
@@ -100,17 +109,31 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
       child: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: widget.recipeList.length,
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return _campingItemWidget(index);
+            child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
+              builder: (context, state) {
+                if (state is TodayCampingsLoaded) {
+                  return ListView.builder(
+                    itemCount: state.campings.length,
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return _campingItemWidget(index, state.campings[index]);
+                    },
+                  );
+                }
+                return Container();
               },
             ),
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  void initState() {
+    BlocProvider.of<CampingAPIBloc>(context).add(
+      GetTodayCampingsEvent()
     );
   }
 }

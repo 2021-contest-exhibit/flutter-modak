@@ -36,6 +36,8 @@ Content _$ContentFromJson(Map<String, dynamic> json) {
     longitude: json['longitude'] as String?,
     latitude: json['latitude'] as String?,
     operationType: json['operationType'] as String?,
+    shortDescription: json['shortDescription'] as String?,
+    longDescription: json['longDescription'] as String?,
     environments: (json['environments'] as List<dynamic>?)
         ?.map((e) => Environment.fromJson(e as Map<String, dynamic>))
         .toList(),
@@ -60,6 +62,8 @@ Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
       'longitude': instance.longitude,
       'latitude': instance.latitude,
       'operationType': instance.operationType,
+      'shortDescription': instance.shortDescription,
+      'longDescription': instance.longDescription,
       'environments': instance.environments,
       'campingImages': instance.campingImages,
     };

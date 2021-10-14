@@ -29,6 +29,8 @@ class Content {
   String? longitude;
   String? latitude;
   String? operationType;
+  String? shortDescription;
+  String? longDescription;
   List<Environment>? environments;
   List<CampingImage>? campingImages;
 
@@ -47,6 +49,8 @@ class Content {
     this.longitude,
     this.latitude,
     this.operationType,
+    this.shortDescription,
+    this.longDescription,
     this.environments,
     this.campingImages,
   });

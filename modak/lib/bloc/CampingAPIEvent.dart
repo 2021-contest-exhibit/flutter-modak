@@ -28,3 +28,8 @@ class GetCampingsFilterDataEvent extends CampingAPIEvent {
   @override
   List<Object?> get props => [];
 }
+
+class GetTodayCampingsEvent extends CampingAPIEvent {
+  @override
+  List<Object?> get props => [];
+}

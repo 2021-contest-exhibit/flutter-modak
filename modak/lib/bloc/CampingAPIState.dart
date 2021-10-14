@@ -1,5 +1,6 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:modak/rest/ResponseGetCampings.dart';
 
 abstract class CampingAPIState extends Equatable {}
 
@@ -25,6 +26,15 @@ class Loaded extends CampingAPIState {
 }
 
 class Error extends CampingAPIState {
+  @override
+  List<Object?> get props => [];
+}
+
+class TodayCampingsLoaded extends CampingAPIState {
+  final List<Content> campings;
+
+  TodayCampingsLoaded({required this.campings});
+
   @override
   List<Object?> get props => [];
 }
