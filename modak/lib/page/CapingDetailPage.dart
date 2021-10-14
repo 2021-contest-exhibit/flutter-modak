@@ -78,7 +78,7 @@ class CampingDetailPageState extends State<CampingDetailPage> {
                 ],
               )),
           Container(
-            margin: EdgeInsets.all(20.0),
+            margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -98,6 +98,7 @@ class CampingDetailPageState extends State<CampingDetailPage> {
                   Icons.favorite,
                   color: Colors.red,
                 ),
+                SizedBox(width: 4.0,),
                 Text(
                   args.viewCount.toString(),
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
