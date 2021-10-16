@@ -1,3 +1,4 @@
+import 'package:modak/rest/RequestPostUser.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 import 'package:modak/rest/ResponseGetCampingsEnvironments.dart';
 import 'package:modak/rest/ResponseGetCampingsOperationTypes.dart';
@@ -28,4 +29,7 @@ abstract class RestClient {
 
   @GET("/campings/operation-types")
   Future<ResponseGetCampingsOperationTypes> getCampingsOperationTypes();
+
+  @POST("/user")
+  Future<String> postUser(@Body() RequestPostUser user);
 }
