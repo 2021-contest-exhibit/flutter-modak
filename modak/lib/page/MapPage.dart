@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:modak/component/MapWidget.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -76,7 +75,6 @@ class MapPageState extends State<MapPage> {
     return FloatingActionButton(
         heroTag: tagName,
         onPressed: () {
-          _currentLocation();
         },
         backgroundColor: Colors.black,
         mini: true,
@@ -103,6 +101,7 @@ class MapPageState extends State<MapPage> {
                   Marker(
                       markerId: MarkerId('55'),
                       position: LatLng(37.39344116934309, 126.81330326976159),
+                      infoWindow: InfoWindow(title: 'test1'),
                       icon: pinLocationIcon
                   )
               );
