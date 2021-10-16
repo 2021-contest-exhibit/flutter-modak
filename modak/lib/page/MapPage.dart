@@ -15,12 +15,26 @@ class MapPageState extends State<MapPage> {
   late double centerLng;
   late double centerLat;
   late GoogleMapController controller;
+  Set<Marker> _markers = {};
+
+  late BitmapDescriptor pinLocationIcon;
 
   @override
   void initState() {
     super.initState();
+    /*
+    아래 함수를 테스트 도중에는 일시적으로 안돌아가게 ( virtual 기기의 위치가 우리나라가 아니라서 테스트하기 힘듬 )
     getPosition();
+     */
+    setCustomMapPin();
   }
+
+  void setCustomMapPin() async {
+    pinLocationIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration( devicePixelRatio: 2.5 ),
+       'image/logo.png');
+  }
+
 
   getPosition() async {
     var permission = await Geolocator.requestPermission();
@@ -81,8 +95,18 @@ class MapPageState extends State<MapPage> {
           GoogleMap(
           mapType: MapType.normal,
           initialCameraPosition: _kGooglePlex,
+          markers: Set.from(_markers),
           onMapCreated: (GoogleMapController controller) {
             this.controller = controller;
+            setState(() {
+              _markers.add(
+                  Marker(
+                      markerId: MarkerId('55'),
+                      position: LatLng(37.39344116934309, 126.81330326976159),
+                      icon: pinLocationIcon
+                  )
+              );
+            });
           }),
           Positioned(
             top: 48,
