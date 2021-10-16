@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/CampingAPIBloc.dart';
 import 'package:modak/bloc/UserEvent.dart';
 import 'package:modak/bloc/UserState.dart';
 import 'package:modak/dto/ModakUser.dart';
+import 'package:modak/repository/APIRepository.dart';
 import 'package:modak/repository/DBRepository.dart';
 import 'package:modak/repository/FireStoreRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
@@ -13,8 +15,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepository;
   final DBRepository dbRepository;
   final FireStoreRepository fireStoreRepository;
+  final APIRepository apiRepository;
 
-  UserBloc({required this.userRepository, required this.dbRepository, required this.fireStoreRepository}) : super(Empty());
+  UserBloc({required this.userRepository, required this.dbRepository, required this.fireStoreRepository, required this.apiRepository}) : super(Empty());
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
@@ -75,6 +78,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if (user != null) {
         await this.fireStoreRepository.signUpUser(
             ModakUser(uid: user.uid, email: user.email!, image: "", level: 1));
+        await this.apiRepository.postUser(user.uid);
       } else {
         yield Error(message: "회원가입에 실패하였습니다.");
       }

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:modak/bloc/CampingAPIBloc.dart';
 import 'package:modak/bloc/ModakBloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
@@ -23,6 +24,7 @@ import 'package:modak/repository/UserRepository.dart';
 import 'package:modak/rest/RestClient.dart';
 import 'package:retrofit/dio.dart';
 
+final logger = Logger();
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
   late final fireStoreRepository;
 
   MyApp() {
+    dio.options.headers["Content-Type"] = "application/json";
     restClient = RestClient(dio);
     userRepository = UserRepository(auth: auth);
     apiRepository = APIRepository(dio: dio, restClient: restClient);
@@ -52,7 +55,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (_) => UserBloc(
-                userRepository: userRepository, dbRepository: DBRepository(), fireStoreRepository: fireStoreRepository)),
+                userRepository: userRepository, dbRepository: DBRepository(), fireStoreRepository: fireStoreRepository, apiRepository: apiRepository)),
         BlocProvider(
             create: (_) => CampingAPIBloc(apiRepository: apiRepository)),
         BlocProvider(

@@ -1,6 +1,7 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:modak/rest/RequestPostUser.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 import 'package:modak/rest/ResponseGetCampingsEnvironments.dart';
 import 'package:modak/rest/ResponseGetCampingsOperationTypes.dart';
@@ -27,6 +28,10 @@ class APIRepository {
 
   Future<ResponseGetCampingsEnvironments?> getCampingsEnvironments() {
     return restClient.getCampingsEnvironments();
+  }
+
+  Future<String> postUser(String email) {
+    return restClient.postUser(RequestPostUser(email: email));
   }
 
 }
