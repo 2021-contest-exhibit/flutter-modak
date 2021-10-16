@@ -87,14 +87,13 @@ class CampingSearchPageState extends State<CampingSearchPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.arrow_back),
-                      color: Colors.black),
-                  Text("검색어를 입력해주세요",
-                      style: TextStyle(color: Colors.grey, fontSize: 20)),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "검색어를 입력해주세요",
+                      style: TextStyle(color: Colors.grey, fontSize: 20),
+                    ),
+                  ),
                   Icon(
                     Icons.search,
                     color: Colors.black,
@@ -136,8 +135,10 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   children: [
                     Flexible(
                         child: Wrap(
-                            children: List.generate(7,
-                                    (i) => _filterButton(state.dataRegions![i])) +
+                            children: List.generate(
+                                    7,
+                                    (i) =>
+                                        _filterButton(state.dataRegions![i])) +
                                 [_filterButton("+더보기")])),
                   ],
                 );
@@ -180,8 +181,8 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                         child: Wrap(
                             children: List.generate(
                                 state.dataOperationTypes!.length,
-                                (i) =>
-                                    _filterButton(state.dataOperationTypes![i])))),
+                                (i) => _filterButton(
+                                    state.dataOperationTypes![i])))),
                   ],
                 );
               }
@@ -218,8 +219,10 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   children: [
                     Flexible(
                         child: Wrap(
-                            children: List.generate(state.dataEnvironments!.length,
-                                (i) => _filterButton(state.dataEnvironments![i])))),
+                            children: List.generate(
+                                state.dataEnvironments!.length,
+                                (i) => _filterButton(
+                                    state.dataEnvironments![i])))),
                   ],
                 );
               }
@@ -227,7 +230,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
             }),
           ),
           SizedBox(
-            height: 36.0,
+            height: 150.0,
           ),
         ],
       ),
