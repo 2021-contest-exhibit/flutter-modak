@@ -9,18 +9,18 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       body: Center(
-        child: CampingSearchPage(),
+        child: CampingFilterPage(),
       ),
     ),
   ));
 }
 
-class CampingSearchPage extends StatefulWidget {
+class CampingFilterPage extends StatefulWidget {
   @override
-  CampingSearchPageState createState() => CampingSearchPageState();
+  CampingFilterPageState createState() => CampingFilterPageState();
 }
 
-class CampingSearchPageState extends State<CampingSearchPage> {
+class CampingFilterPageState extends State<CampingFilterPage> {
   Widget _filterButton(String title) {
     return Container(
       margin: const EdgeInsets.all(8.0),
@@ -88,7 +88,9 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/camping_search');
+                    },
                     child: Text(
                       "검색어를 입력해주세요",
                       style: TextStyle(color: Colors.grey, fontSize: 20),

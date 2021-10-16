@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/CampingAPIBloc.dart';
 import 'package:modak/bloc/ModakBloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
-import 'package:modak/page/CampingFilterPage.dart';
+import 'package:modak/page/CampingSearchPage.dart';
 import 'package:modak/page/CapingDetailPage.dart';
 import 'package:modak/page/CreateMatchingPage.dart';
 import 'package:modak/page/DashBoardPage.dart';

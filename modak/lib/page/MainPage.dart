@@ -30,7 +30,7 @@ class MainPageState extends State<MainPage> {
             children: [
               DashBoardPage(),
               MatchingPage(),
-              CampingSearchPage(),
+              CampingFilterPage(),
               SettingPage(),
             ],
           ),
