@@ -12,6 +12,8 @@ void main() {
 }
 
 class CampingSearchPage extends StatefulWidget {
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   CampingSearchPageState createState() => CampingSearchPageState();
 }
@@ -45,13 +47,24 @@ class CampingSearchPageState extends State<CampingSearchPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/camping_search');
-                    },
-                    child: Text(
-                      "검색어를 입력해주세요",
-                      style: TextStyle(color: Colors.grey, fontSize: 20),
+                  Container(
+                    width: _contentWidth * 0.7,
+                    child: TextField(
+                      controller: widget._searchController,
+                      cursorColor: Colors.black,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: '검색어를 입력해주세요',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 20.0,
+                        ),
+                        border: InputBorder.none,
+                        labelStyle: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   Icon(
