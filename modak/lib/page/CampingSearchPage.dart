@@ -67,10 +67,13 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                       ),
                     ),
                   ),
-                  Icon(
-                    Icons.search,
+                  IconButton(
+                    icon: Icon(Icons.search),
                     color: Colors.black,
-                  )
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/camping_search_result', arguments: widget._searchController.text);
+                    },
+                  ),
                 ],
               ),
             ),

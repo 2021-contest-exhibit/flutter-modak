@@ -8,6 +8,7 @@ import 'package:modak/bloc/CampingAPIBloc.dart';
 import 'package:modak/bloc/ModakBloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/page/CampingSearchPage.dart';
+import 'package:modak/page/CampingSearchResultPage.dart';
 import 'package:modak/page/CapingDetailPage.dart';
 import 'package:modak/page/CreateMatchingPage.dart';
 import 'package:modak/page/DashBoardPage.dart';
@@ -69,6 +70,16 @@ class MyApp extends StatelessWidget {
           fontFamily: 'BMDOHYEON_ttf',
         ),
         initialRoute: '/splash',
+        onGenerateRoute: (settings) {
+          var routeName = settings.name;
+          switch(routeName) {
+            case '/camping_search_result':
+              Object? param = settings.arguments;
+
+              String stringParam = param.toString();
+              return MaterialPageRoute(builder: (_) => CampingSearchResultPage(searchName: stringParam));
+          }
+        },
         routes: {
           '/splash': (context) => SplashPage(),
           '/dashboard': (context) => DashBoardPage(),
