@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:modak/component/MapWidget.dart';
+import 'package:geolocator/geolocator.dart';
 
 class MapPage extends StatefulWidget {
   @override
@@ -8,6 +10,33 @@ class MapPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapPage> {
+
+  late double centerLng;
+  late double centerLat;
+
+  @override
+  void initState() {
+    super.initState();
+    getPosition();
+  }
+
+  getPosition() async {
+    var permission = await Geolocator.requestPermission();
+    print(permission);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    try {
+      setState(() {
+        centerLng = position.longitude;
+        centerLat = position.latitude;
+      });
+    } on PlatformException catch (e) {
+      print(e);
+    }
+  }
+
+
+
   Widget floatingControlButton(Widget icon, String tagName) {
     return FloatingActionButton(
         heroTag: tagName,
@@ -16,6 +45,8 @@ class MapPageState extends State<MapPage> {
         mini: true,
         child: icon);
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +72,7 @@ class MapPageState extends State<MapPage> {
                   }),
                 ),
                 onPressed: () {
+                  getPosition();
                   Navigator.pushNamed(context, '/camping_search');
                 },
                 child: Row(
