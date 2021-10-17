@@ -83,7 +83,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.location_on_outlined,
+                      Icons.search,
                       color: (widget.pageController.page??0).round() == 2
                           ? Theme.of(context).primaryColor
                           : Colors.black,
