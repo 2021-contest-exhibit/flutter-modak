@@ -6,16 +6,13 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       body: Center(
-        child: CampingSearchResultPage(searchName: ''),
+        child: CampingSearchResultPage(),
       ),
     ),
   ));
 }
 
 class CampingSearchResultPage extends StatefulWidget {
-  final String searchName;
-
-  const CampingSearchResultPage({required this.searchName});
 
   @override
   CampingSearchResultPageState createState() => CampingSearchResultPageState();
@@ -25,11 +22,15 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
 
   @override
   void initState() {
-    print(widget.searchName + "...");
   }
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments;
+    print(args);
+
+
+
     return Scaffold(
 
     );
