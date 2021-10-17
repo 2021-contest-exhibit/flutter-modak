@@ -33,6 +33,8 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
       yield* _mapGetUserGoodsEvent(event);
     } else if (event is GetCampingGoodsEvent) {
       yield* _mapGetCampingGoodsEvent(event);
+    } else if (event is GetCampingEvent) {
+      yield* _mapGetCampingEvent(event);
     }
   }
 
@@ -179,6 +181,18 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     if (uid != null) {
       await apiRepository.getGoods(event.campingId, uid);
     } else {
+      yield Error();
+    }
+  }
+
+  Stream<CampingAPIState> _mapGetCampingEvent(GetCampingEvent event) async* {
+    yield Loading();
+
+    var camping = await apiRepository.getCampings(contentId: event.contentId);
+
+    if (camping != null) {
+      yield CampingLoaded(campings: camping.content);
+    }else {
       yield Error();
     }
   }

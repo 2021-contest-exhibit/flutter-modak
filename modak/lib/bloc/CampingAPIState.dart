@@ -61,3 +61,12 @@ class UserGoodsLoaded extends CampingAPIState {
   List<Object?> get props => [];
 
 }
+
+class CampingLoaded extends CampingAPIState {
+  final List<Content> campings;
+
+  CampingLoaded({required this.campings});
+
+  @override
+  List<Object?> get props => [];
+}

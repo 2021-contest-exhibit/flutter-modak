@@ -16,6 +16,7 @@ class RecommandCampingWidget extends StatefulWidget {
 class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
   Widget _campingItemWidget(Content camping) {
     final _width = MediaQuery.of(context).size.width;
+    print('url: ${camping.thumbnailImageUrl}');
     return Container(
       height: 150,
       margin: const EdgeInsets.symmetric(vertical: 18.0),
@@ -132,10 +133,10 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
                 height: 150.0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
-                  child: Image.network(
-                    camping.campingImages![0].imageUrl,
+                  child: (camping.thumbnailImageUrl != null &&camping.thumbnailImageUrl != "") ? Image.network(
+                    camping.thumbnailImageUrl!,
                     fit: BoxFit.fitHeight,
-                  ),
+                  ) : Center(child: Image.asset('image/logo_black.png',width: 36.0, height: 36.0,)),
                 ),
               ),
               Container(

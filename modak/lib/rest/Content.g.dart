@@ -24,6 +24,8 @@ Content _$ContentFromJson(Map<String, dynamic> json) {
     operationType: json['operationType'] as String?,
     shortDescription: json['shortDescription'] as String?,
     longDescription: json['longDescription'] as String?,
+    goodCount: json['goodCount'] as int?,
+    thumbnailImageUrl: json['thumbnailImageUrl'] as String?,
     environments: (json['environments'] as List<dynamic>?)
         ?.map((e) => Environment.fromJson(e as Map<String, dynamic>))
         .toList(),
@@ -50,6 +52,8 @@ Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
       'operationType': instance.operationType,
       'shortDescription': instance.shortDescription,
       'longDescription': instance.longDescription,
+      'goodCount': instance.goodCount,
+      'thumbnailImageUrl': instance.thumbnailImageUrl,
       'environments': instance.environments,
       'campingImages': instance.campingImages,
     };

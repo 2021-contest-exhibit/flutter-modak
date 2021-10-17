@@ -21,6 +21,8 @@ class Content {
   String? operationType;
   String? shortDescription;
   String? longDescription;
+  int? goodCount;
+  String? thumbnailImageUrl;
   List<Environment>? environments;
   List<CampingImage>? campingImages;
 
@@ -41,6 +43,8 @@ class Content {
     this.operationType,
     this.shortDescription,
     this.longDescription,
+    this.goodCount,
+    this.thumbnailImageUrl,
     this.environments,
     this.campingImages,
   });
