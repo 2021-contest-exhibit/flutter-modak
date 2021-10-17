@@ -79,6 +79,13 @@ class GoodsPageState extends State<GoodsPage> {
                 }
                 return Container();
               },
+              buildWhen: (previous, current) {
+                if (current is UserGoodsLoaded) {
+                  return true;
+                } else {
+                  return false;
+                }
+              },
             ),
           ],
         ),
