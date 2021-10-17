@@ -162,6 +162,20 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     }
   }
 
+  Stream<CampingAPIState> _mapGetRecommandCampingsEvent(GetTodayCampingsEvent event) async* {
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      var campings = await apiRepository.getTodayCampings(uid, 0, 5);
+
+      if (campings != null && campings.content.length > 0) {
+        yield TodayCampingsLoaded(campings: campings.content);
+      }
+    } else {
+      yield Error();
+    }
+  }
+
   Stream<CampingAPIState> _mapGetUserGoodsEvent(GetUserGoodsEvent event) async*{
     yield Loading();
 
