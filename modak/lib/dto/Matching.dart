@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:modak/rest/ResponseGetCampings.dart';
+import 'package:modak/rest/Content.dart';
 
 part 'Matching.freezed.dart';
 part 'Matching.g.dart';
@@ -14,6 +14,7 @@ class Matching with _$Matching{
     required DateTime startDate,
     required DateTime endDate,
     required DateTime createDate,
+    List<String>? userList
   }) = _Matching;
 
   factory Matching.fromJson(Map<String, dynamic> json) => _$MatchingFromJson(json);

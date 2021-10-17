@@ -13,6 +13,7 @@ import 'package:modak/page/CampingSearchResultPage.dart';
 import 'package:modak/page/CapingDetailPage.dart';
 import 'package:modak/page/CreateMatchingPage.dart';
 import 'package:modak/page/DashBoardPage.dart';
+import 'package:modak/page/GoodsPage.dart';
 import 'package:modak/page/LoginPage.dart';
 import 'package:modak/page/MainPage.dart';
 import 'package:modak/page/PaymentPage.dart';
@@ -23,7 +24,6 @@ import 'package:modak/repository/DBRepository.dart';
 import 'package:modak/repository/FireStoreRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
 import 'package:modak/rest/RestClient.dart';
-import 'package:retrofit/dio.dart';
 
 final logger = Logger();
 main() async {
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
             create: (_) => UserBloc(
                 userRepository: userRepository, dbRepository: DBRepository(), fireStoreRepository: fireStoreRepository, apiRepository: apiRepository)),
         BlocProvider(
-            create: (_) => CampingAPIBloc(apiRepository: apiRepository)),
+            create: (_) => CampingAPIBloc(apiRepository: apiRepository, userRepository: userRepository)),
         BlocProvider(
             create: (_) => ModakBloc(
                   fireStoreRepository: fireStoreRepository,
@@ -93,6 +93,7 @@ class MyApp extends StatelessWidget {
           '/camping_detail': (context) => CampingDetailPage(),
           '/create_matching': (context) => CreateMatchingPage(),
           '/camping_search': (context) => CampingSearchPage(),
+          '/goods': (context) => GoodsPage(),
         },
       ),
     );

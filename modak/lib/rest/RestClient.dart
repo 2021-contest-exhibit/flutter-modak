@@ -3,8 +3,11 @@ import 'package:modak/rest/ResponseGetCampings.dart';
 import 'package:modak/rest/ResponseGetCampingsEnvironments.dart';
 import 'package:modak/rest/ResponseGetCampingsOperationTypes.dart';
 import 'package:modak/rest/ResponseGetCampingsRegions.dart';
+import 'package:modak/rest/ResponseGetUser.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
+
+import 'RequestPostGood.dart';
 
 part 'RestClient.g.dart';
 
@@ -32,4 +35,10 @@ abstract class RestClient {
 
   @POST("/user")
   Future<String> postUser(@Body() RequestPostUser user);
+
+  @GET("/user")
+  Future<ResponseGetUser> getUser(@Query("email") String email);
+
+  @POST("/good")
+  Future<String> postGood(@Body() RequestPostGood requestPostGood);
 }

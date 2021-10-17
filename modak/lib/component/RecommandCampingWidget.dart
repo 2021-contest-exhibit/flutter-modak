@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modak/dto/Camping.dart';
+import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
 class RecommandCampingWidget extends StatefulWidget {
@@ -132,7 +133,7 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
                   child: Image.network(
-                    "https://www.gocamping.or.kr/upload/camp/7150/thumb/thumb_720_60497nQtHJrTdiezfiaLBaGE.jpg",
+                    camping.campingImages![0].imageUrl,
                     fit: BoxFit.fitHeight,
                   ),
                 ),
@@ -171,8 +172,7 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
                         Icon(Icons.favorite, color: Colors.red, size: 18.0,),
                         const SizedBox(width: 2.0,),
                         Text(
-                          "228"
-
+                          "${camping.viewCount!}"
                         )
                       ],
                     )

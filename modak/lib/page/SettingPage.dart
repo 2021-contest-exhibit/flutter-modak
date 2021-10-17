@@ -22,11 +22,11 @@ class SettingPage extends StatefulWidget {
 }
 
 class SettingPageState extends State<SettingPage> {
-  Widget _menuButton(Icon icon, String title) {
+  Widget _menuButton(Icon icon, String title, GestureTapCallback event) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: InkWell(
-        onTap: () {},
+        onTap: event,
         child: Ink(
           height: 64,
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -105,19 +105,21 @@ class SettingPageState extends State<SettingPage> {
           const SizedBox(
             height: 40.0,
           ),
-          _menuButton(Icon(Icons.campaign), "공지사항"),
+          _menuButton(Icon(Icons.campaign), "공지사항", () {}),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.favorite), "좋아요"),
+          _menuButton(Icon(Icons.favorite), "좋아요", () {
+            Navigator.pushNamed(context, '/goods');
+          }),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.settings), "설정"),
+          _menuButton(Icon(Icons.settings), "설정", () {}),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.info), "버전정보"),
+          _menuButton(Icon(Icons.info), "버전정보", () {}),
           const SizedBox(
             height: 120,
           ),

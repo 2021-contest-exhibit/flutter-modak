@@ -5,12 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/CampingAPIEvent.dart';
 import 'package:modak/bloc/CampingAPIState.dart';
 import 'package:modak/repository/APIRepository.dart';
+import 'package:modak/repository/UserRepository.dart';
+import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
 class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
   final APIRepository apiRepository;
+  final UserRepository userRepository;
 
-  CampingAPIBloc({required this.apiRepository}): super(Empty());
+  CampingAPIBloc({required this.apiRepository, required this.userRepository}): super(Empty());
 
   @override
   Stream<CampingAPIState> mapEventToState(CampingAPIEvent event) async*{
@@ -26,6 +29,10 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
       yield* _mapGetCampingsFilterDataEvent(event);
     } else if(event is GetTodayCampingsEvent) {
       yield* _mapGetTodayCampingsEvent(event);
+    } else if (event is GetUserGoodsEvent) {
+      yield* _mapGetUserGoodsEvent(event);
+    } else if (event is GetCampingGoodsEvent) {
+      yield* _mapGetCampingGoodsEvent(event);
     }
   }
 
@@ -147,6 +154,32 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     }
     if (list.length > 0) {
       yield TodayCampingsLoaded(campings: list);
+    }
+  }
+
+  Stream<CampingAPIState> _mapGetUserGoodsEvent(GetUserGoodsEvent event) async*{
+    yield Loading();
+
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      var goods = await apiRepository.getUserFavorite(uid);
+      print('goods: ${goods.content[0].goods[0].camping}');
+      yield UserGoodsLoaded(user: goods);
+    } else {
+      yield Error();
+    }
+
+  }
+
+  Stream<CampingAPIState> _mapGetCampingGoodsEvent(GetCampingGoodsEvent event) async* {
+    yield Loading();
+
+    var uid = await userRepository.getUserToken();
+    if (uid != null) {
+      await apiRepository.getGoods(event.campingId, uid);
+    } else {
+      yield Error();
     }
   }
 }

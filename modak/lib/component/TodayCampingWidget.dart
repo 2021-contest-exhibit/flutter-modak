@@ -6,6 +6,7 @@ import 'package:modak/bloc/CampingAPIBloc.dart';
 import 'package:modak/bloc/CampingAPIEvent.dart';
 import 'package:modak/bloc/CampingAPIState.dart';
 import 'package:modak/dto/Camping.dart';
+import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
 class TodayCompingWidget extends StatefulWidget {
