@@ -16,7 +16,6 @@ class RecommandCampingWidget extends StatefulWidget {
 class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
   Widget _campingItemWidget(Content camping) {
     final _width = MediaQuery.of(context).size.width;
-    print('url: ${camping.thumbnailImageUrl}');
     return Container(
       height: 150,
       margin: const EdgeInsets.symmetric(vertical: 18.0),

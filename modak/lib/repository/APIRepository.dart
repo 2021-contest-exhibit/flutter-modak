@@ -25,6 +25,10 @@ class APIRepository {
     return restClient.postCampingsRecommendationGood(email, page, size);
   }
 
+  Future<ResponseGetCampings?> getRecommandCampings(String email, int page, int size) {
+    return restClient.postCampingsRecommendationAI(email, page, size);
+  }
+
   Future<ResponseGetCampingsRegions?> getCampingsRegions() {
     return restClient.getCampingsRegions();
   }
