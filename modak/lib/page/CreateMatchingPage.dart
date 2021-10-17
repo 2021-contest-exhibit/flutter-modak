@@ -6,6 +6,7 @@ import 'package:modak/bloc/ModakEvent.dart';
 import 'package:modak/bloc/ModakState.dart';
 import 'package:modak/component/RecommandCampingWidget.dart';
 import 'package:modak/dto/Matching.dart';
+import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 import 'package:table_calendar/table_calendar.dart';
 

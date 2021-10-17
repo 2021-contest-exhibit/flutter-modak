@@ -10,8 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final repo = FireStoreRepository(store: FirebaseFirestore.instance);
-  repo.saveMatching(Matching(user: "11", campingId: 1, startDate: DateTime.now(), endDate: DateTime.now()..add(Duration(days: 1)), createDate: DateTime.now()));
-  List<Matching>? response = await repo.loadMatching();
+  List<Matching>? response = await repo.loadJoinMatchings();
   for (var r in response!) {
     print((r).toJson());
   }
@@ -59,6 +58,15 @@ class FireStoreRepository {
       } else {
         return null;
       }
+    });
+  }
+
+  Future<List<Matching>?> loadJoinMatchings() async {
+    CollectionReference matchings = store.collection("matchings");
+    return matchings.where("userList", arrayContains: "Tg0dduxXYPeD9ZSat8LEbBaqOw53").get().then((value) async {
+      return value.docs.map((e) {
+        return Matching.fromJson(e.data() as Map<String, dynamic>);
+      }).toList();
     });
   }
 

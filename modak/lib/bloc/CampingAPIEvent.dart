@@ -34,11 +34,7 @@ class GetTodayCampingsEvent extends CampingAPIEvent {
   List<Object?> get props => [];
 }
 
-class GetCampingFavoriteEvent extends CampingAPIEvent {
-  final int campingId;
-
-  GetCampingFavoriteEvent({required this.campingId});
-
+class GetUserGoodsEvent extends CampingAPIEvent {
   @override
   List<Object?> get props => [];
 }

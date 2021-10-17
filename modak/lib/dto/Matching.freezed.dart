@@ -27,7 +27,8 @@ class _$MatchingTearOff {
       Content? content,
       required DateTime startDate,
       required DateTime endDate,
-      required DateTime createDate}) {
+      required DateTime createDate,
+      List<String>? userList}) {
     return _Matching(
       user: user,
       email: email,
@@ -36,6 +37,7 @@ class _$MatchingTearOff {
       startDate: startDate,
       endDate: endDate,
       createDate: createDate,
+      userList: userList,
     );
   }
 
@@ -56,6 +58,7 @@ mixin _$Matching {
   DateTime get startDate => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
   DateTime get createDate => throw _privateConstructorUsedError;
+  List<String>? get userList => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,7 +77,8 @@ abstract class $MatchingCopyWith<$Res> {
       Content? content,
       DateTime startDate,
       DateTime endDate,
-      DateTime createDate});
+      DateTime createDate,
+      List<String>? userList});
 }
 
 /// @nodoc
@@ -94,6 +98,7 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? createDate = freezed,
+    Object? userList = freezed,
   }) {
     return _then(_value.copyWith(
       user: user == freezed
@@ -124,6 +129,10 @@ class _$MatchingCopyWithImpl<$Res> implements $MatchingCopyWith<$Res> {
           ? _value.createDate
           : createDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      userList: userList == freezed
+          ? _value.userList
+          : userList // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -140,7 +149,8 @@ abstract class _$MatchingCopyWith<$Res> implements $MatchingCopyWith<$Res> {
       Content? content,
       DateTime startDate,
       DateTime endDate,
-      DateTime createDate});
+      DateTime createDate,
+      List<String>? userList});
 }
 
 /// @nodoc
@@ -161,6 +171,7 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? createDate = freezed,
+    Object? userList = freezed,
   }) {
     return _then(_Matching(
       user: user == freezed
@@ -191,6 +202,10 @@ class __$MatchingCopyWithImpl<$Res> extends _$MatchingCopyWithImpl<$Res>
           ? _value.createDate
           : createDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      userList: userList == freezed
+          ? _value.userList
+          : userList // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -205,7 +220,8 @@ class _$_Matching implements _Matching {
       this.content,
       required this.startDate,
       required this.endDate,
-      required this.createDate});
+      required this.createDate,
+      this.userList});
 
   factory _$_Matching.fromJson(Map<String, dynamic> json) =>
       _$_$_MatchingFromJson(json);
@@ -224,10 +240,12 @@ class _$_Matching implements _Matching {
   final DateTime endDate;
   @override
   final DateTime createDate;
+  @override
+  final List<String>? userList;
 
   @override
   String toString() {
-    return 'Matching(user: $user, email: $email, campingId: $campingId, content: $content, startDate: $startDate, endDate: $endDate, createDate: $createDate)';
+    return 'Matching(user: $user, email: $email, campingId: $campingId, content: $content, startDate: $startDate, endDate: $endDate, createDate: $createDate, userList: $userList)';
   }
 
   @override
@@ -252,7 +270,10 @@ class _$_Matching implements _Matching {
                     .equals(other.endDate, endDate)) &&
             (identical(other.createDate, createDate) ||
                 const DeepCollectionEquality()
-                    .equals(other.createDate, createDate)));
+                    .equals(other.createDate, createDate)) &&
+            (identical(other.userList, userList) ||
+                const DeepCollectionEquality()
+                    .equals(other.userList, userList)));
   }
 
   @override
@@ -264,7 +285,8 @@ class _$_Matching implements _Matching {
       const DeepCollectionEquality().hash(content) ^
       const DeepCollectionEquality().hash(startDate) ^
       const DeepCollectionEquality().hash(endDate) ^
-      const DeepCollectionEquality().hash(createDate);
+      const DeepCollectionEquality().hash(createDate) ^
+      const DeepCollectionEquality().hash(userList);
 
   @JsonKey(ignore: true)
   @override
@@ -285,7 +307,8 @@ abstract class _Matching implements Matching {
       Content? content,
       required DateTime startDate,
       required DateTime endDate,
-      required DateTime createDate}) = _$_Matching;
+      required DateTime createDate,
+      List<String>? userList}) = _$_Matching;
 
   factory _Matching.fromJson(Map<String, dynamic> json) = _$_Matching.fromJson;
 
@@ -303,6 +326,8 @@ abstract class _Matching implements Matching {
   DateTime get endDate => throw _privateConstructorUsedError;
   @override
   DateTime get createDate => throw _privateConstructorUsedError;
+  @override
+  List<String>? get userList => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$MatchingCopyWith<_Matching> get copyWith =>

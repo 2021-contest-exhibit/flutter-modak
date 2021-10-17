@@ -24,7 +24,7 @@ GetUserContent _$GetUserContentFromJson(Map<String, dynamic> json) {
     id: json['id'] as int,
     email: json['email'] as String,
     goods: (json['goods'] as List<dynamic>)
-        .map((e) => Content.fromJson(e as Map<String, dynamic>))
+        .map((e) => Good.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }
@@ -34,4 +34,16 @@ Map<String, dynamic> _$GetUserContentToJson(GetUserContent instance) =>
       'id': instance.id,
       'email': instance.email,
       'goods': instance.goods,
+    };
+
+Good _$GoodFromJson(Map<String, dynamic> json) {
+  return Good(
+    id: json['id'] as int,
+    camping: Content.fromJson(json['camping'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$GoodToJson(Good instance) => <String, dynamic>{
+      'id': instance.id,
+      'camping': instance.camping,
     };

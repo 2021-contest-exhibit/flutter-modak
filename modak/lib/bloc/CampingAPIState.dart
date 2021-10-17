@@ -1,6 +1,8 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
+import 'package:modak/rest/ResponseGetUser.dart';
 
 abstract class CampingAPIState extends Equatable {}
 
@@ -47,5 +49,15 @@ class CampingFavoriteLoaded extends CampingAPIState {
   @override
   List<Object?> get props => [];
 
+
+}
+
+class UserGoodsLoaded extends CampingAPIState {
+  final ResponseGetUser user;
+
+  UserGoodsLoaded({required this.user});
+
+  @override
+  List<Object?> get props => [];
 
 }

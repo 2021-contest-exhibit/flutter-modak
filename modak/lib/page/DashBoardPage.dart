@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modak/component/RecommandCampingWidget.dart';
 import 'package:modak/component/TodayCampingWidget.dart';
 import 'package:modak/dto/Camping.dart';
+import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
 class DashBoardPage extends StatefulWidget {

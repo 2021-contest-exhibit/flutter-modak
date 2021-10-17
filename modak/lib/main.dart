@@ -12,6 +12,7 @@ import 'package:modak/page/CampingSearchPage.dart';
 import 'package:modak/page/CapingDetailPage.dart';
 import 'package:modak/page/CreateMatchingPage.dart';
 import 'package:modak/page/DashBoardPage.dart';
+import 'package:modak/page/GoodsPage.dart';
 import 'package:modak/page/LoginPage.dart';
 import 'package:modak/page/MainPage.dart';
 import 'package:modak/page/PaymentPage.dart';
@@ -81,6 +82,7 @@ class MyApp extends StatelessWidget {
           '/camping_detail': (context) => CampingDetailPage(),
           '/create_matching': (context) => CreateMatchingPage(),
           '/camping_search': (context) => CampingSearchPage(),
+          '/goods': (context) => GoodsPage(),
         },
       ),
     );

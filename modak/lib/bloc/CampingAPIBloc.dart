@@ -6,6 +6,7 @@ import 'package:modak/bloc/CampingAPIEvent.dart';
 import 'package:modak/bloc/CampingAPIState.dart';
 import 'package:modak/repository/APIRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
+import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
 class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
@@ -28,8 +29,8 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
       yield* _mapGetCampingsFilterDataEvent(event);
     } else if(event is GetTodayCampingsEvent) {
       yield* _mapGetTodayCampingsEvent(event);
-    } else if (event is GetCampingFavoriteEvent) {
-      yield* _mapGetUserFavoriteEvent(event);
+    } else if (event is GetUserGoodsEvent) {
+      yield* _mapGetUserGoodsEvent(event);
     } else if (event is GetCampingGoodsEvent) {
       yield* _mapGetCampingGoodsEvent(event);
     }
@@ -156,12 +157,19 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     }
   }
 
-  Stream<CampingAPIState> _mapGetUserFavoriteEvent(GetCampingFavoriteEvent event) async*{
+  Stream<CampingAPIState> _mapGetUserGoodsEvent(GetUserGoodsEvent event) async*{
     yield Loading();
 
-    await apiRepository.getUserFavorite("");
+    var uid = userRepository.getUserToken();
 
-    yield CampingFavoriteLoaded(favorite: 10);
+    if (uid != null) {
+      var goods = await apiRepository.getUserFavorite(uid);
+      print('goods: ${goods.content[0].goods[0].camping}');
+      yield UserGoodsLoaded(user: goods);
+    } else {
+      yield Error();
+    }
+
   }
 
   Stream<CampingAPIState> _mapGetCampingGoodsEvent(GetCampingGoodsEvent event) async* {

@@ -17,6 +17,8 @@ _$_Matching _$_$_MatchingFromJson(Map<String, dynamic> json) {
     startDate: DateTime.parse(json['startDate'] as String),
     endDate: DateTime.parse(json['endDate'] as String),
     createDate: DateTime.parse(json['createDate'] as String),
+    userList:
+        (json['userList'] as List<dynamic>?)?.map((e) => e as String).toList(),
   );
 }
 
@@ -29,4 +31,5 @@ Map<String, dynamic> _$_$_MatchingToJson(_$_Matching instance) =>
       'startDate': instance.startDate.toIso8601String(),
       'endDate': instance.endDate.toIso8601String(),
       'createDate': instance.createDate.toIso8601String(),
+      'userList': instance.userList,
     };
