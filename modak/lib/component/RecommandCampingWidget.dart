@@ -132,10 +132,10 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
                 height: 150.0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
-                  child: Image.network(
+                  child: (camping.campingImages != null && camping.campingImages!.length > 0) ? Image.network(
                     camping.campingImages![0].imageUrl,
                     fit: BoxFit.fitHeight,
-                  ),
+                  ) : Center(child: Image.asset('image/logo_black.png',width: 48.0, height: 48.0,)),
                 ),
               ),
               Container(
