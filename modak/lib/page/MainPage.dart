@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/component/BottomNavigationWidget.dart';
-import 'package:modak/page/CampingFilterPage.dart';
+import 'package:modak/page/CampingSearchPage.dart';
 import 'package:modak/page/DashBoardPage.dart';
 import 'package:modak/page/MapPage.dart';
 import 'package:modak/page/MatchingPage.dart';
