@@ -8,6 +8,7 @@ import 'package:modak/repository/APIRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
 import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
+import 'package:modak/rest/ResponseGetUser.dart';
 
 class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
   final APIRepository apiRepository;
@@ -167,6 +168,17 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     if (uid != null) {
       var goods = await apiRepository.getUserFavorite(uid);
       print('goods: ${goods.content[0].goods[0].camping}');
+      List<Good> campings = await Stream.fromIterable(goods.content[0].goods).asyncMap((e) async {
+        var camping = await apiRepository.getCampings(contentId: e.camping.contentId);
+        if (camping != null) {
+          return Good(id: 0, camping: camping.content[0]);
+        } else {
+          return null;
+        }
+      }).where((event) => event != null).toList() as List<Good>;
+
+      goods.content[0].goods = campings;
+
       yield UserGoodsLoaded(user: goods);
     } else {
       yield Error();

@@ -25,8 +25,6 @@ class GoodsPage extends StatefulWidget {
 
 class GoodsPageState extends State<GoodsPage> {
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +68,6 @@ class GoodsPageState extends State<GoodsPage> {
             BlocBuilder<CampingAPIBloc, CampingAPIState>(
               builder: (context, state) {
                 if (state is UserGoodsLoaded && state.user.content[0].goods.length > 0) {
-                  print("state: ${state.user.content[0].goods[0].camping.name}");
                   return RecommandCampingWidget(
                     campingList: ResponseGetCampings(content: [...state.user.content[0].goods.map((e) {
                       return e.camping;
