@@ -16,6 +16,11 @@ class Loading extends CampingAPIState {
   List<Object?> get props => [];
 }
 
+class SearchLoading extends CampingAPIState {
+  @override
+  List<Object?> get props => [];
+}
+
 class Loaded extends CampingAPIState {
   final List<String>? dataEnvironments;
   final List<String>? dataOperationTypes;

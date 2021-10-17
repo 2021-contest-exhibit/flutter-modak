@@ -113,7 +113,10 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     icon: Icon(Icons.search),
                     color: Colors.black,
                     onPressed: () {
-                      Navigator.pushNamed(context, '/camping_search_result', arguments: {'search_data': widget._searchController.text} );
+                      Navigator.pushNamed(context, '/camping_search_result',
+                          arguments: {
+                            'search_data': widget._searchController.text
+                          });
                     },
                   ),
                 ],
@@ -140,29 +143,36 @@ class CampingSearchPageState extends State<CampingSearchPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
-                builder: (_, state) {
-              if (state is Empty) {
+              builder: (_, state) {
+                if (state is Empty) {
+                  return Container();
+                } else if (state is Loading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is Error) {
+                  return Text("Error: ");
+                } else if (state is Loaded) {
+                  // return Text(state.dataOperationTypes.toString());
+                  return Row(
+                    children: [
+                      Flexible(
+                          child: Wrap(
+                              children: List.generate(
+                                      7,
+                                      (i) => _filterButton(
+                                          state.dataRegions![i])) +
+                                  [_filterButton("+더보기")])),
+                    ],
+                  );
+                }
                 return Container();
-              } else if (state is Loading) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state is Error) {
-                return Text("Error: ");
-              } else if (state is Loaded) {
-                // return Text(state.dataOperationTypes.toString());
-                return Row(
-                  children: [
-                    Flexible(
-                        child: Wrap(
-                            children: List.generate(
-                                    7,
-                                    (i) =>
-                                        _filterButton(state.dataRegions![i])) +
-                                [_filterButton("+더보기")])),
-                  ],
-                );
-              }
-              return Container();
-            }),
+              },
+              buildWhen: (previous, current) {
+                if (current is Loaded || current is Loading) {
+                  return true;
+                }
+                return false;
+              },
+            ),
           ),
           SizedBox(
             height: 24.0,
@@ -184,28 +194,35 @@ class CampingSearchPageState extends State<CampingSearchPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
-                builder: (_, state) {
-              if (state is Empty) {
+              builder: (_, state) {
+                if (state is Empty) {
+                  return Container();
+                } else if (state is Loading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is Error) {
+                  return Text("Error: ");
+                } else if (state is Loaded) {
+                  // return Text(state.dataOperationTypes.toString());
+                  return Row(
+                    children: [
+                      Flexible(
+                          child: Wrap(
+                              children: List.generate(
+                                  state.dataOperationTypes!.length,
+                                  (i) => _filterButton(
+                                      state.dataOperationTypes![i])))),
+                    ],
+                  );
+                }
                 return Container();
-              } else if (state is Loading) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state is Error) {
-                return Text("Error: ");
-              } else if (state is Loaded) {
-                // return Text(state.dataOperationTypes.toString());
-                return Row(
-                  children: [
-                    Flexible(
-                        child: Wrap(
-                            children: List.generate(
-                                state.dataOperationTypes!.length,
-                                (i) => _filterButton(
-                                    state.dataOperationTypes![i])))),
-                  ],
-                );
-              }
-              return Container();
-            }),
+              },
+              buildWhen: (previous, current) {
+                if (current is Loaded || current is Loading) {
+                  return true;
+                }
+                return false;
+              },
+            ),
           ),
           SizedBox(
             height: 24.0,
@@ -224,28 +241,35 @@ class CampingSearchPageState extends State<CampingSearchPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
-                builder: (_, state) {
-              if (state is Empty) {
+              builder: (_, state) {
+                if (state is Empty) {
+                  return Container();
+                } else if (state is Loading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is Error) {
+                  return Text("Error: ");
+                } else if (state is Loaded) {
+                  // return Text(state.dataOperationTypes.toString());
+                  return Row(
+                    children: [
+                      Flexible(
+                          child: Wrap(
+                              children: List.generate(
+                                  state.dataEnvironments!.length,
+                                  (i) => _filterButton(
+                                      state.dataEnvironments![i])))),
+                    ],
+                  );
+                }
                 return Container();
-              } else if (state is Loading) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state is Error) {
-                return Text("Error: ");
-              } else if (state is Loaded) {
-                // return Text(state.dataOperationTypes.toString());
-                return Row(
-                  children: [
-                    Flexible(
-                        child: Wrap(
-                            children: List.generate(
-                                state.dataEnvironments!.length,
-                                (i) => _filterButton(
-                                    state.dataEnvironments![i])))),
-                  ],
-                );
-              }
-              return Container();
-            }),
+              },
+              buildWhen: (previous, current) {
+                if (current is Loaded || current is Loading) {
+                  return true;
+                }
+                return false;
+              },
+            ),
           ),
           SizedBox(
             height: 150.0,
