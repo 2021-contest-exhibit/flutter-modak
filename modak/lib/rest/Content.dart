@@ -21,6 +21,9 @@ class Content {
   String? operationType;
   String? shortDescription;
   String? longDescription;
+  int? goodCount;
+  String? thumbnailImageUrl;
+  bool? isGoodByUser;
   List<Environment>? environments;
   List<CampingImage>? campingImages;
 
@@ -41,6 +44,9 @@ class Content {
     this.operationType,
     this.shortDescription,
     this.longDescription,
+    this.goodCount,
+    this.isGoodByUser,
+    this.thumbnailImageUrl,
     this.environments,
     this.campingImages,
   });

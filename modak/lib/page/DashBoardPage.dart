@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/CampingAPIBloc.dart';
+import 'package:modak/bloc/CampingAPIEvent.dart';
+import 'package:modak/bloc/CampingAPIState.dart';
 import 'package:modak/component/RecommandCampingWidget.dart';
 import 'package:modak/component/TodayCampingWidget.dart';
 import 'package:modak/dto/Camping.dart';
@@ -88,12 +92,22 @@ class DashBoardPageState extends State<DashBoardPage> {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: TodayCompingWidget(
-                      recipeList: [
-                        Camping(title: "백운계곡캠핑장", discription: "글램핑과 캠핑을 골라 즐길 수 있는 백운계곡캠핑..."),
-                        Camping(title: "백운계곡캠핑장", discription: "글램핑과 캠핑을 골라 즐길 수 있는 백운계곡캠핑..."),
-                        Camping(title: "백운계곡캠핑장", discription: "글램핑과 캠핑을 골라 즐길 수 있는 백운계곡캠핑..."),
-                      ],
+                    child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                      builder: (context, state) {
+                        if (state is TodayCampingsLoaded) {
+                          print("state: ${state.campings[0].name}");
+                          return TodayCompingWidget(campingList: [...state.campings]);
+                        }
+                        return Container();
+                      },
+                      buildWhen: (previous, current) {
+                        if (current is TodayCampingsLoaded) {
+                          print("reload");
+                          return true;
+                        } else {
+                          return false;
+                        }
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -223,6 +237,13 @@ class DashBoardPageState extends State<DashBoardPage> {
           ],
         ),
       ),
+    );
+  }
+
+  @override
+  void initState() {
+    BlocProvider.of<CampingAPIBloc>(context).add(
+        GetTodayCampingsEvent()
     );
   }
 }
