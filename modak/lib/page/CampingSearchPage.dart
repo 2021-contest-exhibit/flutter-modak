@@ -9,20 +9,20 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       body: Center(
-        child: CampingFilterPage(),
+        child: CampingSearchPage(),
       ),
     ),
   ));
 }
 
-class CampingFilterPage extends StatefulWidget {
+class CampingSearchPage extends StatefulWidget {
   final TextEditingController _searchController = TextEditingController();
 
   @override
-  CampingFilterPageState createState() => CampingFilterPageState();
+  CampingSearchPageState createState() => CampingSearchPageState();
 }
 
-class CampingFilterPageState extends State<CampingFilterPage> {
+class CampingSearchPageState extends State<CampingSearchPage> {
   Widget _filterButton(String title) {
     return Container(
       margin: const EdgeInsets.all(8.0),
