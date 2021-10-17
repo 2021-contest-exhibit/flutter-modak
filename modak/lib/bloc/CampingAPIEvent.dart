@@ -5,6 +5,10 @@ abstract class CampingAPIEvent extends Equatable{}
 
 
 class GetCampingsEvent extends CampingAPIEvent {
+  String nameContains;
+
+  GetCampingsEvent({required this.nameContains});
+
   @override
   List<Object?> get props => [];
 }

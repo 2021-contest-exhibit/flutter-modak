@@ -45,15 +45,16 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     print("_mapGetCampingsEvent");
     yield Loading();
 
-    var response = await apiRepository.getCampings().onError((error, stackTrace) {
+    var response = await apiRepository.getCampings(nameContains: event.nameContains).onError((error, stackTrace) {
       print(error.toString());
       print(stackTrace);
       return null;
     });
 
     if (response != null) {
-      print("response: ${response.content[1].name}");
-      yield Loaded();
+      print("response: ${response.content}");
+
+      yield CampingsLoaded(content: response.content);
     }else {
       print("error");
       yield Error();

@@ -1,5 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/CampingAPIBloc.dart';
+import 'package:modak/bloc/CampingAPIEvent.dart';
+import 'package:modak/bloc/CampingAPIState.dart';
+import 'package:modak/component/RecommandCampingWidget.dart';
+import 'package:modak/rest/ResponseGetCampings.dart';
 
 
 void main() {
@@ -13,6 +19,9 @@ void main() {
 }
 
 class CampingSearchResultPage extends StatefulWidget {
+  final argument;
+
+  CampingSearchResultPage({this.argument});
 
   @override
   CampingSearchResultPageState createState() => CampingSearchResultPageState();
@@ -22,17 +31,82 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
 
   @override
   void initState() {
+    String searchData = widget.argument['search_data'];
+    BlocProvider.of<CampingAPIBloc>(context).add(
+      GetCampingsEvent(nameContains:searchData),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments;
-    print(args);
+    final double _width = MediaQuery.of(context).size.width;
+    final double _contentWidth = _width - 40;
 
 
 
     return Scaffold(
+      body: ListView(
+        physics: BouncingScrollPhysics(),
+        children: [
+          SizedBox(
+            height: 48.0,
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            width: _contentWidth,
+            height: 48,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.resolveWith((states) {
+                  return Colors.white;
+                }),
+                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  return Colors.white;
+                }),
+              ),
+              onPressed: () {},
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios),
+                    color: Colors.black,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      widget.argument['search_data'],
+                      style: TextStyle(color: Colors.black, fontSize: 18 ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              children: [
+                BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                  builder: (context, state) {
+                    if (state is CampingsLoaded) {
+                      return RecommandCampingWidget(
+                        campingList: ResponseGetCampings(content: state.content),
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+              ],
+            ),
+          ),
 
+        ],
+      ),
     );
   }
 }
