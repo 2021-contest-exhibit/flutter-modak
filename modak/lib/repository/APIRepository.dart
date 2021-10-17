@@ -18,7 +18,16 @@ class APIRepository {
   APIRepository({required this.dio, required this.restClient});
 
   Future<ResponseGetCampings?> getCampings({environmentName, operationType, regionContains, contentId, email, nameContains}) {
-    return restClient.getCampings(0, 10, environmentName, operationType, regionContains, contentId, email, nameContains);
+    return restClient.getCampings(
+        0,
+        10,
+        environmentName,
+        operationType,
+        regionContains,
+        contentId,
+        email,
+        nameContains);
+  }
 
   Future<ResponseGetCampings?> getTodayCampings(String email, int page, int size) {
     return restClient.postCampingsRecommendationGood(email, page, size);
