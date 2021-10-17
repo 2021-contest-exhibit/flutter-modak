@@ -227,7 +227,6 @@ class CreateMatchingPageState extends State<CreateMatchingPage> {
                   CreateMatchingEvent(matching: Matching(createDate: DateTime.now(), startDate: _selectedStartDay!, endDate: _selectedEndDay!, campingId: selectedCamping.contentId))
                 );
                 await BlocProvider.of<ModakBloc>(context).stream.map((state) {
-                  print("state: ${state}");
                   if (state is Empty) {
                   }else if (state is Loading){
                     print("loading");

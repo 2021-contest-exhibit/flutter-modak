@@ -95,14 +95,12 @@ class DashBoardPageState extends State<DashBoardPage> {
                     child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
                       builder: (context, state) {
                         if (state is TodayCampingsLoaded) {
-                          print("state: ${state.campings[0].name}");
                           return TodayCompingWidget(campingList: [...state.campings]);
                         }
                         return Container();
                       },
                       buildWhen: (previous, current) {
                         if (current is TodayCampingsLoaded) {
-                          print("reload");
                           return true;
                         } else {
                           return false;
@@ -135,96 +133,24 @@ class DashBoardPageState extends State<DashBoardPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        RecommandCampingWidget(
-                          campingList: ResponseGetCampings(content: [Content.fromJson({
-                            "contentId": 3,
-                            "name": "(주)데일리랜드",
-                            "viewCount": 0,
-                            "addr": "강원 춘천시 동산면 윗성골길 36\t",
-                            "phoneNumber": "",
-                            "type": "자동차야영장",
-                            "operationSeasons": "봄,여름,가을",
-                            "operationDays": "평일+주말",
-                            "reservationWay": "온라인실시간예약",
-                            "nearbyFacilitiesAvailable": "",
-                            "facilities": "전기,무선인터넷,장작판매,온수,물놀이장,마트.편의점",
-                            "longitude": "127.845655",
-                            "latitude": "37.7584857",
-                            "operationType": "민간",
-                            "environments": [
-                              {
-                                "id": 11,
-                                "name": "산"
-                              },
-                              {
-                                "id": 12,
-                                "name": "숲"
-                              }
-                            ],
-                            "campingImages": [
-                              {
-                                "id": 1,
-                                "serialnum": "73241",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/1564sPF0r8iaRUY0czIIfPbU.jpg"
-                              },
-                              {
-                                "id": 2,
-                                "serialnum": "73242",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/708442rBFwS03LPGVZDPBkKq.jpg"
-                              },
-                              {
-                                "id": 3,
-                                "serialnum": "73243",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/6791ufBTEV41l7kb7jgUuvkF.jpg"
-                              },
-                              {
-                                "id": 4,
-                                "serialnum": "73244",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/1375PZXVu96W0fwfHkXakIRw.jpg"
-                              },
-                              {
-                                "id": 5,
-                                "serialnum": "73245",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/7272O0aoixJTF4WgTsdHeTL9.jpg"
-                              },
-                              {
-                                "id": 6,
-                                "serialnum": "73246",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/8844cWfyDrkNVCcTHYBZg7YF.jpg"
-                              },
-                              {
-                                "id": 7,
-                                "serialnum": "73247",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/0846MqRKEgSxpgVbUWajFyPG.jpg"
-                              },
-                              {
-                                "id": 8,
-                                "serialnum": "73248",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/9793Hxv0t4gp9xerRmglGqv1.jpg"
-                              },
-                              {
-                                "id": 9,
-                                "serialnum": "73249",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/3283SUdVlBtsaWEPfTGo9AMr.jpg"
-                              },
-                              {
-                                "id": 10,
-                                "serialnum": "73250",
-                                "modifiedtime": "2021-02-18 17:08:27",
-                                "imageUrl": "https://gocamping.or.kr/upload/camp/3/0383skBrThi4qQ3x95iXH7Mv.jpg"
-                              }
-                            ]
-                          })]),
-                        )
+                        BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                          builder: (context, state) {
+                            if (state is TodayCampingsLoaded) {
+                              return RecommandCampingWidget(
+                                campingList: ResponseGetCampings(content: [...state.campings]),
+                              );
+                            }
+                            return Container();
+                          },
+                          buildWhen: (previous, current) {
+                            if (current is TodayCampingsLoaded) {
+                              print("reload");
+                              return true;
+                            } else {
+                              return false;
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ),
