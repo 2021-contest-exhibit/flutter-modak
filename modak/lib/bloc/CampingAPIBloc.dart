@@ -36,6 +36,8 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
       yield* _mapGetCampingGoodsEvent(event);
     } else if (event is GetCampingEvent) {
       yield* _mapGetCampingEvent(event);
+    } else if (event is DeleteCampingGoodsEvent) {
+      yield* _mapDeleteCampingGoodEvent(event);
     }
   }
 
@@ -147,16 +149,16 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
   }
 
   Stream<CampingAPIState> _mapGetTodayCampingsEvent(GetTodayCampingsEvent event) async* {
-    var rnd = new Random();
-    List<Content> list = [];
-    for (; list.length < 3;) {
-      var response = await apiRepository.getCampings(contentId: rnd.nextInt(1000));
-      if (response != null && response.content.length > 0){
-        list.add(response.content[0]);
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      var campings = await apiRepository.getTodayCampings(uid, 0, 5);
+
+      if (campings != null && campings.content.length > 0) {
+        yield TodayCampingsLoaded(campings: campings.content);
       }
-    }
-    if (list.length > 0) {
-      yield TodayCampingsLoaded(campings: list);
+    } else {
+      yield Error();
     }
   }
 
@@ -200,12 +202,36 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
   Stream<CampingAPIState> _mapGetCampingEvent(GetCampingEvent event) async* {
     yield Loading();
 
-    var camping = await apiRepository.getCampings(contentId: event.contentId);
+    var uid = userRepository.getUserToken();
 
-    if (camping != null) {
-      yield CampingLoaded(campings: camping.content);
-    }else {
+    if (uid != null) {
+      var camping = await apiRepository.getCampings(contentId: event.contentId, email: uid);
+      print("good: ${camping!.content[0].isGoodByUser}");
+      print("id: ${camping.content[0].contentId}");
+
+      if (camping != null) {
+        yield CampingLoaded(campings: camping.content);
+      }else {
+        yield Error();
+      }
+    } else {
       yield Error();
+    }
+  }
+
+  Stream<CampingAPIState> _mapDeleteCampingGoodEvent(DeleteCampingGoodsEvent event) async* {
+    yield Loading();
+
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      var res = await apiRepository.deleteGoods(event.campingId, uid).onError((error, stackTrace) {
+        return null;
+      });
+
+      if (res != null) {
+        yield Error();
+      }
     }
   }
 }

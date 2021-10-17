@@ -23,6 +23,7 @@ class Content {
   String? longDescription;
   int? goodCount;
   String? thumbnailImageUrl;
+  bool? isGoodByUser;
   List<Environment>? environments;
   List<CampingImage>? campingImages;
 
@@ -44,6 +45,7 @@ class Content {
     this.shortDescription,
     this.longDescription,
     this.goodCount,
+    this.isGoodByUser,
     this.thumbnailImageUrl,
     this.environments,
     this.campingImages,

@@ -1,3 +1,4 @@
+import 'package:modak/rest/RequestDeleteGood.dart';
 import 'package:modak/rest/RequestPostUser.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 import 'package:modak/rest/ResponseGetCampingsEnvironments.dart';
@@ -22,7 +23,8 @@ abstract class RestClient {
       @Query("environmentName") String environmentName,
       @Query("operationType") String operationType,
       @Query("regionContains") String regionContains,
-      @Query("contentId") int contentId);
+      @Query("contentId") int contentId,
+      @Query("email") String email);
 
   @GET("/campings/regions")
   Future<ResponseGetCampingsRegions> getCampingsRegions();
@@ -41,4 +43,13 @@ abstract class RestClient {
 
   @POST("/good")
   Future<String> postGood(@Body() RequestPostGood requestPostGood);
+
+  @DELETE("/good")
+  Future<String> deleteGood(@Body() RequestDeleteGood requestDeleteGood);
+
+  @GET("/campings/recommendation/good")
+  Future<ResponseGetCampings> postCampingsRecommendationGood(@Query("email") String email, @Query("page") int page, @Query("size") int size);
+
+  @GET("/campings/recommendation/ai")
+  Future<ResponseGetCampings> postCampingsRecommendationAI(@Query("email") String email, @Query("page") int page, @Query("size") int size);
 }

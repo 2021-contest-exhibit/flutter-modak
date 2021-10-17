@@ -17,7 +17,7 @@ class _RestClient implements RestClient {
 
   @override
   Future<ResponseGetCampings> getCampings(page, size, environmentName,
-      operationType, regionContains, contentId) async {
+      operationType, regionContains, contentId, email) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -25,7 +25,8 @@ class _RestClient implements RestClient {
       r'environmentName': environmentName,
       r'operationType': operationType,
       r'regionContains': regionContains,
-      r'contentId': contentId
+      r'contentId': contentId,
+      r'email': email
     };
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -125,6 +126,61 @@ class _RestClient implements RestClient {
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data!;
+    return value;
+  }
+
+  @override
+  Future<String> deleteGood(requestDeleteGood) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(requestDeleteGood.toJson());
+    final _result = await _dio.fetch<String>(_setStreamType<String>(
+        Options(method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '/good',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
+    return value;
+  }
+
+  @override
+  Future<ResponseGetCampings> postCampingsRecommendationGood(
+      email, page, size) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'email': email,
+      r'page': page,
+      r'size': size
+    };
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseGetCampings>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/campings/recommendation/good',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ResponseGetCampings.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ResponseGetCampings> postCampingsRecommendationAI(
+      email, page, size) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'email': email,
+      r'page': page,
+      r'size': size
+    };
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseGetCampings>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/campings/recommendation/ai',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ResponseGetCampings.fromJson(_result.data!);
     return value;
   }
 

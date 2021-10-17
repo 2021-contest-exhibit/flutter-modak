@@ -57,3 +57,13 @@ class GetCampingGoodsEvent extends CampingAPIEvent {
   List<Object?> get props => [];
 
 }
+
+class DeleteCampingGoodsEvent extends CampingAPIEvent {
+  final int campingId;
+
+  DeleteCampingGoodsEvent({required this.campingId});
+
+  @override
+  List<Object?> get props => [];
+
+}

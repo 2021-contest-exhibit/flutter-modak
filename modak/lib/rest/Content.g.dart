@@ -25,6 +25,7 @@ Content _$ContentFromJson(Map<String, dynamic> json) {
     shortDescription: json['shortDescription'] as String?,
     longDescription: json['longDescription'] as String?,
     goodCount: json['goodCount'] as int?,
+    isGoodByUser: json['isGoodByUser'] as bool?,
     thumbnailImageUrl: json['thumbnailImageUrl'] as String?,
     environments: (json['environments'] as List<dynamic>?)
         ?.map((e) => Environment.fromJson(e as Map<String, dynamic>))
@@ -54,6 +55,7 @@ Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
       'longDescription': instance.longDescription,
       'goodCount': instance.goodCount,
       'thumbnailImageUrl': instance.thumbnailImageUrl,
+      'isGoodByUser': instance.isGoodByUser,
       'environments': instance.environments,
       'campingImages': instance.campingImages,
     };
