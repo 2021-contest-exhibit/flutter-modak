@@ -1,5 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/CampingAPIBloc.dart';
+import 'package:modak/bloc/CampingAPIEvent.dart';
+import 'package:modak/bloc/CampingAPIState.dart';
+import 'package:modak/component/RecommandCampingWidget.dart';
+import 'package:modak/rest/ResponseGetCampings.dart';
 
 
 void main() {
@@ -25,7 +31,10 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
 
   @override
   void initState() {
-
+    String searchData = widget.argument['search_data'];
+    BlocProvider.of<CampingAPIBloc>(context).add(
+      GetCampingsEvent(nameContains:searchData),
+    );
   }
 
   @override
@@ -78,6 +87,24 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
               ),
             ),
           ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              children: [
+                BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                  builder: (context, state) {
+                    if (state is CampingsLoaded) {
+                      return RecommandCampingWidget(
+                        campingList: ResponseGetCampings(content: state.content),
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+              ],
+            ),
+          ),
+
         ],
       ),
     );
