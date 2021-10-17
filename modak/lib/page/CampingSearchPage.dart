@@ -113,7 +113,7 @@ class CampingFilterPageState extends State<CampingFilterPage> {
                     icon: Icon(Icons.search),
                     color: Colors.black,
                     onPressed: () {
-                      Navigator.pushNamed(context, '/camping_search_result', arguments: widget._searchController.text);
+                      Navigator.pushNamed(context, '/camping_search_result', arguments: {'search_data': widget._searchController.text} );
                     },
                   ),
                 ],
