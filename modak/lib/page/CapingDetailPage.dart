@@ -1,5 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/CampingAPIBloc.dart';
+import 'package:modak/bloc/CampingAPIEvent.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
 void main() {
@@ -21,6 +25,8 @@ class CampingDetailPage extends StatefulWidget {
 }
 
 class CampingDetailPageState extends State<CampingDetailPage> {
+
+
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
@@ -82,25 +88,37 @@ class CampingDetailPageState extends State<CampingDetailPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  args.name!,
-                  style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                Container(
+                  child: AutoSizeText(
+                    args.name!,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                  ),
+                  width: _width - 40,
                 )
               ],
             ),
+          ),
+          SizedBox(
+            height: 12.0,
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Icon(
-                  Icons.favorite,
-                  color: Colors.red,
+                InkWell(
+                  onTap: () {
+                    BlocProvider.of<CampingAPIBloc>(context).add(GetCampingGoodsEvent(campingId: args.contentId));
+                  },
+                  child: Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                  ),
                 ),
                 SizedBox(width: 4.0,),
                 Text(
-                  args.viewCount.toString(),
+                  "${args.viewCount}",
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 )
               ],

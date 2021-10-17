@@ -38,3 +38,14 @@ class TodayCampingsLoaded extends CampingAPIState {
   @override
   List<Object?> get props => [];
 }
+
+class CampingFavoriteLoaded extends CampingAPIState {
+  final int favorite;
+
+  CampingFavoriteLoaded({required this.favorite});
+
+  @override
+  List<Object?> get props => [];
+
+
+}

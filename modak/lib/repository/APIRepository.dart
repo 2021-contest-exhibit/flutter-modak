@@ -1,11 +1,13 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:modak/rest/RequestPostGood.dart';
 import 'package:modak/rest/RequestPostUser.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 import 'package:modak/rest/ResponseGetCampingsEnvironments.dart';
 import 'package:modak/rest/ResponseGetCampingsOperationTypes.dart';
 import 'package:modak/rest/ResponseGetCampingsRegions.dart';
+import 'package:modak/rest/ResponseGetUser.dart';
 import 'package:modak/rest/RestClient.dart';
 
 class APIRepository {
@@ -34,4 +36,11 @@ class APIRepository {
     return restClient.postUser(RequestPostUser(email: email));
   }
 
+  Future<ResponseGetUser> getUserFavorite(String email) {
+    return restClient.getUser(email);
+  }
+
+  Future<String> getGoods(int contentId, String email) {
+    return restClient.postGood(RequestPostGood(contentId: contentId, email: email));
+  }
 }
