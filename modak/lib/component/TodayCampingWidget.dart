@@ -10,9 +10,9 @@ import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
 class TodayCompingWidget extends StatefulWidget {
-  List<Camping> recipeList;
+  List<Content> campingList;
 
-  TodayCompingWidget({required this.recipeList});
+  TodayCompingWidget({required this.campingList});
 
   @override
   _TodayCompingWidgetState createState() => _TodayCompingWidgetState();
@@ -55,8 +55,8 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
                 height: 174,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0), bottomRight: Radius.circular(15.0)),
-                  child: (content.campingImages != null && content.campingImages!.length > 0) ? Image.network(
-                    content.campingImages![0].imageUrl,
+                  child: (content.thumbnailImageUrl != null && content.thumbnailImageUrl != "") ? Image.network(
+                    content.thumbnailImageUrl!,
                     fit: BoxFit.fitHeight,
                   ) : Center(child: Image.asset('image/logo_black.png',width: 48.0, height: 48.0,)),
                 ),
@@ -112,19 +112,12 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
       child: Column(
         children: [
           Expanded(
-            child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
-              builder: (context, state) {
-                if (state is TodayCampingsLoaded) {
-                  return ListView.builder(
-                    itemCount: state.campings.length,
-                    scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return _campingItemWidget(index, state.campings[index]);
-                    },
-                  );
-                }
-                return Container();
+            child: ListView.builder(
+              itemCount: widget.campingList.length,
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return _campingItemWidget(index, widget.campingList[index]);
               },
             ),
           ),
@@ -133,10 +126,4 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
     );
   }
 
-  @override
-  void initState() {
-    BlocProvider.of<CampingAPIBloc>(context).add(
-      GetTodayCampingsEvent()
-    );
-  }
 }

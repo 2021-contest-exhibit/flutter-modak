@@ -8,6 +8,7 @@ import 'package:modak/repository/APIRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
 import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
+import 'package:modak/rest/ResponseGetUser.dart';
 
 class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
   final APIRepository apiRepository;
@@ -33,6 +34,10 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
       yield* _mapGetUserGoodsEvent(event);
     } else if (event is GetCampingGoodsEvent) {
       yield* _mapGetCampingGoodsEvent(event);
+    } else if (event is GetCampingEvent) {
+      yield* _mapGetCampingEvent(event);
+    } else if (event is DeleteCampingGoodsEvent) {
+      yield* _mapDeleteCampingGoodEvent(event);
     }
   }
 
@@ -145,16 +150,30 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
   }
 
   Stream<CampingAPIState> _mapGetTodayCampingsEvent(GetTodayCampingsEvent event) async* {
-    var rnd = new Random();
-    List<Content> list = [];
-    for (; list.length < 3;) {
-      var response = await apiRepository.getCampings(contentId: rnd.nextInt(1000));
-      if (response != null && response.content.length > 0){
-        list.add(response.content[0]);
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      var campings = await apiRepository.getTodayCampings(uid, 0, 5);
+
+      if (campings != null && campings.content.length > 0) {
+        yield TodayCampingsLoaded(campings: campings.content);
       }
+    } else {
+      yield Error();
     }
-    if (list.length > 0) {
-      yield TodayCampingsLoaded(campings: list);
+  }
+
+  Stream<CampingAPIState> _mapGetRecommandCampingsEvent(GetTodayCampingsEvent event) async* {
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      var campings = await apiRepository.getTodayCampings(uid, 0, 5);
+
+      if (campings != null && campings.content.length > 0) {
+        yield TodayCampingsLoaded(campings: campings.content);
+      }
+    } else {
+      yield Error();
     }
   }
 
@@ -166,6 +185,17 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     if (uid != null) {
       var goods = await apiRepository.getUserFavorite(uid);
       print('goods: ${goods.content[0].goods[0].camping}');
+      List<Good> campings = await Stream.fromIterable(goods.content[0].goods).asyncMap((e) async {
+        var camping = await apiRepository.getCampings(contentId: e.camping.contentId);
+        if (camping != null) {
+          return Good(id: 0, camping: camping.content[0]);
+        } else {
+          return null;
+        }
+      }).where((event) => event != null).toList() as List<Good>;
+
+      goods.content[0].goods = campings;
+
       yield UserGoodsLoaded(user: goods);
     } else {
       yield Error();
@@ -181,6 +211,42 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
       await apiRepository.getGoods(event.campingId, uid);
     } else {
       yield Error();
+    }
+  }
+
+  Stream<CampingAPIState> _mapGetCampingEvent(GetCampingEvent event) async* {
+    yield Loading();
+
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      var camping = await apiRepository.getCampings(contentId: event.contentId, email: uid);
+      print("good: ${camping!.content[0].isGoodByUser}");
+      print("id: ${camping.content[0].contentId}");
+
+      if (camping != null) {
+        yield CampingLoaded(campings: camping.content);
+      }else {
+        yield Error();
+      }
+    } else {
+      yield Error();
+    }
+  }
+
+  Stream<CampingAPIState> _mapDeleteCampingGoodEvent(DeleteCampingGoodsEvent event) async* {
+    yield Loading();
+
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      var res = await apiRepository.deleteGoods(event.campingId, uid).onError((error, stackTrace) {
+        return null;
+      });
+
+      if (res != null) {
+        yield Error();
+      }
     }
   }
 }

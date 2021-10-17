@@ -1,6 +1,7 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:modak/rest/RequestDeleteGood.dart';
 import 'package:modak/rest/RequestPostGood.dart';
 import 'package:modak/rest/RequestPostUser.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
@@ -18,6 +19,13 @@ class APIRepository {
 
   Future<ResponseGetCampings?> getCampings({environmentName, operationType, regionContains, contentId, email, nameContains}) {
     return restClient.getCampings(0, 10, environmentName, operationType, regionContains, contentId, email, nameContains);
+
+  Future<ResponseGetCampings?> getTodayCampings(String email, int page, int size) {
+    return restClient.postCampingsRecommendationGood(email, page, size);
+  }
+
+  Future<ResponseGetCampings?> getRecommandCampings(String email, int page, int size) {
+    return restClient.postCampingsRecommendationAI(email, page, size);
   }
 
   Future<ResponseGetCampingsRegions?> getCampingsRegions() {
@@ -42,5 +50,9 @@ class APIRepository {
 
   Future<String> getGoods(int contentId, String email) {
     return restClient.postGood(RequestPostGood(contentId: contentId, email: email));
+  }
+
+  Future<String?> deleteGoods(int contentId, String email) {
+    return restClient.deleteGood(RequestDeleteGood(contentId: contentId, email: email));
   }
 }
