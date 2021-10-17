@@ -43,7 +43,7 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
 
   Stream<CampingAPIState> _mapGetCampingsEvent(GetCampingsEvent event) async* {
     print("_mapGetCampingsEvent");
-    yield Loading();
+    yield SearchLoading();
 
     var response = await apiRepository.getCampings(nameContains: event.nameContains).onError((error, stackTrace) {
       print(error.toString());
