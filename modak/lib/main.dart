@@ -82,7 +82,9 @@ class MyApp extends StatelessWidget {
           '/camping_detail': (context) => CampingDetailPage(),
           '/create_matching': (context) => CreateMatchingPage(),
           '/goods': (context) => GoodsPage(),
-          '/camping_search_result': (context) => CampingSearchResultPage(),
+          '/camping_search_result': (context) => CampingSearchResultPage(
+            argument: ModalRoute.of(context)!.settings.arguments as Map
+          ),
         },
       ),
     );

@@ -13,6 +13,9 @@ void main() {
 }
 
 class CampingSearchResultPage extends StatefulWidget {
+  final argument;
+
+  CampingSearchResultPage({this.argument});
 
   @override
   CampingSearchResultPageState createState() => CampingSearchResultPageState();
@@ -22,13 +25,13 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
 
   @override
   void initState() {
+
   }
 
   @override
   Widget build(BuildContext context) {
     final double _width = MediaQuery.of(context).size.width;
     final double _contentWidth = _width - 40;
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
 
 
 
@@ -67,7 +70,7 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      args['search_data'],
+                      widget.argument['search_data'],
                       style: TextStyle(color: Colors.black, fontSize: 18 ),
                     ),
                   ),
