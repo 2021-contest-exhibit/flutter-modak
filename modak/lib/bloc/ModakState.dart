@@ -15,6 +15,16 @@ class Loading extends ModakState {
   List<Object?> get props => [];
 }
 
+class MyMatchingLoading extends ModakState {
+  @override
+  List<Object?> get props => [];
+}
+
+class MatchingLoading extends ModakState {
+  @override
+  List<Object?> get props => [];
+}
+
 class Error extends ModakState {
   final String message;
 
@@ -38,4 +48,13 @@ class MatchingLoaded extends ModakState {
   @override
   List<Object?> get props => [];
 
+}
+
+class MyMatchingLoaded extends ModakState {
+  final List<ModakMatching>? matchings;
+
+  MyMatchingLoaded({this.matchings});
+
+  @override
+  List<Object?> get props => [];
 }

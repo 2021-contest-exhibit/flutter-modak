@@ -38,11 +38,11 @@ class FireStoreRepository {
     });
   }
 
-  Future<List<Matching>?> loadMyMatching(String uid) {
+  Future<List<Map<String, Matching>>?> loadMyMatching(String uid) {
     CollectionReference matchings = store.collection("matchings");
-    return matchings.where("user", isEqualTo: uid).orderBy("createDate", descending: true).get().then((value) async {
-      return value.docs.map((e) {
-        return Matching.fromJson(e.data() as Map<String, dynamic>);
+    return matchings.where("user", isEqualTo: "0lN9Py0fVwUceep9DTqoQeoG7Fu1").get().then((value) async {
+      return value.docs.map((e) => {
+        e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
       }).toList();
     });
   }
