@@ -17,6 +17,11 @@ class MatchingPageState extends State<MatchingPage> {
   setIndex(int index) {
     setState(() {
       widget._selectedIndex = index;
+      if (index == 0) {
+        BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent());
+      } else if (index == 2) {
+        BlocProvider.of<ModakBloc>(context).add(LoadMyMatchingEvent());
+      }
     });
   }
 
@@ -99,22 +104,24 @@ class MatchingPageState extends State<MatchingPage> {
                     height: _contentHeight,
                     child: BlocBuilder<ModakBloc, ModakState>(
                       builder: (_, state) {
+                        print("state---: ${state}");
                         if (state is Empty) {
                           return Container();
-                        } else if (state is Loading) {
+                        } else if (state is MatchingLoading) {
                           return Center(child: CircularProgressIndicator());
                         } else if (state is Error) {
                           return Text("Error: " + state.message);
                         } else if (state is MatchingLoaded) {
                           return ListView.builder(
                             itemBuilder: (context, index) {
-                              print('matchingId: ${state.matchings![index].matchingId}');
                               return MatchingItemWidget(
                                 userName: state.matchings![index].email!,
                                 campingName:
                                     state.matchings![index].content!.name!,
-                                startDate: state.matchings![index].matching!.startDate,
-                                endDate: state.matchings![index].matching!.endDate,
+                                startDate:
+                                    state.matchings![index].matching!.startDate,
+                                endDate:
+                                    state.matchings![index].matching!.endDate,
                               );
                             },
                             itemCount: state.matchings!.length,
@@ -123,6 +130,7 @@ class MatchingPageState extends State<MatchingPage> {
                         }
                         return Container();
                       },
+                      buildWhen: (previous, current) => current is MatchingLoading || current is MatchingLoaded,
                     ),
                   ),
                 ),
@@ -152,21 +160,24 @@ class MatchingPageState extends State<MatchingPage> {
                     height: _contentHeight,
                     child: BlocBuilder<ModakBloc, ModakState>(
                       builder: (_, state) {
+                        print('mymatching');
                         if (state is Empty) {
                           return Container();
-                        } else if (state is Loading) {
+                        } else if (state is MyMatchingLoading) {
                           return Center(child: CircularProgressIndicator());
                         } else if (state is Error) {
                           return Text("Error: " + state.message);
-                        } else if (state is MatchingLoaded) {
+                        } else if (state is MyMatchingLoaded) {
                           return ListView.builder(
                             itemBuilder: (context, index) {
                               return MatchingItemWidget(
                                 userName: state.matchings![index].email!,
                                 campingName:
-                                state.matchings![index].content!.name!,
-                                startDate: state.matchings![index].matching!.startDate,
-                                endDate: state.matchings![index].matching!.endDate,
+                                    state.matchings![index].content!.name!,
+                                startDate:
+                                    state.matchings![index].matching!.startDate,
+                                endDate:
+                                    state.matchings![index].matching!.endDate,
                               );
                             },
                             itemCount: state.matchings!.length,
@@ -175,6 +186,7 @@ class MatchingPageState extends State<MatchingPage> {
                         }
                         return Container();
                       },
+                      buildWhen: (previous, current) => current is MyMatchingLoading || current is MyMatchingLoaded,
                     ),
                   ),
                 ),
@@ -200,5 +212,6 @@ class MatchingPageState extends State<MatchingPage> {
   @override
   void initState() {
     BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent());
+    BlocProvider.of<ModakBloc>(context).add(LoadMyMatchingEvent());
   }
 }
