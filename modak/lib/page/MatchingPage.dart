@@ -108,6 +108,7 @@ class MatchingPageState extends State<MatchingPage> {
                         } else if (state is MatchingLoaded) {
                           return ListView.builder(
                             itemBuilder: (context, index) {
+                              print('matchingId: ${state.matchings![index].matchingId}');
                               return MatchingItemWidget(
                                 userName: state.matchings![index].email!,
                                 campingName:

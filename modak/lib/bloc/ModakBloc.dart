@@ -60,8 +60,8 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
 
     if (response != null && uid != null && email != null) {
       var matchings = await Stream.fromIterable(response).asyncMap((e) async {
-        var campings = await apiRepository.getCampings(contentId: e.campingId);
-        return ModakMatching(matching: e, content: campings!.content[0], email: email, uid: uid);
+        var campings = await apiRepository.getCampings(contentId: e[e.keys.first]!.campingId);
+        return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: email, uid: uid, matchingId: e.keys.first);
       }).toList();
       yield MatchingLoaded(matchings: matchings);
     } else {
