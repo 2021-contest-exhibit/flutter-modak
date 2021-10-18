@@ -224,7 +224,7 @@ class CreateMatchingPageState extends State<CreateMatchingPage> {
             OutlinedButton(
               onPressed: () async {
                 BlocProvider.of<ModakBloc>(context).add(
-                  CreateMatchingEvent(matching: Matching(createDate: DateTime.now(), startDate: _selectedStartDay!, endDate: _selectedEndDay!, campingId: selectedCamping.contentId))
+                  CreateMatchingEvent(createDate: DateTime.now(), startDate: _selectedStartDay!, endDate: _selectedEndDay!, campingId: selectedCamping.contentId)
                 );
                 await BlocProvider.of<ModakBloc>(context).stream.map((state) {
                   if (state is Empty) {
