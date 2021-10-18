@@ -1,6 +1,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:modak/dto/Matching.dart';
+import 'package:modak/dto/ModakMatching.dart';
 
 abstract class ModakState extends Equatable {}
 
@@ -30,10 +31,9 @@ class Loaded extends ModakState {
 }
 
 class MatchingLoaded extends ModakState {
-  final List<Matching>? matchings;
-  final List<Matching>? myMatchings;
+  final List<ModakMatching>? matchings;
 
-  MatchingLoaded({this.matchings, this.myMatchings});
+  MatchingLoaded({this.matchings});
 
   @override
   List<Object?> get props => [];

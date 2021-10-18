@@ -5,9 +5,12 @@ import 'package:modak/dto/Matching.dart';
 abstract class ModakEvent extends Equatable{}
 
 class CreateMatchingEvent extends ModakEvent {
-  Matching matching;
+  int campingId;
+  DateTime startDate;
+  DateTime endDate;
+  DateTime createDate;
 
-  CreateMatchingEvent({required this.matching});
+  CreateMatchingEvent({required this.campingId, required this.startDate, required this.endDate, required this.createDate});
 
   @override
   List<Object?> get props => [];

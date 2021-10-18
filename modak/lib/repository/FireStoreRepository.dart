@@ -29,10 +29,12 @@ class FireStoreRepository {
     });
   }
 
-  Future<List<Matching>?> loadMatching() {
+  Future<List<Map<String, Matching>>?> loadMatching() {
     CollectionReference matchings = store.collection("matchings");
     return matchings.orderBy("createDate", descending: true).limit(10).get().then((value) async {
-      return value.docs.map((e) => Matching.fromJson(e.data() as Map<String, dynamic>)).toList();
+      return value.docs.map((e) => {
+        e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
+      }).toList();
     });
   }
 
