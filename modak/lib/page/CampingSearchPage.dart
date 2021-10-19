@@ -23,11 +23,23 @@ class CampingSearchPage extends StatefulWidget {
 }
 
 class CampingSearchPageState extends State<CampingSearchPage> {
+  var toggleMap = {};
+
   Widget _filterButton(String title) {
     return Container(
       margin: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          setState(() {
+
+            if(!toggleMap.containsKey(title)) {
+              toggleMap[title] = true;
+            } else {
+              toggleMap[title] = !(toggleMap[title] as bool);
+            }
+
+          });
+        },
         child: Ink(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
           child: Text(
@@ -36,7 +48,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
             style: TextStyle(color: Colors.black),
           ),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: !toggleMap.containsKey(title) || toggleMap[title] as bool == false ? Colors.white : Theme.of(context).primaryColor,
             borderRadius: BorderRadius.all(
               Radius.circular(2.0),
             ),
