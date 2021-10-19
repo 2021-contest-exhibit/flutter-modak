@@ -10,6 +10,7 @@ import 'package:modak/bloc/ModakBloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/page/CampingSearchResultPage.dart';
 import 'package:modak/page/CapingDetailPage.dart';
+import 'package:modak/page/ChattingPage.dart';
 import 'package:modak/page/CreateMatchingPage.dart';
 import 'package:modak/page/DashBoardPage.dart';
 import 'package:modak/page/GoodsPage.dart';
@@ -85,6 +86,7 @@ class MyApp extends StatelessWidget {
           '/camping_search_result': (context) => CampingSearchResultPage(
             argument: ModalRoute.of(context)!.settings.arguments as Map
           ),
+          '/chatting': (context) => ChattingPage(),
         },
       ),
     );
