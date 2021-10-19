@@ -246,7 +246,9 @@ class PaymentPageState extends State<PaymentPage> {
                         height: 24.0,
                       ),
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/chatting");
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
