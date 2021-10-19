@@ -56,12 +56,9 @@ class MatchingPageState extends State<MatchingPage> {
                         child: Text(
                           "최근",
                           style: TextStyle(
-                              fontSize:
-                                  widget._selectedIndex == 0 ? 28.0 : 24.0,
-                              fontWeight: FontWeight.bold,
-                              decoration: widget._selectedIndex == 0
-                                  ? TextDecoration.overline
-                                  : TextDecoration.none),
+                            fontSize: widget._selectedIndex == 0 ? 28.0 : 24.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       InkWell(
@@ -73,9 +70,6 @@ class MatchingPageState extends State<MatchingPage> {
                           style: TextStyle(
                             fontSize: widget._selectedIndex == 1 ? 28.0 : 24.0,
                             fontWeight: FontWeight.bold,
-                            decoration: widget._selectedIndex == 1
-                                ? TextDecoration.overline
-                                : TextDecoration.none,
                           ),
                         ),
                       ),
@@ -88,9 +82,6 @@ class MatchingPageState extends State<MatchingPage> {
                           style: TextStyle(
                             fontSize: widget._selectedIndex == 2 ? 28.0 : 24.0,
                             fontWeight: FontWeight.bold,
-                            decoration: widget._selectedIndex == 2
-                                ? TextDecoration.overline
-                                : TextDecoration.none,
                           ),
                         ),
                       ),
@@ -130,7 +121,9 @@ class MatchingPageState extends State<MatchingPage> {
                         }
                         return Container();
                       },
-                      buildWhen: (previous, current) => current is MatchingLoading || current is MatchingLoaded,
+                      buildWhen: (previous, current) =>
+                          current is MatchingLoading ||
+                          current is MatchingLoaded,
                     ),
                   ),
                 ),
@@ -186,7 +179,9 @@ class MatchingPageState extends State<MatchingPage> {
                         }
                         return Container();
                       },
-                      buildWhen: (previous, current) => current is MyMatchingLoading || current is MyMatchingLoaded,
+                      buildWhen: (previous, current) =>
+                          current is MyMatchingLoading ||
+                          current is MyMatchingLoaded,
                     ),
                   ),
                 ),
