@@ -25,7 +25,7 @@ class CampingSearchPage extends StatefulWidget {
 class CampingSearchPageState extends State<CampingSearchPage> {
   var toggleMap = {};
   var maxCountMap = {"region": 1, "operationType": 1, "environment": 1};
-  var currentCountMap = {"region": 0, "operationType": 0, "environment": 0};
+  var currentMap = {"region": {}, "operationType": {}, "environment": {}};
 
   Widget _filterButton(String title, String type) {
     return Container(
@@ -33,21 +33,29 @@ class CampingSearchPageState extends State<CampingSearchPage> {
       child: InkWell(
         onTap: () {
           setState(() {
+
+
             if (toggleMap[title] == false) {
-              var currentCount = currentCountMap[type] as int;
+              var current = currentMap[type] as Map;
               var maxCount = maxCountMap[type] as int;
 
-              if (maxCount > currentCount) {
+              if (maxCount > current.length) {
                 toggleMap[title] = true;
-                currentCountMap[type] = currentCount + 1;
+
+                current[title] = true;
+                currentMap[type] = current;
               } else {
                 print("더이상 누를 수 없습니다!");
               }
             } else {
               toggleMap[title] = false;
-              currentCountMap[type] =
-                  (currentCountMap[type] as int) - 1;
+
+              var current = currentMap[type] as Map;
+              current.remove(title);
+              currentMap[type] = current;
             }
+
+            print(currentMap["region"].toString() + currentMap["operationType"].toString() + currentMap["environment"].toString());
           });
         },
         child: Ink(
@@ -144,7 +152,10 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                         onPressed: () {
                           Navigator.pushNamed(context, '/camping_search_result',
                               arguments: {
-                                'search_data': widget._searchController.text
+                                'search_data': widget._searchController.text,
+                                'regionMap': currentMap["region"] as Map,
+                                "operationTypeMap": currentMap["operationType"] as Map,
+                                "environmentMap": currentMap["environment"] as Map
                               });
                         },
                       ),

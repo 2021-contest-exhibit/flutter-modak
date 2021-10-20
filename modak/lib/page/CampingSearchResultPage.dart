@@ -32,6 +32,12 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
   @override
   void initState() {
     String searchData = widget.argument['search_data'];
+    Map regionMap = widget.argument['regionMap'];
+    Map operationTypeMap = widget.argument['operationTypeMap'];
+    Map environmentMap = widget.argument['environmentMap'];
+
+    print(regionMap.toString() + operationTypeMap.toString() + environmentMap.toString() + "test");
+
     BlocProvider.of<CampingAPIBloc>(context).add(
       GetCampingsEvent(nameContains:searchData),
     );
