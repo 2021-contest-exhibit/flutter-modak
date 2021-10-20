@@ -45,7 +45,17 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     print("_mapGetCampingsEvent");
     yield SearchLoading();
 
-    var response = await apiRepository.getCampings(nameContains: event.nameContains).onError((error, stackTrace) {
+
+    String region = "";
+    String environment = "";
+    String operationType = "";
+
+    event.regionMap.keys.forEach((element) { region = element as String; });
+    event.environmentMap.keys.forEach((element) { environment = element as String; });
+    event.operationTypeMap.keys.forEach((element) { operationType = element as String;});
+
+
+    var response = await apiRepository.getCampings(nameContains: event.nameContains, regionContains: region, environmentName: environment, operationType: operationType).onError((error, stackTrace) {
       print(error.toString());
       print(stackTrace);
       return null;

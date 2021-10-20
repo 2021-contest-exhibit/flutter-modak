@@ -7,7 +7,6 @@ import 'package:modak/bloc/CampingAPIState.dart';
 import 'package:modak/component/RecommandCampingWidget.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
-
 void main() {
   runApp(MaterialApp(
     home: Scaffold(
@@ -28,7 +27,6 @@ class CampingSearchResultPage extends StatefulWidget {
 }
 
 class CampingSearchResultPageState extends State<CampingSearchResultPage> {
-
   @override
   void initState() {
     String searchData = widget.argument['search_data'];
@@ -36,10 +34,13 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
     Map operationTypeMap = widget.argument['operationTypeMap'];
     Map environmentMap = widget.argument['environmentMap'];
 
-    print(regionMap.toString() + operationTypeMap.toString() + environmentMap.toString() + "test");
 
     BlocProvider.of<CampingAPIBloc>(context).add(
-      GetCampingsEvent(nameContains:searchData),
+      GetCampingsEvent(
+          nameContains: searchData,
+          regionMap: regionMap,
+          operationTypeMap: operationTypeMap,
+          environmentMap: environmentMap),
     );
   }
 
@@ -47,8 +48,6 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
   Widget build(BuildContext context) {
     final double _width = MediaQuery.of(context).size.width;
     final double _contentWidth = _width - 40;
-
-
 
     return Scaffold(
       body: ListView(
@@ -86,7 +85,7 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
                     },
                     child: Text(
                       widget.argument['search_data'],
-                      style: TextStyle(color: Colors.black, fontSize: 18 ),
+                      style: TextStyle(color: Colors.black, fontSize: 18),
                     ),
                   ),
                 ],
@@ -101,7 +100,8 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
                   builder: (context, state) {
                     if (state is CampingsLoaded) {
                       return RecommandCampingWidget(
-                        campingList: ResponseGetCampings(content: state.content),
+                        campingList:
+                            ResponseGetCampings(content: state.content),
                       );
                     }
                     return Container();
@@ -110,7 +110,6 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
               ],
             ),
           ),
-
         ],
       ),
     );

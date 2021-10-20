@@ -6,8 +6,11 @@ abstract class CampingAPIEvent extends Equatable{}
 
 class GetCampingsEvent extends CampingAPIEvent {
   String nameContains;
+  Map regionMap;
+  Map operationTypeMap;
+  Map environmentMap;
 
-  GetCampingsEvent({required this.nameContains});
+  GetCampingsEvent({required this.nameContains, required this.regionMap, required this.operationTypeMap, required this.environmentMap});
 
   @override
   List<Object?> get props => [];
