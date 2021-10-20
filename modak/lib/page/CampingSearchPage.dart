@@ -24,30 +24,29 @@ class CampingSearchPage extends StatefulWidget {
 
 class CampingSearchPageState extends State<CampingSearchPage> {
   var toggleMap = {};
-  var typeMap = {};
   var maxCountMap = {"region": 1, "operationType": 1, "environment": 1};
   var currentCountMap = {"region": 0, "operationType": 0, "environment": 0};
 
-  Widget _filterButton(String title) {
+  Widget _filterButton(String title, String type) {
     return Container(
       margin: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
           setState(() {
             if (toggleMap[title] == false) {
-              var currentCount = currentCountMap[typeMap[title]] as int;
-              var maxCount = maxCountMap[typeMap[title]] as int;
+              var currentCount = currentCountMap[type] as int;
+              var maxCount = maxCountMap[type] as int;
 
               if (maxCount > currentCount) {
                 toggleMap[title] = true;
-                currentCountMap[typeMap[title]] = currentCount + 1;
+                currentCountMap[type] = currentCount + 1;
               } else {
                 print("더이상 누를 수 없습니다!");
               }
             } else {
               toggleMap[title] = false;
-              currentCountMap[typeMap[title]] =
-                  (currentCountMap[typeMap[title]] as int) - 1;
+              currentCountMap[type] =
+                  (currentCountMap[type] as int) - 1;
             }
           });
         },
@@ -193,8 +192,8 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                                   children: List.generate(
                                           7,
                                           (i) => _filterButton(
-                                              state.dataRegions![i])) +
-                                      [_filterButton("+더보기")])),
+                                              state.dataRegions![i], "region")) +
+                                      [_filterButton("+더보기", "+")])),
                         ],
                       );
                     }
@@ -248,7 +247,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                                   children: List.generate(
                                       state.dataOperationTypes!.length,
                                       (i) => _filterButton(
-                                          state.dataOperationTypes![i])))),
+                                          state.dataOperationTypes![i], "operationType")))),
                         ],
                       );
                     }
@@ -298,7 +297,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                                   children: List.generate(
                                       state.dataEnvironments!.length,
                                       (i) => _filterButton(
-                                          state.dataEnvironments![i])))),
+                                          state.dataEnvironments![i], "environment")))),
                         ],
                       );
                     }
@@ -330,15 +329,12 @@ class CampingSearchPageState extends State<CampingSearchPage> {
             buildWhen: (previous, current) {
               if(current is Loaded) {
                 current.dataRegions!.forEach((element) {
-                  typeMap[element] = "region";
                   toggleMap[element] = false;
                 });
                 current.dataEnvironments!.forEach((element) {
-                  typeMap[element] = "environment";
                   toggleMap[element] = false;
                 });
                 current.dataOperationTypes!.forEach((element) {
-                  typeMap[element] = "operationType";
                   toggleMap[element] = false;
                 });
               }
