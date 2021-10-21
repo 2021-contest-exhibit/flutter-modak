@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
     userRepository = UserRepository(auth: auth);
     apiRepository = APIRepository(dio: dio, restClient: restClient);
     fireStoreRepository = FireStoreRepository(store: store);
+    store.collection('chattings').snapshots(includeMetadataChanges: true);
   }
 
   @override

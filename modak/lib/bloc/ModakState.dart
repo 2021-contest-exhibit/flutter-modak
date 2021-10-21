@@ -1,6 +1,8 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:modak/dto/Chat.dart';
 import 'package:modak/dto/Matching.dart';
+import 'package:modak/dto/ModakChat.dart';
 import 'package:modak/dto/ModakMatching.dart';
 
 abstract class ModakState extends Equatable {}
@@ -21,6 +23,11 @@ class MyMatchingLoading extends ModakState {
 }
 
 class MatchingLoading extends ModakState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ChattingLoading extends ModakState {
   @override
   List<Object?> get props => [];
 }
@@ -57,4 +64,15 @@ class MyMatchingLoaded extends ModakState {
 
   @override
   List<Object?> get props => [];
+}
+
+class ChattingLoaded extends ModakState {
+  final List<ModakChat>? chatList;
+
+  ChattingLoaded({required this.chatList});
+
+  @override
+  List<Object?> get props => [];
+
+
 }
