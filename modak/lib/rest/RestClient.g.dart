@@ -41,6 +41,27 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<ResponseGetCampings> findCampings(
+      page, size, email, findCampingsRequestDto) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'size': size,
+      r'email': email
+    };
+    final _data = <String, dynamic>{};
+    _data.addAll(findCampingsRequestDto.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseGetCampings>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/find-campings',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ResponseGetCampings.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ResponseGetCampingsRegions> getCampingsRegions() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

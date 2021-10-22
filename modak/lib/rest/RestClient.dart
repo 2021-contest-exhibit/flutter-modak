@@ -1,3 +1,4 @@
+import 'package:modak/rest/FindCampingsRequestDto.dart';
 import 'package:modak/rest/RequestDeleteGood.dart';
 import 'package:modak/rest/RequestPostUser.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
@@ -26,6 +27,13 @@ abstract class RestClient {
       @Query("contentId") int contentId,
       @Query("email") String email,
       @Query("nameContains") String nameContains);
+
+  @POST("/find-campings")
+  Future<ResponseGetCampings> findCampings(
+      @Query("page") int page,
+      @Query("size") int size,
+      @Query("email") String email,
+      @Body() FindCampingsRequestDto findCampingsRequestDto);
 
   @GET("/campings/regions")
   Future<ResponseGetCampingsRegions> getCampingsRegions();

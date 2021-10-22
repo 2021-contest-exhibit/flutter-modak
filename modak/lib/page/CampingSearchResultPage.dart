@@ -36,7 +36,7 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
 
 
     BlocProvider.of<CampingAPIBloc>(context).add(
-      GetCampingsEvent(
+      FindCampinsEvent(
           nameContains: searchData,
           regionMap: regionMap,
           operationTypeMap: operationTypeMap,
