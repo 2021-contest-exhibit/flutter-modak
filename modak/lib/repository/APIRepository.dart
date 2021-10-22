@@ -30,12 +30,12 @@ class APIRepository {
         nameContains);
   }
 
-  Future<ResponseGetCampings?> findCampingsByList({email, operationTypeEqual, regionContains, environmentEqual}) {
+  Future<ResponseGetCampings?> findCampingsByList({email, operationTypeEqual, regionContains, environmentEqual, nameContains}) {
     return restClient.findCampings(
       0,
       10,
       email,
-      FindCampingsRequestDto(operationTypeEqual: operationTypeEqual, regionContains: regionContains, environmentEqual: environmentEqual)
+      FindCampingsRequestDto(operationTypeEqual: operationTypeEqual, regionContains: regionContains, environmentEqual: environmentEqual, nameContains: nameContains)
     );
   }
 

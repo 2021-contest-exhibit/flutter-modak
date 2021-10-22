@@ -18,6 +18,7 @@ FindCampingsRequestDto _$FindCampingsRequestDtoFromJson(
     environmentEqual: (json['environmentEqual'] as List<dynamic>)
         .map((e) => e as String)
         .toList(),
+    nameContains: json['nameContains'] as String,
   );
 }
 
@@ -27,4 +28,5 @@ Map<String, dynamic> _$FindCampingsRequestDtoToJson(
       'operationTypeEqual': instance.operationTypeEqual,
       'regionContains': instance.regionContains,
       'environmentEqual': instance.environmentEqual,
+      'nameContains': instance.nameContains,
     };
