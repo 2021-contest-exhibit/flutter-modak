@@ -37,10 +37,15 @@ class DashBoardPageState extends State<DashBoardPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                    },
-                    icon: const Icon(Icons.menu),
+                  Container(
+                    margin: EdgeInsets.only(left:10),
+                    child: Text(
+                      'Modak',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   IconButton(
                     onPressed: () {
@@ -64,26 +69,9 @@ class DashBoardPageState extends State<DashBoardPage> {
                     child: Row(
                       children: [
                         Text(
-                          'Modak',
-                          style: TextStyle(
-                            fontSize: 48,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 36,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      children: [
-                        Text(
                           '오늘의 캠핑 추천',
                           style: TextStyle(
-                            fontSize: 24.0,
+                            fontSize: 30.0,
                             fontWeight: FontWeight.bold,
                           ),
                         )
@@ -121,7 +109,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                         Text(
                           '나만의 캠핑 추천',
                           style: TextStyle(
-                            fontSize: 24.0,
+                            fontSize: 30.0,
                             fontWeight: FontWeight.bold,
                           ),
                         )
