@@ -34,7 +34,7 @@ class MatchingPageState extends State<MatchingPage> {
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
     final double _height = MediaQuery.of(context).size.height;
     final double _titleHeight = 48.0;
-    final double _contentHeight = _height - _statusBarHeight - 100;
+    final double _contentHeight = _height - _statusBarHeight - 112 - 9;
     final double _contentWidth = _width;
 
     return Scaffold(
@@ -45,25 +45,25 @@ class MatchingPageState extends State<MatchingPage> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 5.0,
+                  height: 12.0,
                 ),
-                Center(
-                  child: Text(
-                    "매칭 하기",
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                // Center(
+                //   child: Text(
+                //     "매칭 하기",
+                //     style: TextStyle(
+                //       fontSize: 24.0,
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 9.0,
                 ),
-                Divider(
-                  thickness: 0.1,
-                  color: Colors.black,
-                  height: 0.1,
-                ),
+                // Divider(
+                //   thickness: 0.1,
+                //   color: Colors.black,
+                //   height: 0.1,
+                // ),
                 const SizedBox(
                   height: 9.0,
                 ),
@@ -127,13 +127,13 @@ class MatchingPageState extends State<MatchingPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 9.0,
+                  height: 18.0,
                 ),
-                Divider(
-                  thickness: 0.1,
-                  color: Colors.black,
-                  height: 0.1,
-                ),
+                // Divider(
+                //   thickness: 0.1,
+                //   color: Colors.black,
+                //   height: 0.1,
+                // ),
                 Visibility(
                   visible: widget._selectedIndex == 0,
                   child: Container(

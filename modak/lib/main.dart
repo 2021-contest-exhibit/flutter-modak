@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: Color(0xffFEF01B),
+          primaryColor: Color(0xff000000),
           fontFamily: 'NotoSansCJKkr',
         ),
         initialRoute: '/splash',

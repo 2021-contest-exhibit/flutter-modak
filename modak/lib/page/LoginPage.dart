@@ -230,7 +230,7 @@ class LoginPageState extends State<LoginPage> {
                   },
                   child: Text(
                     "회원가입",
-                    style: TextStyle(color: Color(0xff87360C)),
+                    style: TextStyle(color: Theme.of(context).primaryColor),
                   ))
             ],
           ),

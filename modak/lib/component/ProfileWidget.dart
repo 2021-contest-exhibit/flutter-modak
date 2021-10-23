@@ -136,7 +136,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
                             style: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.resolveWith((states) {
-                                return Color(0xff87360C);
+                                return Theme.of(context).primaryColor;
                               }),
                               foregroundColor:
                                   MaterialStateProperty.resolveWith((states) {
@@ -151,7 +151,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
                 ],
               ),
               decoration: BoxDecoration(
-                color: Color(0x2087360C),
+                color: Color(0x20363636),
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
               ),
             ),

@@ -63,7 +63,10 @@ class CampingSearchPageState extends State<CampingSearchPage> {
           child: Text(
             title,
             maxLines: 1,
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: !toggleMap.containsKey(title) ||
+                toggleMap[title] as bool == false
+                ? Theme.of(context).primaryColor
+                : Colors.white),
           ),
           decoration: BoxDecoration(
             color: !toggleMap.containsKey(title) ||
@@ -105,7 +108,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
             physics: BouncingScrollPhysics(),
             children: [
               SizedBox(
-                height: 48.0,
+                height: 24.0,
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -121,13 +124,16 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                         MaterialStateProperty.resolveWith((states) {
                       return Colors.white;
                     }),
+                    padding: MaterialStateProperty.resolveWith((states) {
+                      return EdgeInsets.all(0);
+                    }),
                   ),
                   onPressed: () {},
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        width: _contentWidth * 0.7,
+                        width: _contentWidth - 40 - 24,
                         child: TextField(
                           controller: widget._searchController,
                           cursorColor: Colors.black,
