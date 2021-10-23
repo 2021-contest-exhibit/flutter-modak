@@ -11,6 +11,10 @@ import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
 class DashBoardPage extends StatefulWidget {
+  final PageController pageController;
+
+  DashBoardPage({required this.pageController});
+
   @override
   DashBoardPageState createState() => DashBoardPageState();
 }
@@ -35,13 +39,12 @@ class DashBoardPageState extends State<DashBoardPage> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
                     },
                     icon: const Icon(Icons.menu),
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      widget.pageController.jumpToPage(2);
                     },
                     icon: const Icon(Icons.search),
                   ),
