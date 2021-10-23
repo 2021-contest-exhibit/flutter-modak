@@ -33,6 +33,27 @@ class LoadMyMatchingEvent extends ModakEvent {
   List<Object?> get props => [];
 }
 
+class LoadJoinMatchingEvent extends ModakEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class LoadIsJoinMatchingEvent extends ModakEvent {
+  String matchingId;
+
+  LoadIsJoinMatchingEvent({required this.matchingId});
+  @override
+  List<Object?> get props => [matchingId];
+}
+
+class JoinMatchingEvent extends ModakEvent {
+  String matchingId;
+
+  JoinMatchingEvent({required this.matchingId});
+  @override
+  List<Object?> get props => [matchingId];
+}
+
 class LoadChattingEvent extends ModakEvent {
   String matchingId;
   List<Chat> values;

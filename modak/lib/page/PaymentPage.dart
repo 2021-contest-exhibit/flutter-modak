@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/ModakBloc.dart';
+import 'package:modak/bloc/ModakEvent.dart';
+import 'package:modak/bloc/ModakState.dart';
 import 'package:modak/dto/ModakMatching.dart';
 
 void main() {
@@ -252,7 +255,9 @@ class PaymentPageState extends State<PaymentPage> {
                       ),
                       OutlinedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, "/chatting", arguments: widget.modakMatching.matchingId);
+                          BlocProvider.of<ModakBloc>(context).add(
+                            JoinMatchingEvent(matchingId: widget.modakMatching.matchingId!)
+                          );
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -284,6 +289,32 @@ class PaymentPageState extends State<PaymentPage> {
                 ),
               ],
             ),
+          ),
+          BlocBuilder<ModakBloc, ModakState>(
+            builder: (_, state) {
+              if (state is Loading) {
+                return Container(
+                  color: Color(0x44232323),
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+              return Container();
+            },
+            buildWhen: (previous, current) {
+              print('state: ${current}');
+              if (current is Error) {
+                print("error");
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(current.message)));
+              } else if (current is MachingJoined) {
+                if (current.isJoined) {
+                  print('current: ${current.isJoined}');
+                  Navigator.pushNamed(context, "/chatting", arguments: widget.modakMatching.matchingId);
+                }
+                return false;
+              }
+              return true;
+            },
           )
         ],
       ),
