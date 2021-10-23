@@ -1,24 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modak/dto/ModakMatching.dart';
 
 void main() {
   runApp(MaterialApp(
     home: Scaffold(
       body: Center(
-        child: MatchingItemWidget(campingName: "", endDate: DateTime.now(), startDate: DateTime.now(), userName: "", matchingId: '',),
+        child: MatchingItemWidget(modakMatching: ModakMatching(),),
       ),
     ),
   ));
 }
 
 class MatchingItemWidget extends StatefulWidget {
-  final String userName;
-  final String campingName;
-  final String matchingId;
-  final DateTime startDate;
-  final DateTime endDate;
+  final ModakMatching modakMatching;
 
-  MatchingItemWidget({required this.userName, required this.campingName, required this.startDate, required this.endDate, required this.matchingId});
+  MatchingItemWidget({required this.modakMatching});
 
   @override
   MatchingItemWidgetState createState() => MatchingItemWidgetState();
@@ -48,14 +45,14 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                   width: 24,
                 ),
                 Text(
-                  widget.userName,
+                  widget.modakMatching.content!.name!,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ],
             ),
           ),
           Image.network(
-            "https://www.gocamping.or.kr/upload/camp/1335/thumb/thumb_720_3379YLFxXAtV0MZwiq1wms7p.jpg",
+            widget.modakMatching.content!.thumbnailImageUrl!,
             height: 240,
             width: _width,
             fit: BoxFit.fitWidth,
@@ -69,7 +66,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.campingName,
+                      widget.modakMatching.content!.name!,
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16.0),
                     ),
@@ -77,14 +74,14 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                       height: 2.0,
                     ),
                     Text(
-                      "${widget.startDate.year}.${widget.startDate.month}.${widget.startDate.day} ~ ${widget.endDate.year}.${widget.endDate.month}.${widget.endDate.day}",
+                      "${widget.modakMatching.matching!.startDate.year}.${widget.modakMatching.matching!.startDate.month}.${widget.modakMatching.matching!.startDate.day} ~ ${widget.modakMatching.matching!.endDate.year}.${widget.modakMatching.matching!.endDate.month}.${widget.modakMatching.matching!.endDate.day}",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
                 OutlinedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/payment", arguments: widget.matchingId);
+                    Navigator.pushNamed(context, "/payment", arguments: widget.modakMatching);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

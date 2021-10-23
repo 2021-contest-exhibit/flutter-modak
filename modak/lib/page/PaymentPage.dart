@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/ModakBloc.dart';
+import 'package:modak/dto/ModakMatching.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -11,7 +12,7 @@ void main() {
 }
 
 class PaymentPage extends StatefulWidget {
-  late String matchingId;
+  late ModakMatching modakMatching;
   @override
   PaymentPageState createState() => PaymentPageState();
 }
@@ -30,7 +31,7 @@ class PaymentPageState extends State<PaymentPage> {
             child: ListView(
               children: [
                 Image.network(
-                  "https://www.gocamping.or.kr/upload/camp/1335/thumb/thumb_720_3379YLFxXAtV0MZwiq1wms7p.jpg",
+                  widget.modakMatching.content!.thumbnailImageUrl!,
                   height: 340,
                   fit: BoxFit.fitHeight,
                 ),
@@ -53,7 +54,7 @@ class PaymentPageState extends State<PaymentPage> {
                             width: 24,
                           ),
                           Text(
-                            "ysy3350",
+                            widget.modakMatching.email!,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18),
                           ),
@@ -82,7 +83,7 @@ class PaymentPageState extends State<PaymentPage> {
                             width: 12.0,
                           ),
                           Text(
-                            "별빛누리캠핑장",
+                            widget.modakMatching.content!.name!,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -113,7 +114,7 @@ class PaymentPageState extends State<PaymentPage> {
                             width: 12.0,
                           ),
                           Text(
-                            "2021.07.01 ~ 2021.07.05",
+                            "${widget.modakMatching.matching!.startDate.year}.${widget.modakMatching.matching!.startDate.month}.${widget.modakMatching.matching!.startDate.day} ~ ${widget.modakMatching.matching!.endDate.year}.${widget.modakMatching.matching!.endDate.month}.${widget.modakMatching.matching!.endDate.day}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -251,7 +252,7 @@ class PaymentPageState extends State<PaymentPage> {
                       ),
                       OutlinedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, "/chatting", arguments: widget.matchingId);
+                          Navigator.pushNamed(context, "/chatting", arguments: widget.modakMatching.matchingId);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -291,6 +292,6 @@ class PaymentPageState extends State<PaymentPage> {
 
   @override
   void didChangeDependencies() {
-    widget.matchingId = ModalRoute.of(context)!.settings.arguments as String;
+    widget.modakMatching = ModalRoute.of(context)!.settings.arguments as ModakMatching;
   }
 }
