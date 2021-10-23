@@ -43,7 +43,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                       'Modak',
                       style: TextStyle(
                         fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                        color:  Theme.of(context).primaryColor,
                       ),
                     ),
                   ),
@@ -69,10 +69,9 @@ class DashBoardPageState extends State<DashBoardPage> {
                     child: Row(
                       children: [
                         Text(
-                          '오늘의 캠핑 추천',
+                          'NEW & HOT',
                           style: TextStyle(
                             fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
                           ),
                         )
                       ],
@@ -107,10 +106,9 @@ class DashBoardPageState extends State<DashBoardPage> {
                     child: Row(
                       children: [
                         Text(
-                          '나만의 캠핑 추천',
+                          '추천 캠핑',
                           style: TextStyle(
                             fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
                           ),
                         )
                       ],
