@@ -28,126 +28,133 @@ class DashBoardPageState extends State<DashBoardPage> {
     final double _contentHeight = _height - _statusBarHeight - _titleHeight;
     return Scaffold(
       body: Container(
-        child: Column(
+        child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             Container(
               height: _titleHeight,
               margin:
                   EdgeInsets.only(top: _statusBarHeight, left: 4.0, right: 4.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Stack(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: Text(
-                      'MODAK',
-                      style: TextStyle(
-                          fontSize: 24,
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          widget.pageController.jumpToPage(2);
+                        },
+                        icon: const Icon(Icons.search, size: 28,),
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    onPressed: () {
-                      widget.pageController.jumpToPage(2);
-                    },
-                    icon: const Icon(Icons.search),
+                  Center(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'image/logo_black.png',
+                            width: 18.0,
+                            height: 18.0,
+                          ),
+                          Text(
+                            'MODAK',
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(
+              height: 64,
+            ),
             Container(
-              height: _contentHeight,
-              child: ListView(
-                physics: BouncingScrollPhysics(),
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
                 children: [
-                  const SizedBox(
-                    height: 36,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          'NEW & HOT',
-                          style: TextStyle(
-                              fontSize: 30.0, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 36,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
-                      builder: (context, state) {
-                        if (state is TodayCampingsLoaded) {
-                          return TodayCompingWidget(
-                              campingList: [...state.campings]);
-                        }
-                        return Container();
-                      },
-                      buildWhen: (previous, current) {
-                        if (current is TodayCampingsLoaded) {
-                          return true;
-                        } else {
-                          return false;
-                        }
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 36,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          '추천 캠핑',
-                          style: TextStyle(
-                              fontSize: 30.0, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 36,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        BlocBuilder<CampingAPIBloc, CampingAPIState>(
-                          builder: (context, state) {
-                            if (state is TodayCampingsLoaded) {
-                              return RecommandCampingWidget(
-                                campingList: ResponseGetCampings(
-                                    content: [...state.campings]),
-                              );
-                            }
-                            return Container();
-                          },
-                          buildWhen: (previous, current) {
-                            if (current is TodayCampingsLoaded) {
-                              print("reload");
-                              return true;
-                            } else {
-                              return false;
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 120,
+                  Text(
+                    'NEW & HOT',
+                    style: TextStyle(
+                        fontSize: 30.0, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 36,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                builder: (context, state) {
+                  if (state is TodayCampingsLoaded) {
+                    return TodayCompingWidget(
+                        campingList: [...state.campings]);
+                  }
+                  return Container();
+                },
+                buildWhen: (previous, current) {
+                  if (current is TodayCampingsLoaded) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 36,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    '추천 캠핑',
+                    style: TextStyle(
+                        fontSize: 30.0, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 36,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                    builder: (context, state) {
+                      if (state is TodayCampingsLoaded) {
+                        return RecommandCampingWidget(
+                          campingList: ResponseGetCampings(
+                              content: [...state.campings]),
+                        );
+                      }
+                      return Container();
+                    },
+                    buildWhen: (previous, current) {
+                      if (current is TodayCampingsLoaded) {
+                        print("reload");
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    },
                   ),
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 120,
             ),
           ],
         ),

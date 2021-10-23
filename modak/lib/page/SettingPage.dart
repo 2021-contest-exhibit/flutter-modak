@@ -105,17 +105,17 @@ class SettingPageState extends State<SettingPage> {
           const SizedBox(
             height: 40.0,
           ),
-          _menuButton(Icon(Icons.campaign), "공지사항", () {}),
+          _menuButton(Icon(Icons.campaign, color: Colors.black,), "공지사항", () {}),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.favorite), "좋아요", () {
+          _menuButton(Icon(Icons.favorite, color: Colors.red,), "좋아요", () {
             Navigator.pushNamed(context, '/goods');
           }),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.settings), "설정", () {}),
+          _menuButton(Icon(Icons.settings, color: Colors.grey,), "설정", () {}),
           const SizedBox(
             height: 20.0,
           ),

@@ -54,7 +54,7 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
         physics: BouncingScrollPhysics(),
         children: [
           SizedBox(
-            height: 48.0,
+            height: 24.0,
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -69,7 +69,9 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
                   return Colors.white;
                 }),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               child: Row(
                 children: [
                   IconButton(

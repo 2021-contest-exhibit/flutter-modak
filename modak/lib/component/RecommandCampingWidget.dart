@@ -74,7 +74,7 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
                         maxLines: 2,
                         style: const TextStyle(
                           color: const Color(0xff8f8f8f),
-                          fontSize: 8.0,
+                          fontSize: 12.0,
                         ),
                       ),
                     ),
