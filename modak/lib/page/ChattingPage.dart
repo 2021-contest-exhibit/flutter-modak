@@ -16,11 +16,9 @@ import 'package:modak/dto/ModakUser.dart';
 
 class ChattingPage extends StatefulWidget {
   final scrollController = ScrollController();
-  final PagingController<int, ModakChat> _pagingController =
-      PagingController(firstPageKey: 0);
   final textController = TextEditingController();
   bool isRequest = false;
-  late String _matchingId = "lHKC9XN6suYCNxQzFjJf";
+  late String _matchingId;
 
   List<ModakChat> _chatList = [];
   DocumentSnapshot? lastDocumentSnapshot;
@@ -113,6 +111,7 @@ class ChattingPageState extends State<ChattingPage> {
   @override
   void didChangeDependencies() {
     widget._matchingId = ModalRoute.of(context)!.settings.arguments as String;
+    print('================= ${widget._matchingId}');
     FirebaseFirestore.instance
         .collection('chattings')
         .where("matchingId", isEqualTo: widget._matchingId)

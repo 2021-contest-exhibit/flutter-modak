@@ -29,6 +29,12 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
       yield* _mapLoadChattingEvent(event);
     } else if (event is PushMessageEvent) {
       yield* _mapPushMessageEvent(event);
+    } else if (event is LoadJoinMatchingEvent) {
+      yield* _mapLoadJoinMatchingEvent(event);
+    } else if (event is LoadIsJoinMatchingEvent) {
+      yield* _mapLoadIsJoinMatchingEvent(event);
+    } else if (event is JoinMatchingEvent) {
+      yield* _mapJoinMatchingEvent(event);
     }
   }
 
@@ -113,6 +119,30 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
     }
   }
 
+  Stream<ModakState> _mapLoadJoinMatchingEvent(LoadJoinMatchingEvent event) async* {
+    yield JoinMatchingLoading();
+
+    var uid = userRepository.getUserToken();
+    var email = userRepository.getUserEmail();
+
+    if (uid != null && email != null) {
+      print('_mapLoadMyMatchingEvent');
+      print('uid: ${uid}');
+      var response = await fireStoreRepository.loadJoinMatchings(uid).onError((error, stackTrace) => null);
+      if (response != null) {
+        var matchings = await Stream.fromIterable(response).asyncMap((e) async {
+          var campings = await apiRepository.getCampings(contentId: e[e.keys.first]!.campingId);
+          return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: email, uid: uid, matchingId: e.keys.first);
+        }).toList();
+        yield JoinMatchingLoaded(matchings: matchings);
+      } else {
+        yield Error(message: 'response null');
+      }
+    } else {
+      yield Error(message: "로그인이 필요한 서비스 입니다.");
+    }
+  }
+
   Stream<ModakState> _mapLoadChattingEvent(LoadChattingEvent event) async* {
     yield ChattingLoading();
 
@@ -133,6 +163,36 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
     print('test: ${modakChat[0].chat!.toJson()}');
 
     yield ChattingLoaded(chatList: modakChat);
+  }
+
+  Stream<ModakState> _mapLoadIsJoinMatchingEvent(LoadIsJoinMatchingEvent event) async*{
+    yield IsJoinMatchingLoading();
+
+    var uid = userRepository.getUserToken();
+
+    if (uid != null){
+      var isJoined = await fireStoreRepository.loadIsJoinMatching(uid, event.matchingId);
+      print('isJoined : ${isJoined}');
+      yield IsJoinMatchingLoaded(isJoinMatching: isJoined, matchingId: event.matchingId);
+    } else {
+      yield Error(message: "로그인이 필요한 서비스 입니다.");
+    }
+
+  }
+
+  Stream<ModakState> _mapJoinMatchingEvent(JoinMatchingEvent event) async*{
+    yield JoinLoading();
+
+    var uid = userRepository.getUserToken();
+
+    if (uid != null){
+      var isJoined = await fireStoreRepository.joinMatching(uid, event.matchingId);
+      print('isJoined : ${isJoined}');
+      yield MachingJoined(isJoined: isJoined);
+    } else {
+      yield Error(message: "로그인이 필요한 서비스 입니다.");
+    }
+
   }
 
 }

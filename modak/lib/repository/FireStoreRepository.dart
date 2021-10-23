@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:modak/dto/Chat.dart';
 import 'package:modak/dto/Matching.dart';
+import 'package:modak/dto/ModakMatching.dart';
 import 'package:modak/dto/ModakUser.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
@@ -115,13 +116,30 @@ class FireStoreRepository {
     });
   }
 
-  Future<List<Matching>?> loadJoinMatchings() async {
+  Future<List<Map<String, Matching>>?> loadJoinMatchings(String uid) async {
     CollectionReference matchings = store.collection("matchings");
-    return matchings.where("userList", arrayContains: "Tg0dduxXYPeD9ZSat8LEbBaqOw53").get().then((value) async {
-      return value.docs.map((e) {
-        return Matching.fromJson(e.data() as Map<String, dynamic>);
+    return matchings.where("userList", arrayContains: uid).get().then((value) async {
+      return value.docs.map((e) => {
+        e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
       }).toList();
     });
   }
 
+  Future<bool> loadIsJoinMatching(String uid, String matchingId) async {
+    print('matchingId: ${matchingId}');
+    CollectionReference matchings = store.collection("matchings");
+    return matchings.doc(matchingId).get().then((value) {
+      return Matching.fromJson(value.data() as Map<String, dynamic>).userList!.where((element) => element == uid).length > 0;
+    });
+  }
+  
+  Future<bool> joinMatching(String uid, String matchingId) async {
+    CollectionReference matchings = store.collection("matchings");
+    return matchings.doc(matchingId).get().then((value) {
+      print(value);
+      var matching = Matching.fromJson(value.data() as Map<String, dynamic>)..userList!.add(uid);
+      matchings.doc(matchingId).set(matching.toJson());
+      return true;
+    });
+  }
 }

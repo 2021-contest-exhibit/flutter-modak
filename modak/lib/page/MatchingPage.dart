@@ -20,6 +20,8 @@ class MatchingPageState extends State<MatchingPage> {
       widget._selectedIndex = index;
       if (index == 0) {
         BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent());
+      } else if (index == 1) {
+        BlocProvider.of<ModakBloc>(context).add(LoadJoinMatchingEvent());
       } else if (index == 2) {
         BlocProvider.of<ModakBloc>(context).add(LoadMyMatchingEvent());
       }
@@ -127,14 +129,30 @@ class MatchingPageState extends State<MatchingPage> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20.0),
                     height: _contentHeight,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return MatchingItemWidget(
-                          modakMatching: ModakMatching(),
-                        );
+                    child: BlocBuilder<ModakBloc, ModakState>(
+                      builder: (_, state) {
+                        if (state is Empty) {
+                          return Container();
+                        } else if (state is JoinMatchingLoading) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (state is Error) {
+                          return Center(child: Text(state.message));
+                        } else if (state is JoinMatchingLoaded) {
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return MatchingItemWidget(
+                                modakMatching: state.matchings![index],
+                              );
+                            },
+                            itemCount: state.matchings!.length,
+                            physics: BouncingScrollPhysics(),
+                          );
+                        }
+                        return Container();
                       },
-                      itemCount: 0,
-                      physics: BouncingScrollPhysics(),
+                      buildWhen: (previous, current) =>
+                      current is JoinMatchingLoading ||
+                          current is JoinMatchingLoaded,
                     ),
                   ),
                 ),
@@ -194,5 +212,6 @@ class MatchingPageState extends State<MatchingPage> {
   void initState() {
     BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent());
     BlocProvider.of<ModakBloc>(context).add(LoadMyMatchingEvent());
+    BlocProvider.of<ModakBloc>(context).add(LoadJoinMatchingEvent());
   }
 }
