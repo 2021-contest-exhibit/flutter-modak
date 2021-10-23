@@ -269,7 +269,7 @@ class PaymentPageState extends State<PaymentPage> {
                             return Size(double.infinity, 48.0);
                           }),
                           backgroundColor: MaterialStateProperty.resolveWith((states) {
-                            return Color(0xff87360C);
+                            return Theme.of(context).primaryColor;
                           }),
                           foregroundColor: MaterialStateProperty.resolveWith((states) {
                             return Colors.white;
