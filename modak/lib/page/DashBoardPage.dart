@@ -38,13 +38,13 @@ class DashBoardPageState extends State<DashBoardPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left:10),
+                    margin: EdgeInsets.only(left: 10),
                     child: Text(
-                      'Modak',
+                      'MODAK',
                       style: TextStyle(
-                        fontSize: 24,
-                        color:  Theme.of(context).primaryColor,
-                      ),
+                          fontSize: 24,
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   IconButton(
@@ -71,8 +71,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                         Text(
                           'NEW & HOT',
                           style: TextStyle(
-                            fontSize: 30.0,
-                          ),
+                              fontSize: 30.0, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
@@ -85,7 +84,8 @@ class DashBoardPageState extends State<DashBoardPage> {
                     child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
                       builder: (context, state) {
                         if (state is TodayCampingsLoaded) {
-                          return TodayCompingWidget(campingList: [...state.campings]);
+                          return TodayCompingWidget(
+                              campingList: [...state.campings]);
                         }
                         return Container();
                       },
@@ -108,8 +108,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                         Text(
                           '추천 캠핑',
                           style: TextStyle(
-                            fontSize: 30.0,
-                          ),
+                              fontSize: 30.0, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
@@ -126,7 +125,8 @@ class DashBoardPageState extends State<DashBoardPage> {
                           builder: (context, state) {
                             if (state is TodayCampingsLoaded) {
                               return RecommandCampingWidget(
-                                campingList: ResponseGetCampings(content: [...state.campings]),
+                                campingList: ResponseGetCampings(
+                                    content: [...state.campings]),
                               );
                             }
                             return Container();
@@ -157,8 +157,6 @@ class DashBoardPageState extends State<DashBoardPage> {
 
   @override
   void initState() {
-    BlocProvider.of<CampingAPIBloc>(context).add(
-        GetTodayCampingsEvent()
-    );
+    BlocProvider.of<CampingAPIBloc>(context).add(GetTodayCampingsEvent());
   }
 }
