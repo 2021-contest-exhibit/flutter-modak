@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Color(0xffFFEA00),
-          fontFamily: 'Youth',
+          fontFamily: 'NotoSansCJKkr',
         ),
         initialRoute: '/splash',
         routes: {
