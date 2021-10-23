@@ -42,6 +42,15 @@ class MatchingPageState extends State<MatchingPage> {
             margin: EdgeInsets.only(top: _statusBarHeight),
             child: Column(
               children: [
+                Center(
+                  child: Text(
+                    "매칭 하기",
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   height: 18.0,
                 ),
@@ -55,10 +64,12 @@ class MatchingPageState extends State<MatchingPage> {
                           setIndex(0);
                         },
                         child: Text(
-                          "최근",
+                          "NEW",
                           style: TextStyle(
-                            fontSize: widget._selectedIndex == 0 ? 28.0 : 24.0,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 24.0,
+                            fontWeight: widget._selectedIndex == 0
+                                ? FontWeight.bold
+                                : null,
                           ),
                         ),
                       ),
@@ -67,10 +78,12 @@ class MatchingPageState extends State<MatchingPage> {
                           setIndex(1);
                         },
                         child: Text(
-                          "참여한캠핑",
+                          "JOINED",
                           style: TextStyle(
-                            fontSize: widget._selectedIndex == 1 ? 28.0 : 24.0,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 24.0,
+                            fontWeight: widget._selectedIndex == 1
+                                ? FontWeight.bold
+                                : null,
                           ),
                         ),
                       ),
@@ -79,10 +92,12 @@ class MatchingPageState extends State<MatchingPage> {
                           setIndex(2);
                         },
                         child: Text(
-                          "내캠핑",
+                          "MY",
                           style: TextStyle(
-                            fontSize: widget._selectedIndex == 2 ? 28.0 : 24.0,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 24.0,
+                            fontWeight: widget._selectedIndex == 2
+                                ? FontWeight.bold
+                                : null,
                           ),
                         ),
                       ),
