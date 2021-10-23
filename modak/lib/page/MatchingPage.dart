@@ -42,19 +42,31 @@ class MatchingPageState extends State<MatchingPage> {
             margin: EdgeInsets.only(top: _statusBarHeight),
             child: Column(
               children: [
+                const SizedBox(
+                  height: 5.0,
+                ),
                 Center(
                   child: Text(
                     "매칭 하기",
                     style: TextStyle(
-                      fontSize: 30.0,
+                      fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 18.0,
+                  height: 9.0,
+                ),
+                Divider(
+                  thickness: 0.1,
+                  color: Colors.black,
+                  height: 0.1,
+                ),
+                const SizedBox(
+                  height: 9.0,
                 ),
                 Container(
+                  height: 30,
                   padding: const EdgeInsets.symmetric(horizontal: 40.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,12 +78,16 @@ class MatchingPageState extends State<MatchingPage> {
                         child: Text(
                           "NEW",
                           style: TextStyle(
-                            fontSize: 24.0,
+                            fontSize: 20.0,
                             fontWeight: widget._selectedIndex == 0
                                 ? FontWeight.bold
                                 : null,
                           ),
                         ),
+                      ),
+                      VerticalDivider(
+                        thickness: 0.5,
+                        color: Colors.grey,
                       ),
                       InkWell(
                         onTap: () {
@@ -80,12 +96,16 @@ class MatchingPageState extends State<MatchingPage> {
                         child: Text(
                           "JOINED",
                           style: TextStyle(
-                            fontSize: 24.0,
+                            fontSize: 20.0,
                             fontWeight: widget._selectedIndex == 1
                                 ? FontWeight.bold
                                 : null,
                           ),
                         ),
+                      ),
+                      VerticalDivider(
+                        thickness: 0.5,
+                        color: Colors.grey,
                       ),
                       InkWell(
                         onTap: () {
@@ -94,7 +114,7 @@ class MatchingPageState extends State<MatchingPage> {
                         child: Text(
                           "MY",
                           style: TextStyle(
-                            fontSize: 24.0,
+                            fontSize: 20.0,
                             fontWeight: widget._selectedIndex == 2
                                 ? FontWeight.bold
                                 : null,
@@ -103,6 +123,14 @@ class MatchingPageState extends State<MatchingPage> {
                       ),
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: 9.0,
+                ),
+                Divider(
+                  thickness: 0.1,
+                  color: Colors.black,
+                  height: 0.1,
                 ),
                 Visibility(
                   visible: widget._selectedIndex == 0,
