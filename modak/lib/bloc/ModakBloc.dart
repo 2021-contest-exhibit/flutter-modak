@@ -27,7 +27,20 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
       yield* _mapLoadMyMatchingEvent(event);
     } else if (event is LoadChattingEvent) {
       yield* _mapLoadChattingEvent(event);
+    } else if (event is PushMessageEvent) {
+      yield* _mapPushMessageEvent(event);
     }
+  }
+
+  Stream<ModakState> _mapPushMessageEvent(PushMessageEvent event) async* {
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      await fireStoreRepository.appendChatting(event.matchingId, uid, event.message);
+    } else {
+      yield Error(message: "로그인 필요한 서비스입니다.");
+    }
+
   }
 
   Stream<ModakState>_mapCreateMatchingEvent(CreateMatchingEvent event) async* {
@@ -62,7 +75,7 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
 
     var uid = userRepository.getUserToken();
     var email = userRepository.getUserEmail();
-    var response = await fireStoreRepository.loadMatching().onError((error, stackTrace) => null);
+    var response = await fireStoreRepository.loadMatching(event.matchingId??"").onError((error, stackTrace) => null);
 
     if (response != null && uid != null && email != null) {
       var matchings = await Stream.fromIterable(response).asyncMap((e) async {

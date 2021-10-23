@@ -74,5 +74,4 @@ class ChattingLoaded extends ModakState {
   @override
   List<Object?> get props => [];
 
-
 }

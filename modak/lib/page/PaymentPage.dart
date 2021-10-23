@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/ModakBloc.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -9,11 +11,13 @@ void main() {
 }
 
 class PaymentPage extends StatefulWidget {
+  late String matchingId;
   @override
   PaymentPageState createState() => PaymentPageState();
 }
 
 class PaymentPageState extends State<PaymentPage> {
+
   @override
   Widget build(BuildContext context) {
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
@@ -247,7 +251,7 @@ class PaymentPageState extends State<PaymentPage> {
                       ),
                       OutlinedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, "/chatting");
+                          Navigator.pushNamed(context, "/chatting", arguments: widget.matchingId);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -283,5 +287,10 @@ class PaymentPageState extends State<PaymentPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    widget.matchingId = ModalRoute.of(context)!.settings.arguments as String;
   }
 }

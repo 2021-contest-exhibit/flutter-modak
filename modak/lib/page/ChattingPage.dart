@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +18,9 @@ class ChattingPage extends StatefulWidget {
   final scrollController = ScrollController();
   final PagingController<int, ModakChat> _pagingController =
       PagingController(firstPageKey: 0);
+  final textController = TextEditingController();
+  bool isRequest = false;
+  late String _matchingId = "lHKC9XN6suYCNxQzFjJf";
 
   List<ModakChat> _chatList = [];
   DocumentSnapshot? lastDocumentSnapshot;
@@ -24,18 +30,15 @@ class ChattingPage extends StatefulWidget {
 }
 
 class ChattingPageState extends State<ChattingPage> {
-  final Stream<QuerySnapshot> _chattingStream = FirebaseFirestore.instance
-      .collection('chattings')
-      .where("matchingId", isEqualTo: "lHKC9XN6suYCNxQzFjJf")
-      .orderBy("createDate", descending: true)
-      .snapshots();
+  final StreamController<List<ModakChat>> streamController =
+      new StreamController<List<ModakChat>>();
 
   Widget _ChatWidget(
       double maxSize, bool isMyMessage, String email, String message) {
     return Column(
       children: [
         SizedBox(
-          height: 24.0,
+          height: isMyMessage ? 12.0 : 24.0,
         ),
         Visibility(
           visible: !isMyMessage,
@@ -68,6 +71,9 @@ class ChattingPageState extends State<ChattingPage> {
             Container(
               width: maxSize,
               child: Row(
+                mainAxisAlignment: isMyMessage
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
                 children: [
                   Flexible(
                     child: Container(
@@ -99,45 +105,118 @@ class ChattingPageState extends State<ChattingPage> {
           ],
         ),
         SizedBox(
-          height: 24.0,
+          height: isMyMessage ? 12.0 : 24.0,
         ),
       ],
     );
   }
-
   @override
-  void initState() {
-    // BlocProvider.of<ModakBloc>(context).add(LoadChattingEvent(
-    //     matchingId: "lHKC9XN6suYCNxQzFjJf",
-    //     values: widget._chatList.map((e) => e.chat!).toList()));
+  void didChangeDependencies() {
+    widget._matchingId = ModalRoute.of(context)!.settings.arguments as String;
+    FirebaseFirestore.instance
+        .collection('chattings')
+        .where("matchingId", isEqualTo: widget._matchingId)
+        .orderBy("createDate", descending: true)
+        .snapshots()
+        .listen((event) {
+      event.docChanges.forEach((element) async {
+        if (element.type == DocumentChangeType.added) {
+          print("on changed");
+          var _chat = Chat.fromJson(element.doc.data()!);
+          print("changed :${_chat.toJson()}");
 
-    _chattingStream.listen((event) async {
-      print(event.docs[0].data());
-
-      List<ModakChat> list = [];
-
-      for (int i = 0; i < event.docs.length; i++) {
-        Chat _chat =
-            Chat.fromJson(event.docs[i].data() as Map<String, dynamic>);
-        print(_chat.toJson());
-
-        ModakChat modakChat = await FirebaseFirestore.instance
-            .collection('users')
-            .where("uid", isEqualTo: _chat.userId)
-            .get()
-            .then((value) {
-          print(value.docs[0]);
-          ModakUser _user = ModakUser.fromJson(value.docs[0].data());
-          return ModakChat(chat: _chat, modakUser: _user);
-        });
-        list.add(modakChat);
-      }
-
-      setState(() {
-        widget._chatList = list;
+          await FirebaseFirestore.instance
+              .collection("users")
+              .where("uid", isEqualTo: _chat.userId)
+              .get()
+              .then(
+                (value) {
+              var _modakChat = ModakChat(chat: _chat, modakUser: ModakUser.fromJson(value.docs[0].data()));
+              if (widget._chatList.length > 0) {
+                if (widget._chatList[0].chat!.createDate.isBefore(_modakChat.chat!.createDate)) {
+                  widget._chatList.insert(0, _modakChat);
+                  streamController.add(widget._chatList);
+                }
+              }else {
+                widget._chatList.insert(0, _modakChat);
+                streamController.add(widget._chatList);
+              }
+              requestNextPage();
+            },
+          );
+        }
       });
     });
-    super.initState();
+  }
+
+
+  void requestNextPage() {
+    if (!widget.isRequest){
+      setState(() {
+        widget.isRequest = true;
+      });
+      print((widget._chatList.length > 0
+          ? widget._chatList[widget._chatList.length - 1].chat!.createDate
+          .toIso8601String()
+          : DateTime.now().toIso8601String()));
+      FirebaseFirestore.instance
+          .collection('chattings')
+          .where("matchingId", isEqualTo: widget._matchingId)
+          .orderBy("createDate", descending: true)
+          .startAfter([
+        (widget._chatList.length > 0
+            ? widget._chatList[widget._chatList.length - 1].chat!.createDate
+            .toIso8601String()
+            : DateTime.now().toIso8601String())
+      ])
+          .limit(15)
+          .get()
+          .then(
+            (value) {
+          if (value.size < 1) {
+            setState(() {
+              widget.isRequest = false;
+            });
+            return;
+          }
+          value.docs.forEach(
+                (element) async {
+              print(element.data());
+              var _chat = Chat.fromJson(element.data());
+              final _modakChat = ModakChat(chat: _chat);
+              widget._chatList.add(_modakChat);
+              await FirebaseFirestore.instance
+                  .collection("users")
+                  .where("uid", isEqualTo: _chat.userId)
+                  .get()
+                  .then(
+                    (value) {
+                  var _modakUser = ModakUser.fromJson(value.docs[0].data());
+                  var index = widget._chatList.indexWhere((element) {
+                    return _modakChat.chat!.createDate ==
+                        element.chat!.createDate;
+                  });
+                  print(index);
+                  var _nModakChat =
+                  ModakChat(chat: _modakChat.chat, modakUser: _modakUser);
+
+                  print('user: ${_nModakChat.modakUser!.toJson()}');
+                  widget._chatList[index] = _nModakChat;
+                  print(
+                      "modified: ${widget._chatList[index].modakUser!.toJson()}");
+
+                  streamController.add(widget._chatList);
+                  setState(() {
+                    widget.isRequest = false;
+                  });
+                },
+              );
+            },
+          );
+        },
+      );
+    }
+
   }
 
   @override
@@ -152,29 +231,74 @@ class ChattingPageState extends State<ChattingPage> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Stack(
           children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: _height,
-              child: Container(
-                margin: const EdgeInsets.only(top: 24.0, bottom: 64.0),
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  reverse: true,
-                  itemCount: widget._chatList.length,
-                  itemBuilder: (context, index) {
-                    return _ChatWidget(
-                        _width / 2 - 40,
-                        false,
-                        widget._chatList[index].modakUser!.email,
-                        widget._chatList[index].chat!.message);
-                  },
+            NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (scrollInfo.metrics.maxScrollExtent-20 <
+                    scrollInfo.metrics.pixels) {
+                  requestNextPage();
+                }
+                return true;
+              },
+              child: Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: _height,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 48.0, bottom: 64.0),
+                  child: StreamBuilder(
+                    builder:
+                        (context, AsyncSnapshot<List<ModakChat>> snapshot) {
+                      return StreamBuilder<List<ModakChat>>(
+                        stream: streamController.stream,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Container();
+                          }
+                          return ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            reverse: true,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              var mUser = FirebaseAuth.instance.currentUser;
+                              var _uid = mUser != null ? mUser.uid : "";
+
+                              var chatUid =
+                                  snapshot.data![index].modakUser != null
+                                      ? snapshot.data![index].modakUser!.uid
+                                      : "";
+                              var chatEmail = mUser != null ? mUser.email : "";
+                              return _ChatWidget(
+                                  _width / 2 - 40,
+                                  mUser != null ? chatUid == _uid : false,
+                                  chatEmail!,
+                                  snapshot.data![index].chat!.message);
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
             Positioned(
-              top: _statusHeight,
+              top: _statusHeight + 20,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Visibility(
+                    child: CircularProgressIndicator(),
+                    visible: widget.isRequest,
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              top: _statusHeight + 20,
               child: Row(
                 children: [
                   InkWell(
@@ -197,6 +321,7 @@ class ChattingPageState extends State<ChattingPage> {
                     Container(
                       width: _width - 40 - 48,
                       child: TextField(
+                        controller: widget.textController,
                         cursorColor: Colors.black,
                         decoration: InputDecoration(
                           contentPadding:
@@ -216,12 +341,13 @@ class ChattingPageState extends State<ChattingPage> {
                     ),
                     IconButton(
                         onPressed: () {
-                          BlocProvider.of<ModakBloc>(context).add(
-                              LoadChattingEvent(
-                                  matchingId: "lHKC9XN6suYCNxQzFjJf",
-                                  values: widget._chatList
-                                      .map((e) => e.chat!)
-                                      .toList()));
+                          if (widget.textController.text != "") {
+                            BlocProvider.of<ModakBloc>(context).add(
+                                PushMessageEvent(
+                                    matchingId: widget._matchingId,
+                                    message: widget.textController.text));
+                            widget.textController.text = "";
+                          }
                         },
                         icon: Icon(Icons.send)),
                   ],
@@ -246,5 +372,11 @@ class ChattingPageState extends State<ChattingPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    streamController.close();
+    super.dispose();
   }
 }

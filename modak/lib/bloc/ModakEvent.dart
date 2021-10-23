@@ -20,6 +20,10 @@ class CreateMatchingEvent extends ModakEvent {
 }
 
 class LoadMatchingEvent extends ModakEvent {
+  String? matchingId;
+
+  LoadMatchingEvent({this.matchingId});
+
   @override
   List<Object?> get props => [];
 }
@@ -34,6 +38,17 @@ class LoadChattingEvent extends ModakEvent {
   List<Chat> values;
 
   LoadChattingEvent({required this.matchingId, required this.values});
+
+  @override
+  List<Object?> get props => [];
+
+}
+
+class PushMessageEvent extends ModakEvent {
+  String matchingId;
+  String message;
+
+  PushMessageEvent({required this.matchingId, required this.message});
 
   @override
   List<Object?> get props => [];

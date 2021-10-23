@@ -5,7 +5,7 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       body: Center(
-        child: MatchingItemWidget(campingName: "", endDate: DateTime.now(), startDate: DateTime.now(), userName: "",),
+        child: MatchingItemWidget(campingName: "", endDate: DateTime.now(), startDate: DateTime.now(), userName: "", matchingId: '',),
       ),
     ),
   ));
@@ -14,10 +14,11 @@ void main() {
 class MatchingItemWidget extends StatefulWidget {
   final String userName;
   final String campingName;
+  final String matchingId;
   final DateTime startDate;
   final DateTime endDate;
 
-  MatchingItemWidget({required this.userName, required this.campingName, required this.startDate, required this.endDate});
+  MatchingItemWidget({required this.userName, required this.campingName, required this.startDate, required this.endDate, required this.matchingId});
 
   @override
   MatchingItemWidgetState createState() => MatchingItemWidgetState();
@@ -83,7 +84,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                 ),
                 OutlinedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/payment");
+                    Navigator.pushNamed(context, "/payment", arguments: widget.matchingId);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

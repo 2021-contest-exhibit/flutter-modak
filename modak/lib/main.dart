@@ -9,7 +9,7 @@ import 'package:modak/bloc/CampingAPIBloc.dart';
 import 'package:modak/bloc/ModakBloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/page/CampingSearchResultPage.dart';
-import 'package:modak/page/CapingDetailPage.dart';
+import 'package:modak/page/CampingDetailPage.dart';
 import 'package:modak/page/ChattingPage.dart';
 import 'package:modak/page/CreateMatchingPage.dart';
 import 'package:modak/page/DashBoardPage.dart';

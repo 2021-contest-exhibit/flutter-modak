@@ -70,13 +70,24 @@ class FireStoreRepository {
     });
   }
 
-  Future<List<Map<String, Matching>>?> loadMatching() {
+  Future<List<Map<String, Matching>>?> loadMatching(String matchingId) {
     CollectionReference matchings = store.collection("matchings");
-    return matchings.orderBy("createDate").limit(10).get().then((value) async {
-      return value.docs.map((e) => {
-        e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
-      }).toList();
-    });
+    if (matchingId == "") {
+      return matchings.orderBy("createDate").limit(10).get().then((
+          value) async {
+        return value.docs.map((e) =>
+        {
+          e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
+        }).toList();
+      });
+    } else {
+      return matchings.orderBy("createDate").where("matchingId", isEqualTo: matchingId).limit(10).get().then((value) async {
+        return value.docs.map((e) =>
+        {
+          e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
+        }).toList();
+      });
+    }
   }
 
   Future<List<Map<String, Matching>>?> loadMyMatching(String uid) {

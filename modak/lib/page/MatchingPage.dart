@@ -113,6 +113,7 @@ class MatchingPageState extends State<MatchingPage> {
                                     state.matchings![index].matching!.startDate,
                                 endDate:
                                     state.matchings![index].matching!.endDate,
+                                matchingId: state.matchings![index].matchingId!,
                               );
                             },
                             itemCount: state.matchings!.length,
@@ -139,6 +140,7 @@ class MatchingPageState extends State<MatchingPage> {
                           endDate: DateTime.now(),
                           startDate: DateTime.now(),
                           userName: "",
+                          matchingId: "",
                         );
                       },
                       itemCount: 0,
@@ -171,6 +173,7 @@ class MatchingPageState extends State<MatchingPage> {
                                     state.matchings![index].matching!.startDate,
                                 endDate:
                                     state.matchings![index].matching!.endDate,
+                                matchingId: state.matchings![index].matchingId!,
                               );
                             },
                             itemCount: state.matchings!.length,
