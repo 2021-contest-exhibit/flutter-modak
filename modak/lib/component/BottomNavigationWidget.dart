@@ -59,10 +59,10 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                 children: [
                   IconButton(
                     icon: Icon(
-                      Icons.home_outlined,
-                      color: (widget.pageController.page??0).round() == 0
-                          ? Theme.of(context).primaryColor
-                          : Colors.black,
+                      (widget.pageController.page??0).round() == 0
+                          ? Icons.home
+                          : Icons.home_outlined,
+                      color: Colors.black
                     ),
                     iconSize: (widget.pageController.page??0).round() == 0 ? 36 : 32,
                     onPressed: () {
@@ -71,10 +71,10 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.people_outline,
-                      color: (widget.pageController.page??0).round() == 1
-                          ? Theme.of(context).primaryColor
-                          : Colors.black,
+                      (widget.pageController.page??0).round() == 1
+                          ? Icons.people
+                          : Icons.people_outline,
+                      color: Colors.black,
                     ),
                     iconSize: (widget.pageController.page??0).round() == 1 ? 36 : 32,
                     onPressed: () {
@@ -83,10 +83,10 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.search,
-                      color: (widget.pageController.page??0).round() == 2
-                          ? Theme.of(context).primaryColor
-                          : Colors.black,
+                      (widget.pageController.page??0).round() == 2
+                          ? Icons.search
+                          : Icons.search_outlined,
+                      color: Colors.black,
                     ),
                     iconSize: (widget.pageController.page??0).round() == 2 ? 36 : 32,
                     onPressed: () {
@@ -95,10 +95,10 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.more_horiz,
-                      color: (widget.pageController.page??0).round() == 3
-                          ? Theme.of(context).primaryColor
-                          : Colors.black,
+                      (widget.pageController.page??0).round() == 3
+                          ? Icons.more_horiz
+                          : Icons.more_horiz_outlined,
+                      color: Colors.black,
                     ),
                     iconSize: (widget.pageController.page??0).round() == 3 ? 36 : 32,
                     alignment: Alignment.center,

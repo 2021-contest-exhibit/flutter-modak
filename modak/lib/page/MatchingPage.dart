@@ -45,9 +45,30 @@ class MatchingPageState extends State<MatchingPage> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 18.0,
+                  height: 5.0,
+                ),
+                Center(
+                  child: Text(
+                    "매칭 하기",
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 9.0,
+                ),
+                Divider(
+                  thickness: 0.1,
+                  color: Colors.black,
+                  height: 0.1,
+                ),
+                const SizedBox(
+                  height: 9.0,
                 ),
                 Container(
+                  height: 30,
                   padding: const EdgeInsets.symmetric(horizontal: 40.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,39 +78,61 @@ class MatchingPageState extends State<MatchingPage> {
                           setIndex(0);
                         },
                         child: Text(
-                          "최근",
+                          "NEW",
                           style: TextStyle(
-                            fontSize: widget._selectedIndex == 0 ? 28.0 : 24.0,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            fontWeight: widget._selectedIndex == 0
+                                ? FontWeight.bold
+                                : null,
                           ),
                         ),
+                      ),
+                      VerticalDivider(
+                        thickness: 0.5,
+                        color: Colors.grey,
                       ),
                       InkWell(
                         onTap: () {
                           setIndex(1);
                         },
                         child: Text(
-                          "참여한캠핑",
+                          "JOINED",
                           style: TextStyle(
-                            fontSize: widget._selectedIndex == 1 ? 28.0 : 24.0,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            fontWeight: widget._selectedIndex == 1
+                                ? FontWeight.bold
+                                : null,
                           ),
                         ),
+                      ),
+                      VerticalDivider(
+                        thickness: 0.5,
+                        color: Colors.grey,
                       ),
                       InkWell(
                         onTap: () {
                           setIndex(2);
                         },
                         child: Text(
-                          "내캠핑",
+                          "MY",
                           style: TextStyle(
-                            fontSize: widget._selectedIndex == 2 ? 28.0 : 24.0,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            fontWeight: widget._selectedIndex == 2
+                                ? FontWeight.bold
+                                : null,
                           ),
                         ),
                       ),
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: 9.0,
+                ),
+                Divider(
+                  thickness: 0.1,
+                  color: Colors.black,
+                  height: 0.1,
                 ),
                 Visibility(
                   visible: widget._selectedIndex == 0,
