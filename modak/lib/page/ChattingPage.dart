@@ -1,18 +1,45 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:modak/bloc/ModakBloc.dart';
+import 'package:modak/bloc/ModakEvent.dart';
+import 'package:modak/bloc/ModakState.dart';
+import 'package:modak/dto/Chat.dart';
+import 'package:modak/dto/ModakChat.dart';
+import 'package:modak/dto/ModakUser.dart';
 
 class ChattingPage extends StatefulWidget {
+  final scrollController = ScrollController();
+  final PagingController<int, ModakChat> _pagingController =
+      PagingController(firstPageKey: 0);
+  final textController = TextEditingController();
+  bool isRequest = false;
+  late String _matchingId = "lHKC9XN6suYCNxQzFjJf";
+
+  List<ModakChat> _chatList = [];
+  DocumentSnapshot? lastDocumentSnapshot;
+
   @override
   ChattingPageState createState() => ChattingPageState();
 }
 
 class ChattingPageState extends State<ChattingPage> {
+  final StreamController<List<ModakChat>> streamController =
+      new StreamController<List<ModakChat>>();
 
-  Widget _ChatWidget(double maxSize, bool isMyMessage, String email, String message) {
+  Widget _ChatWidget(
+      double maxSize, bool isMyMessage, String email, String message) {
     return Column(
       children: [
-        SizedBox(height: 24.0,),
+        SizedBox(
+          height: isMyMessage ? 12.0 : 24.0,
+        ),
         Visibility(
           visible: !isMyMessage,
           child: Row(
@@ -24,23 +51,34 @@ class ChattingPageState extends State<ChattingPage> {
                     color: Color(0xff3F3F3F),
                     borderRadius: BorderRadius.all(Radius.circular(5))),
               ),
-              SizedBox(width: 4.0,),
+              SizedBox(
+                width: 4.0,
+              ),
               Text(email),
             ],
           ),
         ),
-        SizedBox(height: 8,),
+        SizedBox(
+          height: 8,
+        ),
         Row(
-          mainAxisAlignment: isMyMessage ? MainAxisAlignment.end: MainAxisAlignment.start,
+          mainAxisAlignment:
+              isMyMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: [
-            SizedBox(width: 4.0,),
+            SizedBox(
+              width: 4.0,
+            ),
             Container(
               width: maxSize,
               child: Row(
+                mainAxisAlignment: isMyMessage
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
                 children: [
                   Flexible(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 4.0),
                       child: AutoSizeText(
                         message,
                         overflow: TextOverflow.fade,
@@ -66,9 +104,119 @@ class ChattingPageState extends State<ChattingPage> {
             ),
           ],
         ),
-        SizedBox(height: 24.0,),
+        SizedBox(
+          height: isMyMessage ? 12.0 : 24.0,
+        ),
       ],
     );
+  }
+  @override
+  void didChangeDependencies() {
+    widget._matchingId = ModalRoute.of(context)!.settings.arguments as String;
+    FirebaseFirestore.instance
+        .collection('chattings')
+        .where("matchingId", isEqualTo: widget._matchingId)
+        .orderBy("createDate", descending: true)
+        .snapshots()
+        .listen((event) {
+      event.docChanges.forEach((element) async {
+        if (element.type == DocumentChangeType.added) {
+          print("on changed");
+          var _chat = Chat.fromJson(element.doc.data()!);
+          print("changed :${_chat.toJson()}");
+
+          await FirebaseFirestore.instance
+              .collection("users")
+              .where("uid", isEqualTo: _chat.userId)
+              .get()
+              .then(
+                (value) {
+              var _modakChat = ModakChat(chat: _chat, modakUser: ModakUser.fromJson(value.docs[0].data()));
+              if (widget._chatList.length > 0) {
+                if (widget._chatList[0].chat!.createDate.isBefore(_modakChat.chat!.createDate)) {
+                  widget._chatList.insert(0, _modakChat);
+                  streamController.add(widget._chatList);
+                }
+              }else {
+                widget._chatList.insert(0, _modakChat);
+                streamController.add(widget._chatList);
+              }
+              requestNextPage();
+            },
+          );
+        }
+      });
+    });
+  }
+
+
+  void requestNextPage() {
+    if (!widget.isRequest){
+      setState(() {
+        widget.isRequest = true;
+      });
+      print((widget._chatList.length > 0
+          ? widget._chatList[widget._chatList.length - 1].chat!.createDate
+          .toIso8601String()
+          : DateTime.now().toIso8601String()));
+      FirebaseFirestore.instance
+          .collection('chattings')
+          .where("matchingId", isEqualTo: widget._matchingId)
+          .orderBy("createDate", descending: true)
+          .startAfter([
+        (widget._chatList.length > 0
+            ? widget._chatList[widget._chatList.length - 1].chat!.createDate
+            .toIso8601String()
+            : DateTime.now().toIso8601String())
+      ])
+          .limit(15)
+          .get()
+          .then(
+            (value) {
+          if (value.size < 1) {
+            setState(() {
+              widget.isRequest = false;
+            });
+            return;
+          }
+          value.docs.forEach(
+                (element) async {
+              print(element.data());
+              var _chat = Chat.fromJson(element.data());
+              final _modakChat = ModakChat(chat: _chat);
+              widget._chatList.add(_modakChat);
+              await FirebaseFirestore.instance
+                  .collection("users")
+                  .where("uid", isEqualTo: _chat.userId)
+                  .get()
+                  .then(
+                    (value) {
+                  var _modakUser = ModakUser.fromJson(value.docs[0].data());
+                  var index = widget._chatList.indexWhere((element) {
+                    return _modakChat.chat!.createDate ==
+                        element.chat!.createDate;
+                  });
+                  print(index);
+                  var _nModakChat =
+                  ModakChat(chat: _modakChat.chat, modakUser: _modakUser);
+
+                  print('user: ${_nModakChat.modakUser!.toJson()}');
+                  widget._chatList[index] = _nModakChat;
+                  print(
+                      "modified: ${widget._chatList[index].modakUser!.toJson()}");
+
+                  streamController.add(widget._chatList);
+                  setState(() {
+                    widget.isRequest = false;
+                  });
+                },
+              );
+            },
+          );
+        },
+      );
+    }
+
   }
 
   @override
@@ -83,25 +231,74 @@ class ChattingPageState extends State<ChattingPage> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Stack(
           children: [
-            Container(
-              child: ListView(
-                physics: BouncingScrollPhysics(),
+            NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (scrollInfo.metrics.maxScrollExtent-20 <
+                    scrollInfo.metrics.pixels) {
+                  requestNextPage();
+                }
+                return true;
+              },
+              child: Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: _height,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 48.0, bottom: 64.0),
+                  child: StreamBuilder(
+                    builder:
+                        (context, AsyncSnapshot<List<ModakChat>> snapshot) {
+                      return StreamBuilder<List<ModakChat>>(
+                        stream: streamController.stream,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Container();
+                          }
+                          return ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            reverse: true,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              var mUser = FirebaseAuth.instance.currentUser;
+                              var _uid = mUser != null ? mUser.uid : "";
 
+                              var chatUid =
+                                  snapshot.data![index].modakUser != null
+                                      ? snapshot.data![index].modakUser!.uid
+                                      : "";
+                              var chatEmail = mUser != null ? mUser.email : "";
+                              return _ChatWidget(
+                                  _width / 2 - 40,
+                                  mUser != null ? chatUid == _uid : false,
+                                  chatEmail!,
+                                  snapshot.data![index].chat!.message);
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: _statusHeight + 20,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 24.0,),
-                  _ChatWidget(_width / 2 - 40, false, "test@test.com", "안녕하세요.얼미ㅏㅓㄴㅇ리ㅏㅓ미러ㅏㅁㄴㅇ러ㅏㄴㅁㄹㅁ"),
-                  _ChatWidget(_width / 2 - 40, false, "test@test.com", "안녕하세요.얼미ㅏㅓㄴㅇ리ㅏㅓ미러ㅏㅁㄴㅇ러ㅏㄴㅁㄹㅁ"),
-                  _ChatWidget(_width / 2 - 40, false, "test@test.com", "안녕하세요.얼미ㅏㅓㄴㅇ리ㅏㅓ미러ㅏㅁㄴㅇ러ㅏㄴㅁㄹㅁ"),
-                  _ChatWidget(_width / 2 - 40, true, "test@test.com", "안녕하세요.얼미ㅏㅓㄴㅇ리ㅏㅓ미러ㅏㅁㄴㅇ러ㅏㄴㅁㄹㅁ"),
-                  _ChatWidget(_width / 2 - 40, false, "test@test.com", "안녕하세요.얼미ㅏㅓㄴㅇ리ㅏㅓ미러ㅏㅁㄴㅇ러ㅏㄴㅁㄹㅁ"),
-                  _ChatWidget(_width / 2 - 40, false, "test@test.com", "안녕하세요.얼미ㅏㅓㄴㅇ리ㅏㅓ미러ㅏㅁㄴㅇ러ㅏㄴㅁㄹㅁ"),
-                  _ChatWidget(_width / 2 - 40, false, "test@test.com", "안녕하세요.얼미ㅏㅓㄴㅇ리ㅏㅓ미러ㅏㅁㄴㅇ러ㅏㄴㅁㄹㅁ"),
-                  SizedBox(height: 56,)
+                  Visibility(
+                    child: CircularProgressIndicator(),
+                    visible: widget.isRequest,
+                  )
                 ],
               ),
             ),
             Positioned(
-              top: _statusHeight,
+              top: _statusHeight + 20,
               child: Row(
                 children: [
                   InkWell(
@@ -124,6 +321,7 @@ class ChattingPageState extends State<ChattingPage> {
                     Container(
                       width: _width - 40 - 48,
                       child: TextField(
+                        controller: widget.textController,
                         cursorColor: Colors.black,
                         decoration: InputDecoration(
                           contentPadding:
@@ -141,7 +339,17 @@ class ChattingPageState extends State<ChattingPage> {
                         ),
                       ),
                     ),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.send)),
+                    IconButton(
+                        onPressed: () {
+                          if (widget.textController.text != "") {
+                            BlocProvider.of<ModakBloc>(context).add(
+                                PushMessageEvent(
+                                    matchingId: widget._matchingId,
+                                    message: widget.textController.text));
+                            widget.textController.text = "";
+                          }
+                        },
+                        icon: Icon(Icons.send)),
                   ],
                 ),
                 decoration: const BoxDecoration(
@@ -164,5 +372,11 @@ class ChattingPageState extends State<ChattingPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    streamController.close();
+    super.dispose();
   }
 }
