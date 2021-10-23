@@ -28,7 +28,7 @@ class MainPageState extends State<MainPage> {
           PageView(
             controller: widget.pageController,
             children: [
-              DashBoardPage(),
+              DashBoardPage(pageController: widget.pageController,),
               MatchingPage(),
               CampingSearchPage(),
               SettingPage(),
