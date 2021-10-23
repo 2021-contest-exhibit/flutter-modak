@@ -11,16 +11,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final repo = FireStoreRepository(store: FirebaseFirestore.instance);
-  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "test", "test");
-  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "test", "test2");
-  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "test", "test3");
-  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf2", "test", "test4");
-  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf2", "test", "test5");
-  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf2", "test", "test6");
+  await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "xnMcnv1CcxYDHExwPBQ5Hm5D7863", "aaa11111");
+  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "1");
+  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "2");
+  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "3");
+  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "4");
+  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "5");
+  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "6");
+  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "7");
+  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "8");
+  // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "9");
   List<Chat> chattings = await repo.getChatting("lHKC9XN6suYCNxQzFjJf");
-  print("size: ${chattings.length}");
-  print("message: ${chattings[0].message}");
-  print(chattings);
   for(int i=0; i< chattings.length; i++) {
     print(chattings[i]);
   }
@@ -50,7 +51,7 @@ class FireStoreRepository {
   Future<List<Chat>> getChatting(String matchingId) {
     CollectionReference chattings = store.collection("chattings");
 
-    return chattings.where("matchingId", isEqualTo: matchingId).limit(10).get().then((value) {
+    return chattings.where("matchingId", isEqualTo: matchingId).orderBy("createDate", descending: true).limit(10).get().then((value) {
       return value.docs.map((e) {
         print(Chat.fromJson(e.data() as Map<String, dynamic>).message);
         return Chat.fromJson(e.data() as Map<String, dynamic>);
@@ -58,13 +59,35 @@ class FireStoreRepository {
     });
   }
 
-  Future<List<Map<String, Matching>>?> loadMatching() {
-    CollectionReference matchings = store.collection("matchings");
-    return matchings.orderBy("createDate", descending: true).limit(10).get().then((value) async {
-      return value.docs.map((e) => {
-        e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
+  Future<List<Chat>> getNextChatting(String matchingId, List<Chat> values) {
+    CollectionReference chattings = store.collection("chattings");
+    print('values: ${values}');
+    return chattings.where("matchingId", isEqualTo: matchingId).orderBy("createDate", descending: true).endBefore([values[values.length - 1].createDate]).limit(10).get().then((value) {
+      return value.docs.map((e) {
+        print(Chat.fromJson(e.data() as Map<String, dynamic>).message);
+        return Chat.fromJson(e.data() as Map<String, dynamic>);
       }).toList();
     });
+  }
+
+  Future<List<Map<String, Matching>>?> loadMatching(String matchingId) {
+    CollectionReference matchings = store.collection("matchings");
+    if (matchingId == "") {
+      return matchings.orderBy("createDate").limit(10).get().then((
+          value) async {
+        return value.docs.map((e) =>
+        {
+          e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
+        }).toList();
+      });
+    } else {
+      return matchings.orderBy("createDate").where("matchingId", isEqualTo: matchingId).limit(10).get().then((value) async {
+        return value.docs.map((e) =>
+        {
+          e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
+        }).toList();
+      });
+    }
   }
 
   Future<List<Map<String, Matching>>?> loadMyMatching(String uid) {

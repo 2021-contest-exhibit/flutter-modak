@@ -194,12 +194,10 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
   Stream<CampingAPIState> _mapGetTodayCampingsEvent(GetTodayCampingsEvent event) async* {
     var uid = userRepository.getUserToken();
 
-    if (uid != null) {
-      var campings = await apiRepository.getTodayCampings(uid, 0, 5);
+    var campings = await apiRepository.getTodayCampings(uid??"", 0, 5);
 
-      if (campings != null && campings.content.length > 0) {
-        yield TodayCampingsLoaded(campings: campings.content);
-      }
+    if (campings != null && campings.content.length > 0) {
+      yield TodayCampingsLoaded(campings: campings.content);
     } else {
       yield Error();
     }
@@ -261,17 +259,13 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
 
     var uid = userRepository.getUserToken();
 
-    if (uid != null) {
-      var camping = await apiRepository.getCampings(contentId: event.contentId, email: uid);
-      print("good: ${camping!.content[0].isGoodByUser}");
-      print("id: ${camping.content[0].contentId}");
+    var camping = await apiRepository.getCampings(contentId: event.contentId, email: uid??"");
+    print("good: ${camping!.content[0].isGoodByUser}");
+    print("id: ${camping.content[0].contentId}");
 
-      if (camping != null) {
-        yield CampingLoaded(campings: camping.content);
-      }else {
-        yield Error();
-      }
-    } else {
+    if (camping != null) {
+      yield CampingLoaded(campings: camping.content);
+    }else {
       yield Error();
     }
   }

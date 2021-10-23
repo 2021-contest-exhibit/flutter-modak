@@ -2,7 +2,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modak/bloc/ModakEvent.dart';
 import 'package:modak/bloc/ModakState.dart';
+import 'package:modak/dto/Chat.dart';
 import 'package:modak/dto/Matching.dart';
+import 'package:modak/dto/ModakChat.dart';
 import 'package:modak/dto/ModakMatching.dart';
 import 'package:modak/repository/APIRepository.dart';
 import 'package:modak/repository/FireStoreRepository.dart';
@@ -23,7 +25,22 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
       yield* _mapLoadMatchingEvent(event);
     } else if (event is LoadMyMatchingEvent) {
       yield* _mapLoadMyMatchingEvent(event);
+    } else if (event is LoadChattingEvent) {
+      yield* _mapLoadChattingEvent(event);
+    } else if (event is PushMessageEvent) {
+      yield* _mapPushMessageEvent(event);
     }
+  }
+
+  Stream<ModakState> _mapPushMessageEvent(PushMessageEvent event) async* {
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      await fireStoreRepository.appendChatting(event.matchingId, uid, event.message);
+    } else {
+      yield Error(message: "로그인 필요한 서비스입니다.");
+    }
+
   }
 
   Stream<ModakState>_mapCreateMatchingEvent(CreateMatchingEvent event) async* {
@@ -58,7 +75,7 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
 
     var uid = userRepository.getUserToken();
     var email = userRepository.getUserEmail();
-    var response = await fireStoreRepository.loadMatching().onError((error, stackTrace) => null);
+    var response = await fireStoreRepository.loadMatching(event.matchingId??"").onError((error, stackTrace) => null);
 
     if (response != null && uid != null && email != null) {
       var matchings = await Stream.fromIterable(response).asyncMap((e) async {
@@ -93,6 +110,28 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
         yield Error(message: 'response null');
       }
     }
+  }
+
+  Stream<ModakState> _mapLoadChattingEvent(LoadChattingEvent event) async* {
+    yield ChattingLoading();
+
+    List<Chat> chatList;
+
+    if (event.values.length > 0) {
+      print('load next');
+      chatList = await fireStoreRepository.getNextChatting(event.matchingId, event.values);
+    } else {
+      chatList = await fireStoreRepository.getChatting(event.matchingId);
+    }
+
+    List<ModakChat> modakChat = await Stream.fromIterable(chatList).asyncMap((e) async {
+      var user = await fireStoreRepository.loadUser(e.userId);
+      return ModakChat(chat: e, modakUser: user);
+    }).toList();
+
+    print('test: ${modakChat[0].chat!.toJson()}');
+
+    yield ChattingLoaded(chatList: modakChat);
   }
 
 }

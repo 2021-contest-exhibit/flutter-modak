@@ -5,6 +5,7 @@ import 'package:modak/bloc/ModakBloc.dart';
 import 'package:modak/bloc/ModakEvent.dart';
 import 'package:modak/bloc/ModakState.dart';
 import 'package:modak/component/MatchingItemWidget.dart';
+import 'package:modak/dto/ModakMatching.dart';
 
 class MatchingPage extends StatefulWidget {
   int _selectedIndex = 0;
@@ -106,13 +107,7 @@ class MatchingPageState extends State<MatchingPage> {
                           return ListView.builder(
                             itemBuilder: (context, index) {
                               return MatchingItemWidget(
-                                userName: state.matchings![index].email!,
-                                campingName:
-                                    state.matchings![index].content!.name!,
-                                startDate:
-                                    state.matchings![index].matching!.startDate,
-                                endDate:
-                                    state.matchings![index].matching!.endDate,
+                                modakMatching: state.matchings![index],
                               );
                             },
                             itemCount: state.matchings!.length,
@@ -135,10 +130,7 @@ class MatchingPageState extends State<MatchingPage> {
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return MatchingItemWidget(
-                          campingName: "",
-                          endDate: DateTime.now(),
-                          startDate: DateTime.now(),
-                          userName: "",
+                          modakMatching: ModakMatching(),
                         );
                       },
                       itemCount: 0,
@@ -164,13 +156,7 @@ class MatchingPageState extends State<MatchingPage> {
                           return ListView.builder(
                             itemBuilder: (context, index) {
                               return MatchingItemWidget(
-                                userName: state.matchings![index].email!,
-                                campingName:
-                                    state.matchings![index].content!.name!,
-                                startDate:
-                                    state.matchings![index].matching!.startDate,
-                                endDate:
-                                    state.matchings![index].matching!.endDate,
+                                modakMatching: state.matchings![index],
                               );
                             },
                             itemCount: state.matchings!.length,
