@@ -73,16 +73,15 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
   Stream<ModakState> _mapLoadMatchingEvent(LoadMatchingEvent event) async* {
     yield MatchingLoading();
 
-    var uid = userRepository.getUserToken();
-    var email = userRepository.getUserEmail();
     var response = await fireStoreRepository.loadMatching(event.matchingId??"").onError((error, stackTrace) => null);
 
-    if (response != null && uid != null && email != null) {
+    if (response != null) {
       var matchings = await Stream.fromIterable(response).asyncMap((e) async {
         var campings = await apiRepository.getCampings(contentId: e[e.keys.first]!.campingId);
         var user = await fireStoreRepository.loadUser(e[e.keys.first]!.user!);
         var userEmail = user != null ? user.email : "";
-        return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: userEmail, uid: uid, matchingId: e.keys.first);
+        var userUid = user != null ? user.uid : "";
+        return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: userEmail, uid: userUid, matchingId: e.keys.first);
       }).toList();
       yield MatchingLoaded(matchings: matchings);
     } else {
@@ -109,6 +108,8 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
       } else {
         yield Error(message: 'response null');
       }
+    } else {
+      yield Error(message: "로그인이 필요한 서비스 입니다.");
     }
   }
 
