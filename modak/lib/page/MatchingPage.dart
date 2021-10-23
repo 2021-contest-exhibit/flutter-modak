@@ -151,7 +151,7 @@ class MatchingPageState extends State<MatchingPage> {
                         } else if (state is MyMatchingLoading) {
                           return Center(child: CircularProgressIndicator());
                         } else if (state is Error) {
-                          return Text("Error: " + state.message);
+                          return Center(child: Text(state.message));
                         } else if (state is MyMatchingLoaded) {
                           return ListView.builder(
                             itemBuilder: (context, index) {
