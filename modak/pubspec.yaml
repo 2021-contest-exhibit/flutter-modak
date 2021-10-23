@@ -83,6 +83,9 @@ flutter:
     - family: BMDOHYEON_ttf
       fonts:
         - asset: fonts/BMDOHYEON_ttf.ttf
+    - family: Youth
+      fonts:
+        - asset: fonts/Youth.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
