@@ -1,6 +1,7 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:modak/rest/FindCampingsRequestDto.dart';
 import 'package:modak/rest/RequestDeleteGood.dart';
 import 'package:modak/rest/RequestPostGood.dart';
 import 'package:modak/rest/RequestPostUser.dart';
@@ -27,6 +28,15 @@ class APIRepository {
         contentId,
         email,
         nameContains);
+  }
+
+  Future<ResponseGetCampings?> findCampingsByList({email, operationTypeEqual, regionContains, environmentEqual, nameContains}) {
+    return restClient.findCampings(
+      0,
+      10,
+      email,
+      FindCampingsRequestDto(operationTypeEqual: operationTypeEqual, regionContains: regionContains, environmentEqual: environmentEqual, nameContains: nameContains)
+    );
   }
 
   Future<ResponseGetCampings?> getTodayCampings(String email, int page, int size) {

@@ -3,11 +3,25 @@ import 'package:equatable/equatable.dart';
 
 abstract class CampingAPIEvent extends Equatable{}
 
+class FindCampinsEvent extends CampingAPIEvent {
+  String nameContains;
+  Map regionMap;
+  Map operationTypeMap;
+  Map environmentMap;
+
+  FindCampinsEvent({required this.nameContains, required this.regionMap, required this.operationTypeMap, required this.environmentMap});
+
+  @override
+  List<Object?> get props => [];
+}
 
 class GetCampingsEvent extends CampingAPIEvent {
   String nameContains;
+  Map regionMap;
+  Map operationTypeMap;
+  Map environmentMap;
 
-  GetCampingsEvent({required this.nameContains});
+  GetCampingsEvent({required this.nameContains, required this.regionMap, required this.operationTypeMap, required this.environmentMap});
 
   @override
   List<Object?> get props => [];

@@ -38,6 +38,38 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
       yield* _mapGetCampingEvent(event);
     } else if (event is DeleteCampingGoodsEvent) {
       yield* _mapDeleteCampingGoodEvent(event);
+    } else if (event is FindCampinsEvent) {
+      yield* _mapFindCampingsEvent(event);
+    }
+  }
+
+  Stream<CampingAPIState> _mapFindCampingsEvent(FindCampinsEvent event) async* {
+    print("_mapfindCampingsEvent");
+    yield SearchLoading();
+
+
+    List<String> operationTypeEqual = [];
+    List<String> regionContains = [];
+    List<String> environmentEqual = [];
+
+    event.regionMap.keys.forEach((element) { regionContains.add(element); });
+    event.environmentMap.keys.forEach((element) { environmentEqual.add(element); });
+    event.operationTypeMap.keys.forEach((element) { operationTypeEqual.add(element);});
+    
+
+    var response = await apiRepository.findCampingsByList(nameContains: event.nameContains, operationTypeEqual: operationTypeEqual, regionContains: regionContains, environmentEqual: environmentEqual).onError((error, stackTrace) {
+      print(error.toString());
+      print(stackTrace);
+      return null;
+    });
+
+    if (response != null) {
+      print("response: ${response.content}");
+
+      yield CampingsLoaded(content: response.content);
+    }else {
+      print("error");
+      yield Error();
     }
   }
 
@@ -45,7 +77,17 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     print("_mapGetCampingsEvent");
     yield SearchLoading();
 
-    var response = await apiRepository.getCampings(nameContains: event.nameContains).onError((error, stackTrace) {
+
+    String region = "";
+    String environment = "";
+    String operationType = "";
+
+    event.regionMap.keys.forEach((element) { region = element as String; });
+    event.environmentMap.keys.forEach((element) { environment = element as String; });
+    event.operationTypeMap.keys.forEach((element) { operationType = element as String;});
+
+
+    var response = await apiRepository.getCampings(nameContains: event.nameContains, regionContains: region, environmentName: environment, operationType: operationType).onError((error, stackTrace) {
       print(error.toString());
       print(stackTrace);
       return null;
