@@ -98,8 +98,8 @@ class ProfileWidgetState extends State<ProfileWidget> {
                               width: (_width-10) * 15 / 100,
                               child: AutoSizeText(
                                 'Lv. ${widget.user != null ? widget.user!.level.toString() : "0"}',
-                                style: const TextStyle(
-                                    fontSize: 18.0, color: Color(0xff87360C)),
+                                style: TextStyle(
+                                    fontSize: 18.0, color: Theme.of(context).primaryColor),
                                 minFontSize: 12.0,
                                 maxLines: 1,
                               ),

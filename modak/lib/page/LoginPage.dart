@@ -164,7 +164,7 @@ class LoginPageState extends State<LoginPage> {
                     }),
                     backgroundColor:
                         MaterialStateProperty.resolveWith((states) {
-                      return Color(0xff87360C);
+                      return Theme.of(context).primaryColor;
                     }),
                     foregroundColor:
                         MaterialStateProperty.resolveWith((states) {
