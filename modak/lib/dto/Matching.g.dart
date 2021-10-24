@@ -6,18 +6,19 @@ part of 'Matching.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Matching _$$_MatchingFromJson(Map<String, dynamic> json) => _$_Matching(
-      user: json['user'] as String?,
-      campingId: json['campingId'] as int,
-      startDate: DateTime.parse(json['startDate'] as String),
-      endDate: DateTime.parse(json['endDate'] as String),
-      createDate: DateTime.parse(json['createDate'] as String),
-      userList: (json['userList'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-    );
+_$_Matching _$_$_MatchingFromJson(Map<String, dynamic> json) {
+  return _$_Matching(
+    user: json['user'] as String?,
+    campingId: json['campingId'] as int,
+    startDate: DateTime.parse(json['startDate'] as String),
+    endDate: DateTime.parse(json['endDate'] as String),
+    createDate: DateTime.parse(json['createDate'] as String),
+    userList:
+        (json['userList'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  );
+}
 
-Map<String, dynamic> _$$_MatchingToJson(_$_Matching instance) =>
+Map<String, dynamic> _$_$_MatchingToJson(_$_Matching instance) =>
     <String, dynamic>{
       'user': instance.user,
       'campingId': instance.campingId,

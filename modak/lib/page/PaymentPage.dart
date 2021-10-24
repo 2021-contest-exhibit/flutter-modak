@@ -255,9 +255,7 @@ class PaymentPageState extends State<PaymentPage> {
                       ),
                       OutlinedButton(
                         onPressed: () {
-                          BlocProvider.of<ModakBloc>(context).add(
-                            JoinMatchingEvent(matchingId: widget.modakMatching.matchingId!)
-                          );
+                          Navigator.pushNamed(context, '/import', arguments: [1, widget.modakMatching.matchingId]);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -309,7 +307,7 @@ class PaymentPageState extends State<PaymentPage> {
               } else if (current is MachingJoined) {
                 if (current.isJoined) {
                   print('current: ${current.isJoined}');
-                  Navigator.pushNamed(context, "/chatting", arguments: widget.modakMatching.matchingId);
+                  Navigator.pushReplacementNamed(context, "/chatting", arguments: widget.modakMatching.matchingId);
                 }
                 return false;
               }

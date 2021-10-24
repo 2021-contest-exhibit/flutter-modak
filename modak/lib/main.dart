@@ -16,6 +16,7 @@ import 'package:modak/page/DashBoardPage.dart';
 import 'package:modak/page/GoodsPage.dart';
 import 'package:modak/page/LoginPage.dart';
 import 'package:modak/page/MainPage.dart';
+import 'package:modak/page/Payment.dart';
 import 'package:modak/page/PaymentPage.dart';
 import 'package:modak/page/SignUpPage.dart';
 import 'package:modak/page/SplashPage.dart';
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
             argument: ModalRoute.of(context)!.settings.arguments as Map
           ),
           '/chatting': (context) => ChattingPage(),
+          '/import': (context) => Payment(),
         },
       ),
     );

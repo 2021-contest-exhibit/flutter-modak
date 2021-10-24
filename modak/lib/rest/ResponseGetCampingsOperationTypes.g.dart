@@ -7,10 +7,11 @@ part of 'ResponseGetCampingsOperationTypes.dart';
 // **************************************************************************
 
 ResponseGetCampingsOperationTypes _$ResponseGetCampingsOperationTypesFromJson(
-        Map<String, dynamic> json) =>
-    ResponseGetCampingsOperationTypes(
-      data: (json['data'] as List<dynamic>).map((e) => e as String).toList(),
-    );
+    Map<String, dynamic> json) {
+  return ResponseGetCampingsOperationTypes(
+    data: (json['data'] as List<dynamic>).map((e) => e as String).toList(),
+  );
+}
 
 Map<String, dynamic> _$ResponseGetCampingsOperationTypesToJson(
         ResponseGetCampingsOperationTypes instance) =>

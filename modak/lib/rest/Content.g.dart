@@ -6,33 +6,35 @@ part of 'Content.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Content _$ContentFromJson(Map<String, dynamic> json) => Content(
-      contentId: json['contentId'] as int,
-      name: json['name'] as String?,
-      viewCount: json['viewCount'] as int?,
-      addr: json['addr'] as String?,
-      phoneNumber: json['phoneNumber'] as String?,
-      type: json['type'] as String?,
-      operationSeasons: json['operationSeasons'] as String?,
-      operationDays: json['operationDays'] as String?,
-      reservationWay: json['reservationWay'] as String?,
-      nearbyFacilitiesAvailable: json['nearbyFacilitiesAvailable'] as String?,
-      facilities: json['facilities'] as String?,
-      longitude: json['longitude'] as String?,
-      latitude: json['latitude'] as String?,
-      operationType: json['operationType'] as String?,
-      shortDescription: json['shortDescription'] as String?,
-      longDescription: json['longDescription'] as String?,
-      goodCount: json['goodCount'] as int?,
-      isGoodByUser: json['isGoodByUser'] as bool?,
-      thumbnailImageUrl: json['thumbnailImageUrl'] as String?,
-      environments: (json['environments'] as List<dynamic>?)
-          ?.map((e) => Environment.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      campingImages: (json['campingImages'] as List<dynamic>?)
-          ?.map((e) => CampingImage.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+Content _$ContentFromJson(Map<String, dynamic> json) {
+  return Content(
+    contentId: json['contentId'] as int,
+    name: json['name'] as String?,
+    viewCount: json['viewCount'] as int?,
+    addr: json['addr'] as String?,
+    phoneNumber: json['phoneNumber'] as String?,
+    type: json['type'] as String?,
+    operationSeasons: json['operationSeasons'] as String?,
+    operationDays: json['operationDays'] as String?,
+    reservationWay: json['reservationWay'] as String?,
+    nearbyFacilitiesAvailable: json['nearbyFacilitiesAvailable'] as String?,
+    facilities: json['facilities'] as String?,
+    longitude: json['longitude'] as String?,
+    latitude: json['latitude'] as String?,
+    operationType: json['operationType'] as String?,
+    shortDescription: json['shortDescription'] as String?,
+    longDescription: json['longDescription'] as String?,
+    goodCount: json['goodCount'] as int?,
+    isGoodByUser: json['isGoodByUser'] as bool?,
+    thumbnailImageUrl: json['thumbnailImageUrl'] as String?,
+    environments: (json['environments'] as List<dynamic>?)
+        ?.map((e) => Environment.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    campingImages: (json['campingImages'] as List<dynamic>?)
+        ?.map((e) => CampingImage.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
 
 Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
       'contentId': instance.contentId,
@@ -58,10 +60,12 @@ Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
       'campingImages': instance.campingImages,
     };
 
-Environment _$EnvironmentFromJson(Map<String, dynamic> json) => Environment(
-      id: json['id'] as int,
-      name: json['name'] as String,
-    );
+Environment _$EnvironmentFromJson(Map<String, dynamic> json) {
+  return Environment(
+    id: json['id'] as int,
+    name: json['name'] as String,
+  );
+}
 
 Map<String, dynamic> _$EnvironmentToJson(Environment instance) =>
     <String, dynamic>{
@@ -69,12 +73,14 @@ Map<String, dynamic> _$EnvironmentToJson(Environment instance) =>
       'name': instance.name,
     };
 
-CampingImage _$CampingImageFromJson(Map<String, dynamic> json) => CampingImage(
-      id: json['id'] as int,
-      serialnum: json['serialnum'] as String,
-      modifiedtime: json['modifiedtime'] as String,
-      imageUrl: json['imageUrl'] as String,
-    );
+CampingImage _$CampingImageFromJson(Map<String, dynamic> json) {
+  return CampingImage(
+    id: json['id'] as int,
+    serialnum: json['serialnum'] as String,
+    modifiedtime: json['modifiedtime'] as String,
+    imageUrl: json['imageUrl'] as String,
+  );
+}
 
 Map<String, dynamic> _$CampingImageToJson(CampingImage instance) =>
     <String, dynamic>{

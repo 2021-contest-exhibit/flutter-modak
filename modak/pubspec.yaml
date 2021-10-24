@@ -55,7 +55,7 @@ dependencies:
 
   infinite_scroll_pagination:
 
-  json_annotation: 4.3.0
+#  json_annotation: ^4.3.0
 
   iamport_flutter:
 

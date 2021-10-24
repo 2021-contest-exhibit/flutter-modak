@@ -1,6 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'Matching.dart';
 
@@ -193,7 +192,7 @@ class _$_Matching implements _Matching {
       required this.userList});
 
   factory _$_Matching.fromJson(Map<String, dynamic> json) =>
-      _$$_MatchingFromJson(json);
+      _$_$_MatchingFromJson(json);
 
   @override
   final String? user;
@@ -253,7 +252,7 @@ class _$_Matching implements _Matching {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MatchingToJson(this);
+    return _$_$_MatchingToJson(this);
   }
 }
 
