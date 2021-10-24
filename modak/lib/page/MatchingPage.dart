@@ -87,10 +87,6 @@ class MatchingPageState extends State<MatchingPage> {
                           ),
                         ),
                       ),
-                      VerticalDivider(
-                        thickness: 0.5,
-                        color: Colors.grey,
-                      ),
                       InkWell(
                         onTap: () {
                           setIndex(1);
@@ -104,10 +100,6 @@ class MatchingPageState extends State<MatchingPage> {
                                 : null,
                           ),
                         ),
-                      ),
-                      VerticalDivider(
-                        thickness: 0.5,
-                        color: Colors.grey,
                       ),
                       InkWell(
                         onTap: () {
@@ -127,13 +119,16 @@ class MatchingPageState extends State<MatchingPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 18.0,
+                  height: 12.0,
                 ),
-                // Divider(
-                //   thickness: 0.1,
-                //   color: Colors.black,
-                //   height: 0.1,
-                // ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Divider(
+                    thickness: 0.2,
+                    color: Colors.black,
+                    height: 0.1,
+                  ),
+                ),
                 Visibility(
                   visible: widget._selectedIndex == 0,
                   child: Container(
