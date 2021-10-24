@@ -7,19 +7,20 @@ part of 'FindCampingsRequestDto.dart';
 // **************************************************************************
 
 FindCampingsRequestDto _$FindCampingsRequestDtoFromJson(
-        Map<String, dynamic> json) =>
-    FindCampingsRequestDto(
-      operationTypeEqual: (json['operationTypeEqual'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      regionContains: (json['regionContains'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      environmentEqual: (json['environmentEqual'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      nameContains: json['nameContains'] as String,
-    );
+    Map<String, dynamic> json) {
+  return FindCampingsRequestDto(
+    operationTypeEqual: (json['operationTypeEqual'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList(),
+    regionContains: (json['regionContains'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList(),
+    environmentEqual: (json['environmentEqual'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList(),
+    nameContains: json['nameContains'] as String,
+  );
+}
 
 Map<String, dynamic> _$FindCampingsRequestDtoToJson(
         FindCampingsRequestDto instance) =>

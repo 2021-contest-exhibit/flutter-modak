@@ -6,12 +6,13 @@ part of 'ResponseGetCampings.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ResponseGetCampings _$ResponseGetCampingsFromJson(Map<String, dynamic> json) =>
-    ResponseGetCampings(
-      content: (json['content'] as List<dynamic>)
-          .map((e) => Content.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+ResponseGetCampings _$ResponseGetCampingsFromJson(Map<String, dynamic> json) {
+  return ResponseGetCampings(
+    content: (json['content'] as List<dynamic>)
+        .map((e) => Content.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
 
 Map<String, dynamic> _$ResponseGetCampingsToJson(
         ResponseGetCampings instance) =>

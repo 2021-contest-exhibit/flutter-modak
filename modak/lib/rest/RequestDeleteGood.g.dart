@@ -6,11 +6,12 @@ part of 'RequestDeleteGood.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RequestDeleteGood _$RequestDeleteGoodFromJson(Map<String, dynamic> json) =>
-    RequestDeleteGood(
-      contentId: json['contentId'] as int,
-      email: json['email'] as String,
-    );
+RequestDeleteGood _$RequestDeleteGoodFromJson(Map<String, dynamic> json) {
+  return RequestDeleteGood(
+    contentId: json['contentId'] as int,
+    email: json['email'] as String,
+  );
+}
 
 Map<String, dynamic> _$RequestDeleteGoodToJson(RequestDeleteGood instance) =>
     <String, dynamic>{
