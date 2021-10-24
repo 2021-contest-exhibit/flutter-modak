@@ -82,6 +82,7 @@ class _TodayCompingWidgetState extends State<TodayCompingWidget> {
                         style: const TextStyle(
                           color: const Color(0xff000000),
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Shilla_Gothic',
                           fontSize: 12.0,
                         ),
                       ),

@@ -85,7 +85,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
                                 (widget.user != null
                                     ? (widget.user!.email)
                                     : ""),
-                                style: const TextStyle(fontSize: 40.0, ),
+                                style: const TextStyle(fontSize: 40.0, fontFamily: 'NotoSansCJkr',),
                                 minFontSize: 12.0,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -98,8 +98,9 @@ class ProfileWidgetState extends State<ProfileWidget> {
                               width: (_width-10) * 15 / 100,
                               child: AutoSizeText(
                                 'Lv. ${widget.user != null ? widget.user!.level.toString() : "0"}',
+                                textAlign: TextAlign.end,
                                 style: TextStyle(
-                                    fontSize: 18.0, color: Theme.of(context).primaryColor),
+                                    fontSize: 18.0, color: Theme.of(context).primaryColor, fontFamily: 'NotoSansCJkr',),
                                 minFontSize: 12.0,
                                 maxLines: 1,
                               ),

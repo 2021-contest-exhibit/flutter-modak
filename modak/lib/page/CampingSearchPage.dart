@@ -66,7 +66,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
             style: TextStyle(color: !toggleMap.containsKey(title) ||
                 toggleMap[title] as bool == false
                 ? Theme.of(context).primaryColor
-                : Colors.white),
+                : Colors.white, fontFamily: 'NotoSansKR', fontWeight: FontWeight.bold),
           ),
           decoration: BoxDecoration(
             color: !toggleMap.containsKey(title) ||
@@ -135,19 +135,25 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                       Container(
                         width: _contentWidth - 40 - 24,
                         child: TextField(
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontFamily: 'NotoSansKR',
+                          ),
                           controller: widget._searchController,
                           cursorColor: Colors.black,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
+
                             hintText: '검색어를 입력해주세요',
                             hintStyle: TextStyle(
                               color: Colors.grey,
-                              fontSize: 20.0,
+                              fontSize: 18.0,
+                              fontFamily: 'NotoSansKR',
                             ),
                             border: InputBorder.none,
                             labelStyle: TextStyle(
                                 color: Colors.black54,
-                                fontSize: 20.0,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -180,7 +186,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     ),
                     Text("지역별",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20))
+                            fontWeight: FontWeight.bold, fontSize: 20, fontFamily: '비트로_코어_TTF'))
                   ],
                 ),
               ),
@@ -235,7 +241,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     ),
                     Text("운영 형태",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20))
+                            fontWeight: FontWeight.bold, fontSize: 20, fontFamily: '비트로_코어_TTF'))
                   ],
                 ),
               ),
@@ -287,7 +293,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   width: 20.0,
                 ),
                 Text("입지 구분",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: '비트로_코어_TTF'))
               ])),
               SizedBox(
                 height: 24.0,

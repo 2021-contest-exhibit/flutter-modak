@@ -84,12 +84,9 @@ class MatchingPageState extends State<MatchingPage> {
                             fontWeight: widget._selectedIndex == 0
                                 ? FontWeight.bold
                                 : null,
+                            fontFamily: widget._selectedIndex == 0 ? '비트로_코어_TTF' : 'Shilla_Gothic'
                           ),
                         ),
-                      ),
-                      VerticalDivider(
-                        thickness: 0.5,
-                        color: Colors.grey,
                       ),
                       InkWell(
                         onTap: () {
@@ -102,12 +99,9 @@ class MatchingPageState extends State<MatchingPage> {
                             fontWeight: widget._selectedIndex == 1
                                 ? FontWeight.bold
                                 : null,
+                            fontFamily: widget._selectedIndex == 1 ? '비트로_코어_TTF' : 'Shilla_Gothic'
                           ),
                         ),
-                      ),
-                      VerticalDivider(
-                        thickness: 0.5,
-                        color: Colors.grey,
                       ),
                       InkWell(
                         onTap: () {
@@ -120,6 +114,7 @@ class MatchingPageState extends State<MatchingPage> {
                             fontWeight: widget._selectedIndex == 2
                                 ? FontWeight.bold
                                 : null,
+                            fontFamily: widget._selectedIndex == 2 ? '비트로_코어_TTF' : 'Shilla_Gothic'
                           ),
                         ),
                       ),
@@ -127,13 +122,16 @@ class MatchingPageState extends State<MatchingPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 18.0,
+                  height: 12.0,
                 ),
-                // Divider(
-                //   thickness: 0.1,
-                //   color: Colors.black,
-                //   height: 0.1,
-                // ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Divider(
+                    thickness: 0.2,
+                    color: Colors.black,
+                    height: 0.1,
+                  ),
+                ),
                 Visibility(
                   visible: widget._selectedIndex == 0,
                   child: Container(

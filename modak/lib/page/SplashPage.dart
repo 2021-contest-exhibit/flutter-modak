@@ -45,7 +45,8 @@ class SplashPageState extends State<SplashPage> with SingleTickerProviderStateMi
                   Image.asset('image/logo.png',width: 48.0, height: 48.0,),
                   Text(
                     "MODAK",
-                    style: TextStyle(fontSize: 48.0, color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 48.0, color: Colors.white, fontWeight: FontWeight.bold,
+                        fontFamily: 'NotoSansCJKkr'),
                   )
                 ],
               ),

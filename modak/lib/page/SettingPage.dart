@@ -45,6 +45,7 @@ class SettingPageState extends State<SettingPage> {
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'NotoSansCJkr',
                   ),
                 ),
               )
