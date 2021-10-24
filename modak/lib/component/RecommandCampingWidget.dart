@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modak/dto/Camping.dart';
@@ -52,22 +53,25 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(12.0),
+                padding: EdgeInsets.only(top: 6, left: 24, right: 24),
                 width: (_width-40) * 55/100,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20.0,),
-                    Text(
+                    AutoSizeText(
                       camping.name!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: const Color(0xff000000),
                         fontSize: 18.0,
+                        fontFamily: 'Shilla_Gothic',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 20.0,),
+                    const SizedBox(height: 12.0,),
                     Flexible(
                       child: Text(
                         camping.addr!,

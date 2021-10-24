@@ -27,6 +27,7 @@ import 'package:modak/rest/RestClient.dart';
 
 final logger = Logger();
 main() async {
+  // initializeJsonMapper();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());

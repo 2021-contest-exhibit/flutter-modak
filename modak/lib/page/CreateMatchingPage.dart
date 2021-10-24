@@ -145,7 +145,7 @@ class CreateMatchingPageState extends State<CreateMatchingPage> {
             ),
             Text(
               "장소",
-              style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: '비트로_코어_TTF',),
             ),
             SizedBox(
               height: 18.0,
@@ -178,7 +178,7 @@ class CreateMatchingPageState extends State<CreateMatchingPage> {
             ),
             Text(
               "날짜",
-              style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: '비트로_코어_TTF',),
             ),
             TableCalendar(
               firstDay: DateTime.utc(2010, 10, 16),

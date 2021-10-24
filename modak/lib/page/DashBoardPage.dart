@@ -24,7 +24,7 @@ class DashBoardPageState extends State<DashBoardPage> {
   Widget build(BuildContext context) {
     final double _statusBarHeight = MediaQuery.of(context).padding.top;
     final double _height = MediaQuery.of(context).size.height;
-    final double _titleHeight = 48.0;
+    final double _titleHeight = 56.0;
     final double _contentHeight = _height - _statusBarHeight - _titleHeight;
     return Scaffold(
       body: Container(
@@ -54,15 +54,17 @@ class DashBoardPageState extends State<DashBoardPage> {
                         children: [
                           Image.asset(
                             'image/logo_black.png',
-                            width: 18.0,
-                            height: 18.0,
+                            width: 24.0,
+                            height: 24.0,
                           ),
                           Text(
                             'MODAK',
                             style: TextStyle(
                                 fontSize: 24,
                                 color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.bold,
+                              fontFamily: '비트로_코어_TTF'
+                            ),
                           ),
                         ],
                       ),
@@ -81,7 +83,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                   Text(
                     'NEW & HOT',
                     style: TextStyle(
-                        fontSize: 30.0, fontWeight: FontWeight.bold),
+                        fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: '비트로_코어_TTF'),
                   )
                 ],
               ),
@@ -118,7 +120,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                   Text(
                     '추천 캠핑',
                     style: TextStyle(
-                        fontSize: 30.0, fontWeight: FontWeight.bold),
+                        fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: '비트로_코어_TTF'),
                   )
                 ],
               ),

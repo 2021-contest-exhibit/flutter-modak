@@ -55,6 +55,10 @@ dependencies:
 
   infinite_scroll_pagination:
 
+  json_annotation: 4.3.0
+
+  iamport_flutter:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -109,6 +113,10 @@ flutter:
     - family: Shilla_Gothic
       fonts:
         - asset: fonts/Shilla_Gothic.ttf
+
+    - family: 비트로_코어_TTF
+      fonts:
+        - asset: fonts/비트로_코어_TTF.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
