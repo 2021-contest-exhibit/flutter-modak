@@ -154,7 +154,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                         Text(
                           'HOT 캠핑장',
                           style: TextStyle(
-                              fontSize: 20.0,
+                              fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'NotoSansKR'),
                         )
