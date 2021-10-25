@@ -26,6 +26,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
   var toggleMap = {};
   var maxCountMap = {"region": 100, "operationType": 5, "environment": 8};
   var currentMap = {"region": {}, "operationType": {}, "environment": {}};
+  var regionMore = false;
 
   Widget _filterButton(String title, String type) {
     return Container(
@@ -33,7 +34,13 @@ class CampingSearchPageState extends State<CampingSearchPage> {
       child: InkWell(
         onTap: () {
           setState(() {
-
+            if (type == "+") {
+              regionMore = true;
+              return;
+            } else if(type == "-"){
+              regionMore = false;
+              return;
+            }
 
             if (toggleMap[title] == false) {
               var current = currentMap[type] as Map;
@@ -55,7 +62,9 @@ class CampingSearchPageState extends State<CampingSearchPage> {
               currentMap[type] = current;
             }
 
-            print(currentMap["region"].toString() + currentMap["operationType"].toString() + currentMap["environment"].toString());
+            print(currentMap["region"].toString() +
+                currentMap["operationType"].toString() +
+                currentMap["environment"].toString());
           });
         },
         child: Ink(
@@ -63,10 +72,13 @@ class CampingSearchPageState extends State<CampingSearchPage> {
           child: Text(
             title,
             maxLines: 1,
-            style: TextStyle(color: !toggleMap.containsKey(title) ||
-                toggleMap[title] as bool == false
-                ? Theme.of(context).primaryColor
-                : Colors.white, fontFamily: 'NotoSansKR', fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: !toggleMap.containsKey(title) ||
+                        toggleMap[title] as bool == false
+                    ? Theme.of(context).primaryColor
+                    : Colors.white,
+                fontFamily: 'NotoSansKR',
+                fontWeight: FontWeight.bold),
           ),
           decoration: BoxDecoration(
             color: !toggleMap.containsKey(title) ||
@@ -143,7 +155,6 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                           cursorColor: Colors.black,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-
                             hintText: '검색어를 입력해주세요',
                             hintStyle: TextStyle(
                               color: Colors.grey,
@@ -166,8 +177,10 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                               arguments: {
                                 'search_data': widget._searchController.text,
                                 'regionMap': currentMap["region"] as Map,
-                                "operationTypeMap": currentMap["operationType"] as Map,
-                                "environmentMap": currentMap["environment"] as Map
+                                "operationTypeMap":
+                                    currentMap["operationType"] as Map,
+                                "environmentMap":
+                                    currentMap["environment"] as Map
                               });
                         },
                       ),
@@ -186,7 +199,9 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     ),
                     Text("지역별",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'NotoSansKR'))
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'NotoSansKR'))
                   ],
                 ),
               ),
@@ -211,12 +226,21 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                       return Row(
                         children: [
                           Flexible(
-                              child: Wrap(
-                                  children: List.generate(
+                            child: Wrap(
+                              children: regionMore == false
+                                  ? List.generate(
                                           7,
                                           (i) => _filterButton(
-                                              state.dataRegions![i], "region")) +
-                                      [_filterButton("+더보기", "+")])),
+                                              state.dataRegions![i],
+                                              "region")) +
+                                      [_filterButton("+더보기", "+")]
+                                  : List.generate(
+                                      state.dataRegions!.length,
+                                      (i) => _filterButton(
+                                          state.dataRegions![i], "region")
+                                    ) + [_filterButton("-접기", "-")],
+                            ),
+                          ),
                         ],
                       );
                     }
@@ -241,7 +265,9 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     ),
                     Text("운영 형태",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'NotoSansKR'))
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'NotoSansKR'))
                   ],
                 ),
               ),
@@ -270,7 +296,8 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                                   children: List.generate(
                                       state.dataOperationTypes!.length,
                                       (i) => _filterButton(
-                                          state.dataOperationTypes![i], "operationType")))),
+                                          state.dataOperationTypes![i],
+                                          "operationType")))),
                         ],
                       );
                     }
@@ -293,7 +320,10 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   width: 20.0,
                 ),
                 Text("입지 구분",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'NotoSansKR'))
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'NotoSansKR'))
               ])),
               SizedBox(
                 height: 24.0,
@@ -320,7 +350,8 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                                   children: List.generate(
                                       state.dataEnvironments!.length,
                                       (i) => _filterButton(
-                                          state.dataEnvironments![i], "environment")))),
+                                          state.dataEnvironments![i],
+                                          "environment")))),
                         ],
                       );
                     }
@@ -350,7 +381,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
               return Container();
             },
             buildWhen: (previous, current) {
-              if(current is Loaded) {
+              if (current is Loaded) {
                 current.dataRegions!.forEach((element) {
                   toggleMap[element] = false;
                 });
