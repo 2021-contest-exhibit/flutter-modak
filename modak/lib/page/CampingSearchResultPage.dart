@@ -34,7 +34,6 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
     Map operationTypeMap = widget.argument['operationTypeMap'];
     Map environmentMap = widget.argument['environmentMap'];
 
-
     BlocProvider.of<CampingAPIBloc>(context).add(
       FindCampinsEvent(
           nameContains: searchData,
@@ -100,13 +99,28 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
               children: [
                 BlocBuilder<CampingAPIBloc, CampingAPIState>(
                   builder: (context, state) {
-                    if (state is CampingsLoaded) {
+                    if (state is Empty) {
+                      return Container();
+                    } else if (state is SearchLoading) {
+                      return Container(
+                        color: Color(0x44232323),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else if (state is Error) {
+                      return Text("Error: ");
+                    } else if (state is CampingsLoaded) {
                       return RecommandCampingWidget(
                         campingList:
                             ResponseGetCampings(content: state.content),
                       );
                     }
                     return Container();
+                  },
+                  buildWhen: (previous, current) {
+                    if (current is CampingsLoaded || current is SearchLoading) {
+                      return true;
+                    }
+                    return false;
                   },
                 ),
               ],
