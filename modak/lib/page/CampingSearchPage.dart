@@ -214,15 +214,14 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   builder: (_, state) {
                     if (state is Empty) {
                       return Container();
-                    } else if (state is Loading) {
+                    } else if (state is CampingSearchLoading) {
                       return Container(
                         color: Color(0x44232323),
                         child: Center(child: CircularProgressIndicator()),
                       );
                     } else if (state is Error) {
                       return Text("Error: ");
-                    } else if (state is Loaded) {
-                      // return Text(state.dataOperationTypes.toString());
+                    } else if (state is CampingSearchLoaded) {
                       return Row(
                         children: [
                           Flexible(
@@ -247,7 +246,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     return Container();
                   },
                   buildWhen: (previous, current) {
-                    if (current is Loaded || current is Loading) {
+                    if (current is CampingSearchLoaded || current is CampingSearchLoading) {
                       return true;
                     }
                     return false;
@@ -280,14 +279,14 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   builder: (_, state) {
                     if (state is Empty) {
                       return Container();
-                    } else if (state is Loading) {
+                    } else if (state is CampingSearchLoading) {
                       return Container(
                         color: Color(0x44232323),
                         child: Center(child: CircularProgressIndicator()),
                       );
                     } else if (state is Error) {
                       return Text("Error: ");
-                    } else if (state is Loaded) {
+                    } else if (state is CampingSearchLoaded) {
                       // return Text(state.dataOperationTypes.toString());
                       return Row(
                         children: [
@@ -304,7 +303,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     return Container();
                   },
                   buildWhen: (previous, current) {
-                    if (current is Loaded || current is Loading) {
+                    if (current is CampingSearchLoaded || current is CampingSearchLoading) {
                       return true;
                     }
                     return false;
@@ -334,14 +333,14 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   builder: (_, state) {
                     if (state is Empty) {
                       return Container();
-                    } else if (state is Loading) {
+                    } else if (state is CampingSearchLoading) {
                       return Container(
                         color: Color(0x44232323),
                         child: Center(child: CircularProgressIndicator()),
                       );
                     } else if (state is Error) {
                       return Text("Error: ");
-                    } else if (state is Loaded) {
+                    } else if (state is CampingSearchLoaded) {
                       // return Text(state.dataOperationTypes.toString());
                       return Row(
                         children: [
@@ -358,7 +357,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     return Container();
                   },
                   buildWhen: (previous, current) {
-                    if (current is Loaded || current is Loading) {
+                    if (current is CampingSearchLoaded || current is CampingSearchLoading) {
                       return true;
                     }
                     return false;
@@ -372,7 +371,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
           ),
           BlocBuilder<CampingAPIBloc, CampingAPIState>(
             builder: (_, state) {
-              if (state is Loading) {
+              if (state is CampingSearchLoading) {
                 return Container(
                   color: Color(0x44232323),
                   child: Center(child: CircularProgressIndicator()),
@@ -381,7 +380,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
               return Container();
             },
             buildWhen: (previous, current) {
-              if (current is Loaded) {
+              if (current is CampingSearchLoaded) {
                 current.dataRegions!.forEach((element) {
                   toggleMap[element] = false;
                 });

@@ -105,7 +105,7 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
 
   Stream<CampingAPIState> _mapGetCampingsFilterDataEvent(GetCampingsFilterDataEvent event) async* {
     print("_mapGetCampingsFilterDataEvent");
-    yield Loading();
+    yield CampingSearchLoading();
 
     var response1 = await apiRepository.getCampingsEnvironments().onError((error, stackTrace) {
       print(error.toString());
@@ -127,7 +127,7 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
 
     if (response1 != null && response2 != null && response3 != null) {
       print("response: ${response1.data} ${response2.data} ${response3.data}");
-      yield Loaded(dataEnvironments:response1.data, dataOperationTypes: response2.data, dataRegions: response3.data);
+      yield CampingSearchLoaded(dataEnvironments:response1.data, dataOperationTypes: response2.data, dataRegions: response3.data);
     }else {
       print("error");
       yield Error();
