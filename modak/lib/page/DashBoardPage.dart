@@ -82,7 +82,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                   Text(
                     'TOP 5',
                     style: TextStyle(
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'NotoSansKR'),
                   )
@@ -108,7 +108,7 @@ class DashBoardPageState extends State<DashBoardPage> {
               ),
             ),
             const SizedBox(
-              height: 36,
+              height: 20,
             ),
             Container(
               padding: EdgeInsets.only(top:24, ),
@@ -140,7 +140,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                         Text(
                           'AI모닥의 추천',
                           style: TextStyle(
-                              fontSize: 22.0,
+                              fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'NotoSansKR'),
                         )
