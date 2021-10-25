@@ -35,7 +35,15 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
       yield* _mapLoadIsJoinMatchingEvent(event);
     } else if (event is JoinMatchingEvent) {
       yield* _mapJoinMatchingEvent(event);
+    } else if (event is CampingSelectedEvent) {
+      yield* _mapCampingSelectedEvent(event);
     }
+  }
+
+  Stream<ModakState> _mapCampingSelectedEvent(CampingSelectedEvent event) async*{
+    yield CampingSelectedLoading();
+
+    yield CampingSelected(content: event.content);
   }
 
   Stream<ModakState> _mapPushMessageEvent(PushMessageEvent event) async* {
