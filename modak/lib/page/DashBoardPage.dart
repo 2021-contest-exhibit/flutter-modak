@@ -44,7 +44,10 @@ class DashBoardPageState extends State<DashBoardPage> {
                         onPressed: () {
                           widget.pageController.jumpToPage(2);
                         },
-                        icon: const Icon(Icons.search, size: 28,),
+                        icon: const Icon(
+                          Icons.search,
+                          size: 28,
+                        ),
                       ),
                     ],
                   ),
@@ -62,9 +65,8 @@ class DashBoardPageState extends State<DashBoardPage> {
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'NotoSansKR'
-                            ),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'NotoSansKR'),
                           ),
                         ],
                       ),
@@ -74,30 +76,28 @@ class DashBoardPageState extends State<DashBoardPage> {
               ),
             ),
             const SizedBox(
-              height: 64,
+              height: 30,
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
                 children: [
                   Text(
-                    'NEW & HOT',
+                    'TOP 5',
                     style: TextStyle(
-                        fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'NotoSansKR'),
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'NotoSansKR'),
                   )
                 ],
               ),
-            ),
-            const SizedBox(
-              height: 36,
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
               child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
                 builder: (context, state) {
                   if (state is TodayCampingsLoaded) {
-                    return TodayCompingWidget(
-                        campingList: [...state.campings]);
+                    return TodayCompingWidget(campingList: [...state.campings]);
                   }
                   return Container();
                 },
@@ -118,15 +118,28 @@ class DashBoardPageState extends State<DashBoardPage> {
               child: Row(
                 children: [
                   Text(
-                    '추천 캠핑',
+                    'AI모닥의 추천',
                     style: TextStyle(
-                        fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'NotoSansKR'),
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'NotoSansKR'),
                   )
                 ],
               ),
             ),
-            const SizedBox(
-              height: 36,
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    '여긴 어때요?',
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'NotoSansKR'),
+                  )
+                ],
+              ),
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -137,8 +150,8 @@ class DashBoardPageState extends State<DashBoardPage> {
                     builder: (context, state) {
                       if (state is TodayCampingsLoaded) {
                         return RecommandCampingWidget(
-                          campingList: ResponseGetCampings(
-                              content: [...state.campings]),
+                          campingList:
+                              ResponseGetCampings(content: [...state.campings]),
                         );
                       }
                       return Container();
