@@ -20,13 +20,14 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
     return Container(
       height: 150,
       margin: const EdgeInsets.symmetric(vertical: 18.0),
+      color: Color(0xffF8F8F8),
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(context, '/camping_detail', arguments: camping);
         },
         child: Ink(
           decoration: const BoxDecoration(
-            color: Color(0xffffffff),
+            color: Color(0xffFFFFFF),
             borderRadius: const BorderRadius.all(
               const Radius.circular(5.0),
             ),

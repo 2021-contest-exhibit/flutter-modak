@@ -75,9 +75,6 @@ class DashBoardPageState extends State<DashBoardPage> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 30,
-            ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
@@ -85,7 +82,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                   Text(
                     'TOP 5',
                     style: TextStyle(
-                        fontSize: 30.0,
+                        fontSize: 25.0,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'NotoSansKR'),
                   )
@@ -114,63 +111,90 @@ class DashBoardPageState extends State<DashBoardPage> {
               height: 36,
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  Text(
-                    'AI모닥의 추천',
-                    style: TextStyle(
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'NotoSansKR'),
-                  )
+              padding: EdgeInsets.only(top:24, ),
+              decoration: BoxDecoration(
+                color: Color(0xffF2F2F2),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
+
+                boxShadow: [
+                  BoxShadow(
+                      color: Color(0x22000000),
+                      offset: Offset(-10, -10),
+                      spreadRadius: 0,
+                      blurRadius: 10),
+                  BoxShadow(
+                      color: Color(0x11000000),
+                      offset: Offset(10, 10),
+                      spreadRadius: 0,
+                      blurRadius: 10)
                 ],
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  Text(
-                    '여긴 어때요?',
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'NotoSansKR'),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  BlocBuilder<CampingAPIBloc, CampingAPIState>(
-                    builder: (context, state) {
-                      if (state is TodayCampingsLoaded) {
-                        return RecommandCampingWidget(
-                          campingList:
-                              ResponseGetCampings(content: [...state.campings]),
-                        );
-                      }
-                      return Container();
-                    },
-                    buildWhen: (previous, current) {
-                      if (current is TodayCampingsLoaded) {
-                        print("reload");
-                        return true;
-                      } else {
-                        return false;
-                      }
-                    },
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'AI모닥의 추천',
+                          style: TextStyle(
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'NotoSansKR'),
+                        )
+                      ],
+                    ),
                   ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          '여긴 어때요?',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'NotoSansKR'),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                          builder: (context, state) {
+                            if (state is TodayCampingsLoaded) {
+                              return RecommandCampingWidget(
+                                campingList:
+                                ResponseGetCampings(content: [...state.campings]),
+                              );
+                            }
+                            return Container();
+                          },
+                          buildWhen: (previous, current) {
+                            if (current is TodayCampingsLoaded) {
+                              print("reload");
+                              return true;
+                            } else {
+                              return false;
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 220,
+                  )
                 ],
-              ),
+              )
             ),
-            const SizedBox(
-              height: 120,
-            ),
+
           ],
         ),
       ),
