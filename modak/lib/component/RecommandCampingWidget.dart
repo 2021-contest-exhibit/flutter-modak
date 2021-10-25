@@ -67,7 +67,7 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
                       style: const TextStyle(
                         color: const Color(0xff000000),
                         fontSize: 18.0,
-                        fontFamily: 'Shilla_Gothic',
+                        fontFamily: 'NotoSansKR',
                         fontWeight: FontWeight.bold,
                       ),
                     ),

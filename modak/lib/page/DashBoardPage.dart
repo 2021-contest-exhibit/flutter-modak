@@ -60,10 +60,10 @@ class DashBoardPageState extends State<DashBoardPage> {
                           Text(
                             'MODAK',
                             style: TextStyle(
-                                fontSize: 24,
+                                fontSize: 20,
                                 color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontFamily: '비트로_코어_TTF'
+                              fontFamily: 'NotoSansKR'
                             ),
                           ),
                         ],
@@ -83,7 +83,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                   Text(
                     'NEW & HOT',
                     style: TextStyle(
-                        fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: '비트로_코어_TTF'),
+                        fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'NotoSansKR'),
                   )
                 ],
               ),
@@ -120,7 +120,7 @@ class DashBoardPageState extends State<DashBoardPage> {
                   Text(
                     '추천 캠핑',
                     style: TextStyle(
-                        fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: '비트로_코어_TTF'),
+                        fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'NotoSansKR'),
                   )
                 ],
               ),
