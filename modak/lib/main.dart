@@ -18,6 +18,7 @@ import 'package:modak/page/LoginPage.dart';
 import 'package:modak/page/MainPage.dart';
 import 'package:modak/page/Payment.dart';
 import 'package:modak/page/PaymentPage.dart';
+import 'package:modak/page/SelectCampingPage.dart';
 import 'package:modak/page/SignUpPage.dart';
 import 'package:modak/page/SplashPage.dart';
 import 'package:modak/repository/APIRepository.dart';
@@ -90,6 +91,7 @@ class MyApp extends StatelessWidget {
           ),
           '/chatting': (context) => ChattingPage(),
           '/import': (context) => Payment(),
+          '/select_camping': (context) => SelectCampingPage(),
         },
       ),
     );
