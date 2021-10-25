@@ -33,6 +33,22 @@ class Loaded extends CampingAPIState {
 
 }
 
+class CampingSearchLoading extends CampingAPIState {
+  @override
+  List<Object?> get props => [];
+}
+
+class CampingSearchLoaded extends CampingAPIState {
+  final List<String>? dataEnvironments;
+  final List<String>? dataOperationTypes;
+  final List<String>? dataRegions;
+
+  CampingSearchLoaded({this.dataEnvironments, this.dataOperationTypes, this.dataRegions});
+
+  @override
+  List<Object?> get props => [this.dataEnvironments, this.dataOperationTypes, this.dataRegions];
+}
+
 
 class CampingsLoaded extends CampingAPIState {
   final List<Content> content;
