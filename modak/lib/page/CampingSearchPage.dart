@@ -186,7 +186,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     ),
                     Text("지역별",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20, fontFamily: '비트로_코어_TTF'))
+                            fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'NotoSansKR'))
                   ],
                 ),
               ),
@@ -241,7 +241,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                     ),
                     Text("운영 형태",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20, fontFamily: '비트로_코어_TTF'))
+                            fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'NotoSansKR'))
                   ],
                 ),
               ),
@@ -293,7 +293,7 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   width: 20.0,
                 ),
                 Text("입지 구분",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: '비트로_코어_TTF'))
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'NotoSansKR'))
               ])),
               SizedBox(
                 height: 24.0,

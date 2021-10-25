@@ -52,7 +52,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                     ),
                     Text(
                       widget.modakMatching.email!,
-                      style: TextStyle(fontSize: 18, fontFamily: '비트로_코어_TTF'),
+                      style: TextStyle(fontSize: 18, fontFamily: 'NotoSansKR'),
                     ),
                   ],
                 ),
@@ -74,7 +74,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                         Text(
                           widget.modakMatching.content!.name!,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16.0, fontFamily: 'Shilla_Gothic'),
+                              fontWeight: FontWeight.bold, fontSize: 16.0, fontFamily: 'NotoSansKR'),
                         ),
                         const SizedBox(
                           height: 2.0,
@@ -105,7 +105,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                           Text(
                             "참여하기",
                             style: TextStyle(
-                                fontSize: 12.0, fontWeight: FontWeight.bold, fontFamily: 'Shilla_Gothic'),
+                                fontSize: 12.0, fontWeight: FontWeight.bold, fontFamily: 'NotoSansKR'),
                           ),
                         ],
                       ),

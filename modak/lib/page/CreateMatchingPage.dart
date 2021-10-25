@@ -65,7 +65,7 @@ class CreateMatchingPageState extends State<CreateMatchingPage> {
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
-                    fontFamily: '비트로_코어_TTF',
+                    fontFamily: 'NotoSansKR',
                   ),
                 ),
                 SizedBox(
@@ -122,7 +122,7 @@ class CreateMatchingPageState extends State<CreateMatchingPage> {
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
-                    fontFamily: '비트로_코어_TTF',
+                    fontFamily: 'NotoSansKR',
                   ),
                 ),
                 TableCalendar(
