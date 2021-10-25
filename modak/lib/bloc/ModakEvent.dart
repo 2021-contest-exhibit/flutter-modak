@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:modak/dto/Chat.dart';
 import 'package:modak/dto/Matching.dart';
+import 'package:modak/rest/Content.dart';
 
 abstract class ModakEvent extends Equatable{}
 
@@ -74,4 +75,13 @@ class PushMessageEvent extends ModakEvent {
   @override
   List<Object?> get props => [];
 
+}
+
+class CampingSelectedEvent extends ModakEvent {
+  final Content content;
+
+  CampingSelectedEvent({required this.content});
+
+  @override
+  List<Object?> get props => [];
 }
