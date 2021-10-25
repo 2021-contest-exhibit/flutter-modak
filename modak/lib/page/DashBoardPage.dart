@@ -80,9 +80,23 @@ class DashBoardPageState extends State<DashBoardPage> {
               child: Row(
                 children: [
                   Text(
-                    'TOP 5',
+                    'AI모닥의 추천',
                     style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'NotoSansKR'),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    '여긴 어때요?',
+                    style: TextStyle(
+                        fontSize: 15.0,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'NotoSansKR'),
                   )
@@ -138,23 +152,9 @@ class DashBoardPageState extends State<DashBoardPage> {
                     child: Row(
                       children: [
                         Text(
-                          'AI모닥의 추천',
+                          'HOT 캠핑장',
                           style: TextStyle(
                               fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'NotoSansKR'),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          '여긴 어때요?',
-                          style: TextStyle(
-                              fontSize: 15.0,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'NotoSansKR'),
                         )
