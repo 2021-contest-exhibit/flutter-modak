@@ -16,7 +16,9 @@ class MatchingPage extends StatefulWidget {
 
 class MatchingPageState extends State<MatchingPage> {
   final List<ModakMatching> newModakMatchings = [];
+  final List<ModakMatching> joinModakMatchings = [];
   bool newModakMatchingsLoading = false;
+  bool joinModakMatchingLoading = false;
 
 
   setIndex(int index) {
@@ -168,30 +170,44 @@ class MatchingPageState extends State<MatchingPage> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20.0),
                     height: _contentHeight,
-                    child: BlocBuilder<ModakBloc, ModakState>(
-                      builder: (_, state) {
-                        if (state is Empty) {
-                          return Container();
-                        } else if (state is JoinMatchingLoading) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (state is Error) {
-                          return Center(child: Text(state.message));
-                        } else if (state is JoinMatchingLoaded) {
-                          return ListView.builder(
-                            itemBuilder: (context, index) {
-                              return MatchingItemWidget(
-                                modakMatching: state.matchings![index],
-                              );
-                            },
-                            itemCount: state.matchings!.length,
-                            physics: BouncingScrollPhysics(),
-                          );
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: (notification) {
+                        if (notification.metrics.maxScrollExtent < notification.metrics.pixels) {
+                          if (joinModakMatchings.length > 0 && !joinModakMatchingLoading){
+                            joinModakMatchingLoading = true;
+                            BlocProvider.of<ModakBloc>(context).add(LoadJoinMatchingEvent(lastDate: joinModakMatchings[joinModakMatchings.length - 1].matching!.createDate.toIso8601String()));
+                          }
                         }
-                        return Container();
+                        return true;
                       },
-                      buildWhen: (previous, current) =>
-                      current is JoinMatchingLoading ||
-                          current is JoinMatchingLoaded,
+                      child: BlocBuilder<ModakBloc, ModakState>(
+                        builder: (_, state) {
+                          if (state is Empty) {
+                            return Container();
+                          } else if (state is JoinMatchingLoading) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (state is Error) {
+                            return Center(child: Text(state.message));
+                          } else if (state is JoinMatchingLoaded) {
+                            if (state.matchings!.length > 0){
+                              joinModakMatchings.addAll(state.matchings!);
+                            }
+                            joinModakMatchingLoading = false;
+                            return ListView.builder(
+                              itemBuilder: (context, index) {
+                                return MatchingItemWidget(
+                                  modakMatching: joinModakMatchings[index],
+                                );
+                              },
+                              itemCount: joinModakMatchings.length,
+                              physics: BouncingScrollPhysics(),
+                            );
+                          }
+                          return Container();
+                        },
+                        buildWhen: (previous, current) =>
+                            current is JoinMatchingLoaded,
+                      ),
                     ),
                   ),
                 ),

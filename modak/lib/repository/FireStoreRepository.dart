@@ -122,9 +122,16 @@ class FireStoreRepository {
     });
   }
 
-  Future<List<Map<String, Matching>>?> loadJoinMatchings(String uid) async {
+  Future<List<Map<String, Matching>>?> loadJoinMatchings(String uid, String lastDate) async {
+    var lastDateList = [];
+    if (lastDate != "") {
+      lastDateList.add(lastDate);
+    } else {
+      lastDateList.add(DateTime.now().toIso8601String());
+    }
+
     CollectionReference matchings = store.collection("matchings");
-    return matchings.where("userList", arrayContains: uid).get().then((value) async {
+    return matchings.where("userList", arrayContains: uid).orderBy("createDate", descending: true).startAfter(lastDateList).limit(10).get().then((value) async {
       return value.docs.map((e) => {
         e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
       }).toList();
