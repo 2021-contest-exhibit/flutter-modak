@@ -57,6 +57,10 @@ class GetCampingsFilterDataEvent extends CampingAPIEvent {
 }
 
 class GetTodayCampingsEvent extends CampingAPIEvent {
+  final int index;
+
+  GetTodayCampingsEvent({required this.index});
+
   @override
   List<Object?> get props => [];
 }
