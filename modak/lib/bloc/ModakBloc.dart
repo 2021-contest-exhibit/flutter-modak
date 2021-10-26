@@ -87,7 +87,7 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
   Stream<ModakState> _mapLoadMatchingEvent(LoadMatchingEvent event) async* {
     yield MatchingLoading();
 
-    var response = await fireStoreRepository.loadMatching(event.matchingId??"").onError((error, stackTrace) => null);
+    var response = await fireStoreRepository.loadMatching(event.matchingId??"", event.lastDate??"").onError((error, stackTrace) => null);
 
     if (response != null) {
       var matchings = await Stream.fromIterable(response).asyncMap((e) async {

@@ -22,8 +22,9 @@ class CreateMatchingEvent extends ModakEvent {
 
 class LoadMatchingEvent extends ModakEvent {
   String? matchingId;
+  String? lastDate;
 
-  LoadMatchingEvent({this.matchingId});
+  LoadMatchingEvent({this.matchingId, this.lastDate});
 
   @override
   List<Object?> get props => [];

@@ -71,10 +71,16 @@ class FireStoreRepository {
     });
   }
 
-  Future<List<Map<String, Matching>>?> loadMatching(String matchingId) {
+  Future<List<Map<String, Matching>>?> loadMatching(String matchingId, String lastDate) {
     CollectionReference matchings = store.collection("matchings");
     if (matchingId == "") {
-      return matchings.orderBy("createDate").limit(10).get().then((
+      var lastDateList = [];
+      if (lastDate != "") {
+        lastDateList.add(lastDate);
+      } else {
+        lastDateList.add(DateTime.now().toIso8601String());
+      }
+      return matchings.orderBy("createDate", descending: true).startAfter(lastDateList).limit(10).get().then((
           value) async {
         return value.docs.map((e) =>
         {
@@ -82,7 +88,7 @@ class FireStoreRepository {
         }).toList();
       });
     } else {
-      return matchings.orderBy("createDate").where("matchingId", isEqualTo: matchingId).limit(10).get().then((value) async {
+      return matchings.orderBy("createDate", descending: true).where("matchingId", isEqualTo: matchingId).limit(10).get().then((value) async {
         return value.docs.map((e) =>
         {
           e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
