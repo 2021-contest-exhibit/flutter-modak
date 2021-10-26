@@ -114,25 +114,94 @@ class DashBoardPageState extends State<DashBoardPage> {
                         ],
                       ),
                     ),
-                    Container(
-                      child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
-                        builder: (context, state) {
-                          if (state is TodayCampingsLoaded) {
-                            return TodayCompingWidget(campingList: [...state.campings]);
-                          }
-                          return Container();
-                        },
-                        buildWhen: (previous, current) {
-                          if (current is TodayCampingsLoaded) {
-                            return true;
-                          } else {
-                            return false;
-                          }
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    'AI모닥의 추천',
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'NotoSansKR'),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                children: [
+                  Text(
+                    '여긴 어때요?',
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'NotoSansKR'),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                builder: (context, state) {
+                  if (state is TodayCampingsLoaded) {
+                    return TodayCompingWidget(campingList: [...state.campings]);
+                  }
+                  return Container();
+                },
+                buildWhen: (previous, current) {
+                  if (current is TodayCampingsLoaded) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: EdgeInsets.only(top:24, ),
+              decoration: BoxDecoration(
+                color: Color(0xffF2F2F2),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
+
+                boxShadow: [
+                  BoxShadow(
+                      color: Color(0x22000000),
+                      offset: Offset(-10, -10),
+                      spreadRadius: 0,
+                      blurRadius: 10),
+                  BoxShadow(
+                      color: Color(0x11000000),
+                      offset: Offset(10, 10),
+                      spreadRadius: 0,
+                      blurRadius: 10)
+                ],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'HOT 캠핑장',
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'NotoSansKR'),
+                        )
+                      ],
                     ),
                     Container(
                         padding: EdgeInsets.only(top:24, ),
