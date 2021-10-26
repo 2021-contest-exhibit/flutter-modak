@@ -20,33 +20,32 @@ class RecommandCampingWidgetState extends State<RecommandCampingWidget> {
     return Container(
       height: 150,
       margin: const EdgeInsets.symmetric(vertical: 18.0),
-      color: Color(0xffF8F8F8),
+      decoration: const BoxDecoration(
+          color: Color(0xffFFFFFF),
+          borderRadius: const BorderRadius.all(
+            const Radius.circular(20.0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x22000000),
+              offset: Offset(2.0, 2.0),
+              blurRadius: 2.0,
+              spreadRadius: 0.1,
+            ),
+          ]
+      ),
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(context, '/camping_detail', arguments: camping);
         },
         child: Ink(
-          decoration: const BoxDecoration(
-            color: Color(0xffFFFFFF),
-            borderRadius: const BorderRadius.all(
-              const Radius.circular(5.0),
-            ),
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0x22000000),
-                  offset: Offset(2.0, 2.0),
-                  blurRadius: 2.0,
-                  spreadRadius: 0.1,
-                ),
-              ]
-          ),
           child: Row(
             children: [
               Container(
                 width: (_width-40) * 45/100,
                 height: 150.0,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), bottomLeft: Radius.circular(20.0)),
                   child: (camping.thumbnailImageUrl != null &&camping.thumbnailImageUrl != "") ? Image.network(
                     camping.thumbnailImageUrl!,
                     fit: BoxFit.fitHeight,
