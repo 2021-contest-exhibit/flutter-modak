@@ -73,13 +73,13 @@ class FireStoreRepository {
 
   Future<List<Map<String, Matching>>?> loadMatching(String matchingId, String lastDate) {
     CollectionReference matchings = store.collection("matchings");
+    var lastDateList = [];
+    if (lastDate != "") {
+      lastDateList.add(lastDate);
+    } else {
+      lastDateList.add(DateTime.now().toIso8601String());
+    }
     if (matchingId == "") {
-      var lastDateList = [];
-      if (lastDate != "") {
-        lastDateList.add(lastDate);
-      } else {
-        lastDateList.add(DateTime.now().toIso8601String());
-      }
       return matchings.orderBy("createDate", descending: true).startAfter(lastDateList).limit(10).get().then((
           value) async {
         return value.docs.map((e) =>
@@ -88,7 +88,10 @@ class FireStoreRepository {
         }).toList();
       });
     } else {
-      return matchings.orderBy("createDate", descending: true).where("matchingId", isEqualTo: matchingId).limit(10).get().then((value) async {
+      return matchings.where("matchingId", isEqualTo: matchingId)
+          .orderBy("createDate", descending: true)
+          .startAfter(lastDateList)
+          .limit(10).get().then((value) async {
         return value.docs.map((e) =>
         {
           e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
@@ -97,9 +100,18 @@ class FireStoreRepository {
     }
   }
 
-  Future<List<Map<String, Matching>>?> loadMyMatching(String uid) {
+  Future<List<Map<String, Matching>>?> loadMyMatching(String uid, String? lastDate) {
+    var lastDateList = [];
+    if (lastDate != "") {
+      lastDateList.add(lastDate);
+    } else {
+      lastDateList.add(DateTime.now().toIso8601String());
+    }
     CollectionReference matchings = store.collection("matchings");
-    return matchings.where("user", isEqualTo: uid).get().then((value) async {
+    return matchings.where("user", isEqualTo: uid)
+        .orderBy("createDate", descending: true)
+        .startAfter(lastDateList)
+        .limit(10).get().then((value) async {
       return value.docs.map((e) => {
         e.id: Matching.fromJson(e.data() as Map<String, dynamic>)
       }).toList();

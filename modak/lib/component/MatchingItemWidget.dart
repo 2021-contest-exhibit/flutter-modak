@@ -155,8 +155,9 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
             print('state: ${current}');
             if (current is Error) {
               print("error");
+              ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(current.message)));
+                  .showSnackBar(SnackBar(content: Text(current.message), duration: Duration(milliseconds: 500),));
             } else if (current is IsJoinMatchingLoaded && current.matchingId == widget.modakMatching.matchingId) {
               if (current.isJoinMatching) {
                 print('current: ${current.isJoinMatching}, ${current.matchingId}');

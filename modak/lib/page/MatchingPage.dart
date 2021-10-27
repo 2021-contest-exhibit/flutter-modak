@@ -15,20 +15,36 @@ class MatchingPage extends StatefulWidget {
 }
 
 class MatchingPageState extends State<MatchingPage> {
-  final List<ModakMatching> newModakMatchings = [];
-  final List<ModakMatching> joinModakMatchings = [];
+  List<ModakMatching> newModakMatchings = [];
+  List<ModakMatching> joinModakMatchings = [];
+  List<ModakMatching> myModakMatchings = [];
   bool newModakMatchingsLoading = false;
   bool joinModakMatchingLoading = false;
+  bool myModakMatchingLoading = false;
+  bool isNewModakMatchingEnd = false;
+  bool isJoinModakMatchingEnd = false;
+  bool isMyModakMatchingEnd = false;
 
 
   setIndex(int index) {
     setState(() {
       widget._selectedIndex = index;
       if (index == 0) {
+        newModakMatchings = [];
+        newModakMatchingsLoading = true;
+        isNewModakMatchingEnd = false;
         BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent());
       } else if (index == 1) {
+        print('index1');
+        joinModakMatchings = [];
+        joinModakMatchingLoading = true;
+        isJoinModakMatchingEnd = false;
         BlocProvider.of<ModakBloc>(context).add(LoadJoinMatchingEvent());
       } else if (index == 2) {
+        print('index2');
+        myModakMatchings = [];
+        myModakMatchingLoading = true;
+        isMyModakMatchingEnd = false;
         BlocProvider.of<ModakBloc>(context).add(LoadMyMatchingEvent());
       }
     });
@@ -124,125 +140,164 @@ class MatchingPageState extends State<MatchingPage> {
                     height: 0.1,
                   ),
                 ),
-                Visibility(
-                  visible: widget._selectedIndex == 0,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.0),
-                    height: _contentHeight,
-                    child: NotificationListener<ScrollNotification>(
-                      onNotification: (notification) {
-                        if (notification.metrics.maxScrollExtent < notification.metrics.pixels) {
-                          if (newModakMatchings.length > 0 && !newModakMatchingsLoading){
-                            newModakMatchingsLoading = true;
-                            BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent(lastDate: newModakMatchings[newModakMatchings.length - 1].matching!.createDate.toIso8601String()));
-                          }
-                        }
-                        return true;
-                      },
-                      child: BlocBuilder<ModakBloc, ModakState>(
-                        builder: (_, state) {
-                          if (state is MatchingLoaded) {
-                            if (state.matchings!.length > 0){
-                              print('machings: ${state.matchings![0].matching!.createDate}');
-                              newModakMatchings.addAll(state.matchings!);
-                            }
-                            newModakMatchingsLoading = false;
-                            return ListView.builder(
-                              itemBuilder: (context, index) {
-                                return MatchingItemWidget(
-                                  modakMatching: newModakMatchings[index],
-                                );
+                Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Visibility(
+                          visible: widget._selectedIndex == 0,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20.0),
+                            height: _contentHeight,
+                            child: NotificationListener<ScrollNotification>(
+                              onNotification: (notification) {
+                                if (notification.metrics.maxScrollExtent < notification.metrics.pixels) {
+                                  if (newModakMatchings.length > 0 && !newModakMatchingsLoading && !isNewModakMatchingEnd){
+                                    newModakMatchingsLoading = true;
+                                    BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent(lastDate: newModakMatchings[newModakMatchings.length - 1].matching!.createDate.toIso8601String()));
+                                  }
+                                }
+                                return true;
                               },
-                              itemCount: newModakMatchings.length,
-                              physics: BouncingScrollPhysics(),
-                            );
-                          }
-                          return Container();
-                        },
-                        buildWhen: (previous, current) =>
-                            current is MatchingLoaded,
-                      ),
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: widget._selectedIndex == 1,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.0),
-                    height: _contentHeight,
-                    child: NotificationListener<ScrollNotification>(
-                      onNotification: (notification) {
-                        if (notification.metrics.maxScrollExtent < notification.metrics.pixels) {
-                          if (joinModakMatchings.length > 0 && !joinModakMatchingLoading){
-                            joinModakMatchingLoading = true;
-                            BlocProvider.of<ModakBloc>(context).add(LoadJoinMatchingEvent(lastDate: joinModakMatchings[joinModakMatchings.length - 1].matching!.createDate.toIso8601String()));
-                          }
-                        }
-                        return true;
-                      },
-                      child: BlocBuilder<ModakBloc, ModakState>(
-                        builder: (_, state) {
-                          if (state is Empty) {
-                            return Container();
-                          } else if (state is JoinMatchingLoading) {
-                            return Center(child: CircularProgressIndicator());
-                          } else if (state is Error) {
-                            return Center(child: Text(state.message));
-                          } else if (state is JoinMatchingLoaded) {
-                            if (state.matchings!.length > 0){
-                              joinModakMatchings.addAll(state.matchings!);
-                            }
-                            joinModakMatchingLoading = false;
-                            return ListView.builder(
-                              itemBuilder: (context, index) {
-                                return MatchingItemWidget(
-                                  modakMatching: joinModakMatchings[index],
-                                );
+                              child: BlocBuilder<ModakBloc, ModakState>(
+                                builder: (_, state) {
+                                  if (state is MatchingLoaded) {
+                                    if (state.matchings!.length > 0){
+                                      print('machings: ${state.matchings![0].matching!.createDate}');
+                                      newModakMatchings.addAll(state.matchings!);
+                                    } else {
+                                      isNewModakMatchingEnd = true;
+                                    }
+                                    newModakMatchingsLoading = false;
+                                    return ListView.builder(
+                                      itemBuilder: (context, index) {
+                                        return MatchingItemWidget(
+                                          modakMatching: newModakMatchings[index],
+                                        );
+                                      },
+                                      itemCount: newModakMatchings.length,
+                                      physics: BouncingScrollPhysics(),
+                                    );
+                                  }
+                                  return Container();
+                                },
+                                buildWhen: (previous, current) =>
+                                current is MatchingLoaded,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: widget._selectedIndex == 1,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20.0),
+                            height: _contentHeight,
+                            child: NotificationListener<ScrollNotification>(
+                              onNotification: (notification) {
+                                if (notification.metrics.maxScrollExtent < notification.metrics.pixels) {
+                                  if (joinModakMatchings.length > 0 && !joinModakMatchingLoading && !isJoinModakMatchingEnd){
+                                    joinModakMatchingLoading = true;
+                                    BlocProvider.of<ModakBloc>(context).add(LoadJoinMatchingEvent(lastDate: joinModakMatchings[joinModakMatchings.length - 1].matching!.createDate.toIso8601String()));
+                                  }
+                                }
+                                return true;
                               },
-                              itemCount: joinModakMatchings.length,
-                              physics: BouncingScrollPhysics(),
-                            );
-                          }
-                          return Container();
-                        },
-                        buildWhen: (previous, current) =>
-                            current is JoinMatchingLoaded,
-                      ),
+                              child: BlocBuilder<ModakBloc, ModakState>(
+                                builder: (_, state) {
+                                  if (state is JoinMatchingLoaded) {
+                                    if (state.matchings!.length > 0){
+                                      joinModakMatchings.addAll(state.matchings!);
+                                    } else {
+                                      isJoinModakMatchingEnd = true;
+                                    }
+                                    joinModakMatchingLoading = false;
+                                    return ListView.builder(
+                                      itemBuilder: (context, index) {
+                                        return MatchingItemWidget(
+                                          modakMatching: joinModakMatchings[index],
+                                        );
+                                      },
+                                      itemCount: joinModakMatchings.length,
+                                      physics: BouncingScrollPhysics(),
+                                    );
+                                  } else if (state is Error) {
+                                    return Text(state.message);
+                                  }
+                                  return Container();
+                                },
+                                buildWhen: (previous, current) =>
+                                current is JoinMatchingLoaded || current is Error,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: widget._selectedIndex == 2,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20.0),
+                            height: _contentHeight,
+                            child: NotificationListener<ScrollNotification>(
+                              onNotification: (notification) {
+                                if (notification.metrics.maxScrollExtent < notification.metrics.pixels) {
+                                  if (myModakMatchings.length > 0 && !myModakMatchingLoading && !isMyModakMatchingEnd){
+                                    myModakMatchingLoading = true;
+                                    BlocProvider.of<ModakBloc>(context).add(LoadMyMatchingEvent(lastDate: myModakMatchings[myModakMatchings.length - 1].matching!.createDate.toIso8601String()));
+                                  }
+                                }
+                                return true;
+                              },
+                              child: BlocBuilder<ModakBloc, ModakState>(
+                                builder: (_, state) {
+                                  if (state is MyMatchingLoaded) {
+                                    if (state.matchings!.length > 0){
+                                      myModakMatchings.addAll(state.matchings!);
+                                    } else {
+                                      isJoinModakMatchingEnd = true;
+                                    }
+                                    myModakMatchingLoading = false;
+                                    return ListView.builder(
+                                      itemBuilder: (context, index) {
+                                        return MatchingItemWidget(
+                                          modakMatching: myModakMatchings[index],
+                                        );
+                                      },
+                                      itemCount: myModakMatchings.length,
+                                      physics: BouncingScrollPhysics(),
+                                    );
+                                  } else if (state is Error) {
+                                    return Text(state.message);
+                                  }
+                                  return Container();
+                                },
+                                buildWhen: (previous, current) =>
+                                current is MyMatchingLoaded,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                Visibility(
-                  visible: widget._selectedIndex == 2,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.0),
-                    height: _contentHeight,
-                    child: BlocBuilder<ModakBloc, ModakState>(
-                      builder: (_, state) {
-                        if (state is Empty) {
-                          return Container();
-                        } else if (state is MyMatchingLoading) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (state is Error) {
-                          return Center(child: Text(state.message));
-                        } else if (state is MyMatchingLoaded) {
-                          return ListView.builder(
-                            itemBuilder: (context, index) {
-                              return MatchingItemWidget(
-                                modakMatching: state.matchings![index],
-                              );
-                            },
-                            itemCount: state.matchings!.length,
-                            physics: BouncingScrollPhysics(),
+                    BlocBuilder<ModakBloc, ModakState>(
+                      builder: (context, state) {
+                        if (state is MatchingLoading) {
+                          return Positioned(
+                            top: 0,
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              color: Color(0x44888888),
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
                           );
                         }
                         return Container();
                       },
-                      buildWhen: (previous, current) =>
-                          current is MyMatchingLoading ||
-                          current is MyMatchingLoaded,
-                    ),
-                  ),
-                ),
+                    )
+                  ],
+                )
               ],
             ),
           ),
@@ -264,8 +319,6 @@ class MatchingPageState extends State<MatchingPage> {
 
   @override
   void initState() {
-    BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent());
-    BlocProvider.of<ModakBloc>(context).add(LoadMyMatchingEvent());
-    BlocProvider.of<ModakBloc>(context).add(LoadJoinMatchingEvent());
+    setIndex(0);
   }
 }

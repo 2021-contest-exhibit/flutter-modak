@@ -112,7 +112,7 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
     if (uid != null && email != null) {
       print('_mapLoadMyMatchingEvent');
       print('uid: ${uid}');
-      var response = await fireStoreRepository.loadMyMatching(uid).onError((error, stackTrace) => null);
+      var response = await fireStoreRepository.loadMyMatching(uid, event.lastDate??"").onError((error, stackTrace) => null);
       if (response != null) {
         var matchings = await Stream.fromIterable(response).asyncMap((e) async {
           var campings = await apiRepository.getCampings(contentId: e[e.keys.first]!.campingId);
