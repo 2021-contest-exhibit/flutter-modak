@@ -67,8 +67,8 @@ class MatchingPageState extends State<MatchingPage> {
             child: Column(
               children: [
                 Container(
-                  height: 90,
-                  padding: const EdgeInsets.only(left: 40.0, right: 40, top: 30),
+                  height: 64,
+                  padding: const EdgeInsets.only(left: 40.0, right: 40),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 18, 32, 47),
                       borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20.0), bottomRight: Radius.circular(20.0)),

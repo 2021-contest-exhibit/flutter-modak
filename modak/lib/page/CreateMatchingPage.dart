@@ -40,9 +40,9 @@ class CreateMatchingPageState extends State<CreateMatchingPage> {
             padding:
                 EdgeInsets.only(top: statusHeight, left: 20.0, right: 20.0),
             child: ListView(
+              physics: BouncingScrollPhysics(),
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
                   child: Row(
                     children: [
                       InkWell(

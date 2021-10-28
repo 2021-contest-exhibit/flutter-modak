@@ -34,7 +34,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
     return Stack(
       children: [
         Container(
-          margin: const EdgeInsets.only(bottom: 56.0, left: 20.0, right: 20.0),
+          margin: const EdgeInsets.only(bottom: 36.0, left: 20.0, right: 20.0),
           child: Column(
             children: [
               Container(
