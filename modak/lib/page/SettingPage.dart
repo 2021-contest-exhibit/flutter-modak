@@ -83,7 +83,7 @@ class SettingPageState extends State<SettingPage> {
         physics: BouncingScrollPhysics(),
         children: [
           const SizedBox(
-            height: 40.0,
+            height: 20.0,
           ),
           Container(
             height: 220,
@@ -106,21 +106,39 @@ class SettingPageState extends State<SettingPage> {
           const SizedBox(
             height: 40.0,
           ),
-          _menuButton(Icon(Icons.campaign, color: Colors.black,), "공지사항", () {}),
+          _menuButton(Icon(Icons.campaign, color: Colors.black, size: 28,), "공지사항", () {
+            ScaffoldMessenger.of(context).clearSnackBars();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('아직 지원하지 않는 기능입니다.'),
+              duration: Duration(milliseconds: 500),
+            ));
+          }),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.favorite, color: Colors.red,), "좋아요", () {
+          _menuButton(Icon(Icons.favorite, color: Colors.red, size: 28,), "좋아요", () {
             Navigator.pushNamed(context, '/goods');
           }),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.settings, color: Colors.grey,), "설정", () {}),
+          _menuButton(Icon(Icons.settings, color: Colors.grey, size: 28,), "설정", () {
+            ScaffoldMessenger.of(context).clearSnackBars();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('아직 지원하지 않는 기능입니다.'),
+              duration: Duration(milliseconds: 500),
+            ));
+          }),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.info), "버전정보", () {}),
+          _menuButton(Icon(Icons.info, size: 28,), "버전정보", () {
+            ScaffoldMessenger.of(context).clearSnackBars();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('V1.0.0'),
+              duration: Duration(milliseconds: 500),
+            ));
+          }),
           const SizedBox(
             height: 120,
           ),
