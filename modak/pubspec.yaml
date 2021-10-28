@@ -54,6 +54,9 @@ dependencies:
   keyboard_visibility:
 
   infinite_scroll_pagination:
+  preload_page_view:
+
+  url_launcher:
 
 #  json_annotation: ^4.3.0
 
