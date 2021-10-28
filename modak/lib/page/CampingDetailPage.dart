@@ -7,6 +7,7 @@ import 'package:modak/bloc/CampingAPIEvent.dart';
 import 'package:modak/bloc/CampingAPIState.dart';
 import 'package:modak/rest/Content.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -20,8 +21,8 @@ void main() {
 
 class CampingDetailPage extends StatefulWidget {
   final PageController _controller = new PageController(initialPage: 0);
-  late var args;
-  int _currentPage = 1;
+  late Content args;
+  int _currentPage = 0;
 
   @override
   CampingDetailPageState createState() => CampingDetailPageState();
@@ -31,11 +32,15 @@ class CampingDetailPageState extends State<CampingDetailPage> {
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
+    widget._currentPage = widget.args.campingImages!.length > 0 ? 1 : 0;
     widget._controller.addListener(() {
       setState(() {
-        widget._currentPage = ((widget._controller.page ?? 1) + 1).toInt();
+        widget._currentPage = widget.args.campingImages!.length > 0
+            ? ((widget._controller.page ?? 0) + 1).toInt()
+            : 0;
       });
     });
+    print(widget.args.campingImages);
     return Scaffold(
         body: NestedScrollView(
       physics: BouncingScrollPhysics(),
@@ -58,20 +63,51 @@ class CampingDetailPageState extends State<CampingDetailPage> {
                       PageView(
                         controller: widget._controller,
                         allowImplicitScrolling: true,
-                        children: widget.args.campingImages!.map<Widget>((e) {
-                          return Image.network(
-                            e.imageUrl,
-                            height: 388,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress != null) {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                              return child;
-                            },
-                          );
-                        }).toList(),
+                        children: (widget.args.campingImages != null &&
+                                widget.args.campingImages!.length > 0)
+                            ? widget.args.campingImages!.map<Widget>((e) {
+                                return Image.network(
+                                  e.imageUrl,
+                                  height: 388,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress != null) {
+                                      return Container(
+                                        color: Colors.white,
+                                        child: Center(
+                                            child: CircularProgressIndicator()),
+                                      );
+                                    }
+                                    return child;
+                                  },
+                                );
+                              }).toList()
+                            : [
+                                Container(
+                                  height: 288,
+                                  color: Colors.white,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'image/logo_black.png',
+                                          width: 36.0,
+                                          height: 36.0,
+                                        ),
+                                        Text(
+                                          "등록된 이미지가 없습니다.",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 24),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
                       ),
                       Positioned(
                         bottom: 12.0,
@@ -121,7 +157,7 @@ class CampingDetailPageState extends State<CampingDetailPage> {
             Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                  margin: EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -130,7 +166,9 @@ class CampingDetailPageState extends State<CampingDetailPage> {
                           widget.args.name!,
                           maxLines: 1,
                           style: TextStyle(
-                              fontSize: 24.0, fontWeight: FontWeight.bold, fontFamily: 'NotoSansKR'),
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'NotoSansKR'),
                         ),
                         width: _width - 40,
                       )
@@ -183,7 +221,9 @@ class CampingDetailPageState extends State<CampingDetailPage> {
                           ],
                         );
                       }
-                      return SizedBox(height: 24.0,);
+                      return SizedBox(
+                        height: 24.0,
+                      );
                     },
                   ),
                 ),
@@ -207,7 +247,9 @@ class CampingDetailPageState extends State<CampingDetailPage> {
                               child: Text(
                                 e,
                                 maxLines: 1,
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColor,
@@ -276,22 +318,44 @@ class CampingDetailPageState extends State<CampingDetailPage> {
                       SizedBox(
                         height: 4.0,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 12.0,
-                          ),
-                          Text(
-                            widget.args.phoneNumber!,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                      Visibility(
+                        visible: widget.args.phoneNumber != null && widget.args.phoneNumber != "",
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 12.0,
+                                ),
+                                Icon(Icons.call),
+                                SizedBox(
+                                  width: 8.0,
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    print(widget.args.phoneNumber!);
+                                    if (await canLaunch('tel: ${widget.args.phoneNumber!}')) {
+                                      await launch('tel: ${widget.args.phoneNumber}');
+                                    } else {
+                                      print("지원하지 않습니다");
+                                    }
+                                  },
+                                  child: Text(
+                                    widget.args.phoneNumber!,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.lightBlue,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 24.0,
+                            SizedBox(
+                              height: 24.0,
+                            ),
+                          ],
+                        ),
                       ),
                       Text(
                         widget.args.longDescription ?? "",
