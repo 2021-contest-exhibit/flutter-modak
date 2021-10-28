@@ -152,7 +152,6 @@ class SelectCampingPageState extends State<SelectCampingPage> {
                           fontFamily: 'NotoSansKR',
                         ),
                         cursorColor: Colors.black,
-                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: '검색어를 입력해주세요',
                           hintStyle: TextStyle(
