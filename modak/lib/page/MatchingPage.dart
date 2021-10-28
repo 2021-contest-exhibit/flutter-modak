@@ -66,18 +66,25 @@ class MatchingPageState extends State<MatchingPage> {
             margin: EdgeInsets.only(top: _statusBarHeight),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 12.0,
-                ),
-                const SizedBox(
-                  height: 9.0,
-                ),
-                const SizedBox(
-                  height: 9.0,
-                ),
                 Container(
-                  height: 30,
-                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                  height: 90,
+                  padding: const EdgeInsets.only(left: 40.0, right: 40, top: 30),
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 18, 32, 47),
+                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20.0), bottomRight: Radius.circular(20.0)),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color(0x22000000),
+                          offset: Offset(-10, -10),
+                          spreadRadius: 0,
+                          blurRadius: 10),
+                      BoxShadow(
+                          color: Color(0x11000000),
+                          offset: Offset(10, 10),
+                          spreadRadius: 0,
+                          blurRadius: 10)
+                    ],
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -89,6 +96,7 @@ class MatchingPageState extends State<MatchingPage> {
                           "NEW",
                           style: TextStyle(
                             fontSize: 20.0,
+                            color: Colors.white,
                             fontWeight: widget._selectedIndex == 0
                                 ? FontWeight.bold
                                 : null,
@@ -103,6 +111,7 @@ class MatchingPageState extends State<MatchingPage> {
                         child: Text(
                           "JOINED",
                           style: TextStyle(
+                            color: Colors.white,
                             fontSize: 20.0,
                             fontWeight: widget._selectedIndex == 1
                                 ? FontWeight.bold
@@ -118,6 +127,7 @@ class MatchingPageState extends State<MatchingPage> {
                         child: Text(
                           "MY",
                           style: TextStyle(
+                            color: Colors.white,
                             fontSize: 20.0,
                             fontWeight: widget._selectedIndex == 2
                                 ? FontWeight.bold
@@ -129,17 +139,6 @@ class MatchingPageState extends State<MatchingPage> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Divider(
-                    thickness: 0.2,
-                    color: Colors.black,
-                    height: 0.1,
-                  ),
-                ),
                 Stack(
                   children: [
                     Column(
@@ -147,7 +146,6 @@ class MatchingPageState extends State<MatchingPage> {
                         Visibility(
                           visible: widget._selectedIndex == 0,
                           child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20.0),
                             height: _contentHeight,
                             child: NotificationListener<ScrollNotification>(
                               onNotification: (notification) {
@@ -221,7 +219,7 @@ class MatchingPageState extends State<MatchingPage> {
                                       physics: BouncingScrollPhysics(),
                                     );
                                   } else if (state is Error) {
-                                    return Text(state.message);
+                                    return Center(child: Text(state.message, style: TextStyle(fontWeight: FontWeight.bold),));
                                   }
                                   return Container();
                                 },
@@ -265,7 +263,7 @@ class MatchingPageState extends State<MatchingPage> {
                                       physics: BouncingScrollPhysics(),
                                     );
                                   } else if (state is Error) {
-                                    return Text(state.message);
+                                    return Center(child: Text(state.message, style: TextStyle(fontWeight: FontWeight.bold),));
                                   }
                                   return Container();
                                 },

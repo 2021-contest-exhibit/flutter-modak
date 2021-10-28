@@ -10,7 +10,9 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       body: Center(
-        child: MatchingItemWidget(modakMatching: ModakMatching(),),
+        child: MatchingItemWidget(
+          modakMatching: ModakMatching(),
+        ),
       ),
     ),
   ));
@@ -32,7 +34,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
     return Stack(
       children: [
         Container(
-          margin: const EdgeInsets.only(bottom: 56.0),
+          margin: const EdgeInsets.only(bottom: 56.0, left: 20.0, right: 20.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -43,16 +45,21 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                     Container(
                       width: 32,
                       height: 32,
+                      child: Icon(Icons.person, color: Colors.white,),
                       decoration: BoxDecoration(
-                          color: Color(0xff3F3F3F),
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                          color: Color.fromARGB(255, 18, 32, 47),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
                     ),
                     SizedBox(
                       width: 24,
                     ),
                     Text(
                       widget.modakMatching.email!,
-                      style: TextStyle(fontSize: 18, fontFamily: 'NotoSansKR'),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'NotoSansKR',
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -64,7 +71,8 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                 fit: BoxFit.fitWidth,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -74,7 +82,9 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                         Text(
                           widget.modakMatching.content!.name!,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16.0, fontFamily: 'NotoSansKR'),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                              fontFamily: 'NotoSansKR'),
                         ),
                         const SizedBox(
                           height: 2.0,
@@ -89,8 +99,8 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                       onPressed: () {
                         print('onpressed');
                         BlocProvider.of<ModakBloc>(context).add(
-                          LoadIsJoinMatchingEvent(matchingId: widget.modakMatching.matchingId!)
-                        );
+                            LoadIsJoinMatchingEvent(
+                                matchingId: widget.modakMatching.matchingId!));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -105,17 +115,19 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                           Text(
                             "참여하기",
                             style: TextStyle(
-                                fontSize: 12.0, fontWeight: FontWeight.bold, fontFamily: 'NotoSansKR'),
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'NotoSansKR'),
                           ),
                         ],
                       ),
                       style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      return Theme.of(context).primaryColor;
-                    }),
-                    foregroundColor:
-                        MaterialStateProperty.resolveWith((states) {
+                            MaterialStateProperty.resolveWith((states) {
+                          return Theme.of(context).primaryColor;
+                        }),
+                        foregroundColor:
+                            MaterialStateProperty.resolveWith((states) {
                           return Colors.white;
                         }),
                         padding: MaterialStateProperty.resolveWith((states) {
@@ -133,11 +145,15 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
             boxShadow: [
               BoxShadow(
-                color: Color(0x22000000),
-                offset: Offset(2.0, 2.0),
-                blurRadius: 2.0,
-                spreadRadius: 0.1,
-              ),
+                  color: Color(0x22000000),
+                  offset: Offset(-5, -5),
+                  spreadRadius: 0,
+                  blurRadius: 5),
+              BoxShadow(
+                  color: Color(0x11000000),
+                  offset: Offset(5, 5),
+                  spreadRadius: 0,
+                  blurRadius: 10)
             ],
           ),
         ),
@@ -156,15 +172,21 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
             if (current is Error) {
               print("error");
               ScaffoldMessenger.of(context).clearSnackBars();
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(current.message), duration: Duration(milliseconds: 500),));
-            } else if (current is IsJoinMatchingLoaded && current.matchingId == widget.modakMatching.matchingId) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(current.message),
+                duration: Duration(milliseconds: 500),
+              ));
+            } else if (current is IsJoinMatchingLoaded &&
+                current.matchingId == widget.modakMatching.matchingId) {
               if (current.isJoinMatching) {
-                print('current: ${current.isJoinMatching}, ${current.matchingId}');
+                print(
+                    'current: ${current.isJoinMatching}, ${current.matchingId}');
                 print('before: ${previous}');
-                Navigator.pushNamed(context, "/chatting", arguments: widget.modakMatching.matchingId);
+                Navigator.pushNamed(context, "/chatting",
+                    arguments: widget.modakMatching.matchingId);
               } else {
-                Navigator.pushNamed(context, "/payment", arguments: widget.modakMatching);
+                Navigator.pushNamed(context, "/payment",
+                    arguments: widget.modakMatching);
               }
               return false;
             }
