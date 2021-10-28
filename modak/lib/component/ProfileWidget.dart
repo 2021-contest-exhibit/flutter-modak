@@ -85,7 +85,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
                                 (widget.user != null
                                     ? (widget.user!.email)
                                     : ""),
-                                style: const TextStyle(fontSize: 40.0, fontFamily: 'NotoSansCJkr',),
+                                style: const TextStyle(fontSize: 40.0, fontFamily: 'NotoSansCJkr', fontWeight: FontWeight.bold),
                                 minFontSize: 12.0,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -100,7 +100,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
                                 'Lv. ${widget.user != null ? widget.user!.level.toString() : "0"}',
                                 textAlign: TextAlign.end,
                                 style: TextStyle(
-                                    fontSize: 18.0, color: Theme.of(context).primaryColor, fontFamily: 'NotoSansCJkr',),
+                                    fontSize: 18.0, color: Theme.of(context).primaryColor, fontFamily: 'NotoSansCJkr', fontWeight: FontWeight.bold),
                                 minFontSize: 12.0,
                                 maxLines: 1,
                               ),
@@ -159,17 +159,18 @@ class ProfileWidgetState extends State<ProfileWidget> {
           ),
           Positioned(
             left: 20.0,
-            top: 30.0,
-            bottom: 30.0,
+            top: 35.0,
+            bottom: 35.0,
             child: Container(
-              width: (_width-10) * 40 / 100,
+              width: (_width-10) * 42 / 100,
               height: (_width-10) * 40 / 100,
               child: Icon(
-                Icons.person_outline,
-                size: 64,
+                Icons.person,
+                size: 72,
+                color: Colors.white,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color.fromARGB(255, 18, 32, 47),
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 boxShadow: [
                   BoxShadow(

@@ -83,7 +83,7 @@ class SettingPageState extends State<SettingPage> {
         physics: BouncingScrollPhysics(),
         children: [
           const SizedBox(
-            height: 40.0,
+            height: 20.0,
           ),
           Container(
             height: 220,

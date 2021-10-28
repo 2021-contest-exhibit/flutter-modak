@@ -29,12 +29,11 @@ class GoodsPageState extends State<GoodsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.all(20.0),
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              padding: const EdgeInsets.symmetric(vertical: 22.0, horizontal: 20.0),
               child: Stack(
                 children: [
                   Row(
@@ -65,24 +64,27 @@ class GoodsPageState extends State<GoodsPage> {
                 ],
               ),
             ),
-            BlocBuilder<CampingAPIBloc, CampingAPIState>(
-              builder: (context, state) {
-                if (state is UserGoodsLoaded && state.user.content[0].goods.length > 0) {
-                  return RecommandCampingWidget(
-                    campingList: ResponseGetCampings(content: [...state.user.content[0].goods.map((e) {
-                      return e.camping;
-                    }).toList()]),
-                  );
-                }
-                return Container();
-              },
-              buildWhen: (previous, current) {
-                if (current is UserGoodsLoaded) {
-                  return true;
-                } else {
-                  return false;
-                }
-              },
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                builder: (context, state) {
+                  if (state is UserGoodsLoaded && state.user.content[0].goods.length > 0) {
+                    return RecommandCampingWidget(
+                      campingList: ResponseGetCampings(content: [...state.user.content[0].goods.map((e) {
+                        return e.camping;
+                      }).toList()]),
+                    );
+                  }
+                  return Container();
+                },
+                buildWhen: (previous, current) {
+                  if (current is UserGoodsLoaded) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                },
+              ),
             ),
           ],
         ),
