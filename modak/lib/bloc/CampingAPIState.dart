@@ -74,6 +74,15 @@ class TodayCampingsLoaded extends CampingAPIState {
   List<Object?> get props => [];
 }
 
+class AICampingsLoaded extends CampingAPIState {
+  final List<Content> campings;
+
+  AICampingsLoaded({required this.campings});
+
+  @override
+  List<Object?> get props => [];
+}
+
 class CampingFavoriteLoaded extends CampingAPIState {
   final int favorite;
 

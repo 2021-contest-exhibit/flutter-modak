@@ -65,6 +65,12 @@ class GetTodayCampingsEvent extends CampingAPIEvent {
   List<Object?> get props => [];
 }
 
+class GetAICampingsEvent extends CampingAPIEvent {
+
+  @override
+  List<Object?> get props => [];
+}
+
 class GetUserGoodsEvent extends CampingAPIEvent {
   @override
   List<Object?> get props => [];

@@ -29,10 +29,10 @@ class CampingDetailPage extends StatefulWidget {
 }
 
 class CampingDetailPageState extends State<CampingDetailPage> {
+
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-    widget._currentPage = widget.args.campingImages!.length > 0 ? 1 : 0;
     widget._controller.addListener(() {
       setState(() {
         widget._currentPage = widget.args.campingImages!.length > 0
@@ -383,5 +383,6 @@ class CampingDetailPageState extends State<CampingDetailPage> {
     widget.args = ModalRoute.of(context)!.settings.arguments as Content;
     BlocProvider.of<CampingAPIBloc>(context)
         .add(GetCampingEvent(contentId: widget.args.contentId));
+    widget._currentPage = widget.args.campingImages!.length > 0 ? 1 : 0;
   }
 }

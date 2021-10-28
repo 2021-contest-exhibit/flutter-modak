@@ -117,13 +117,13 @@ class DashBoardPageState extends State<DashBoardPage> {
                     Container(
                       child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
                         builder: (context, state) {
-                          if (state is TodayCampingsLoaded) {
+                          if (state is AICampingsLoaded) {
                             return TodayCompingWidget(campingList: [...state.campings]);
                           }
                           return Container();
                         },
                         buildWhen: (previous, current) {
-                          if (current is TodayCampingsLoaded) {
+                          if (current is AICampingsLoaded) {
                             return true;
                           } else {
                             return false;
@@ -234,6 +234,9 @@ class DashBoardPageState extends State<DashBoardPage> {
 
   @override
   void initState() {
+    BlocProvider.of<CampingAPIBloc>(context).add(
+        GetAICampingsEvent()
+    );
     BlocProvider.of<CampingAPIBloc>(context).add(
         GetTodayCampingsEvent(index: 0)
     );
