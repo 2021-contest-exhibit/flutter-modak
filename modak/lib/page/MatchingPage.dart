@@ -188,7 +188,6 @@ class MatchingPageState extends State<MatchingPage> {
                         Visibility(
                           visible: widget._selectedIndex == 1,
                           child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20.0),
                             height: _contentHeight,
                             child: NotificationListener<ScrollNotification>(
                               onNotification: (notification) {
@@ -232,7 +231,6 @@ class MatchingPageState extends State<MatchingPage> {
                         Visibility(
                           visible: widget._selectedIndex == 2,
                           child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20.0),
                             height: _contentHeight,
                             child: NotificationListener<ScrollNotification>(
                               onNotification: (notification) {

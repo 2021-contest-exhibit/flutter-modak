@@ -36,7 +36,6 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
         Container(
           margin: const EdgeInsets.only(bottom: 56.0, left: 20.0, right: 20.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 margin: const EdgeInsets.all(12.0),
@@ -66,7 +65,6 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
               ),
               Image.network(
                 widget.modakMatching.content!.thumbnailImageUrl!,
-                height: 240,
                 width: _width,
                 fit: BoxFit.fitWidth,
               ),
@@ -142,7 +140,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
           ),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
             boxShadow: [
               BoxShadow(
                   color: Color(0x22000000),
