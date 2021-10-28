@@ -44,7 +44,11 @@ class APIRepository {
   }
 
   Future<ResponseGetCampings?> getRecommandCampings(String email, int page, int size) {
-    return restClient.postCampingsRecommendationAI(email, page, size);
+    return restClient.postCampingsRecommendationGood(email, page, size);
+  }
+
+  Future<ResponseGetCampings?> getRecommandAICampings(String email) {
+    return restClient.postCampingsRecommendationAI(email, 0, 5);
   }
 
   Future<ResponseGetCampingsRegions?> getCampingsRegions() {
