@@ -163,7 +163,7 @@ class ProfileWidgetState extends State<ProfileWidget> {
             bottom: 35.0,
             child: Container(
               width: (_width-10) * 42 / 100,
-              height: (_width-10) * 40 / 100,
+              height: (_width-10) * 42 / 100,
               child: Icon(
                 Icons.person,
                 size: 72,

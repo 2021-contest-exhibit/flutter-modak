@@ -189,7 +189,7 @@ class SelectCampingPageState extends State<SelectCampingPage> {
                     }).toList(),
                   );
                 } else if (state is SearchLoading) {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 }
                 return Container();
               },
