@@ -365,6 +365,60 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                 ),
               ),
               SizedBox(
+                height: 24.0,
+              ),
+              Container(
+                  child: Row(children: [
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Text("이용 시설",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'NotoSansKR'))
+                  ])),
+              SizedBox(
+                height: 24.0,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                  builder: (_, state) {
+                    if (state is Empty) {
+                      return Container();
+                    } else if (state is CampingSearchLoading) {
+                      return Container(
+                        color: Color(0x44232323),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else if (state is Error) {
+                      return Text("Error: ");
+                    } else if (state is CampingSearchLoaded) {
+                      // return Text(state.dataOperationTypes.toString());
+                      return Row(
+                        children: [
+                          Flexible(
+                              child: Wrap(
+                                  children: List.generate(
+                                      state.dataFacilities!.length,
+                                          (i) => _filterButton(
+                                          state.dataFacilities![i],
+                                          "facility")))),
+                        ],
+                      );
+                    }
+                    return Container();
+                  },
+                  buildWhen: (previous, current) {
+                    if (current is CampingSearchLoaded || current is CampingSearchLoading) {
+                      return true;
+                    }
+                    return false;
+                  },
+                ),
+              ),
+              SizedBox(
                 height: 150.0,
               ),
             ],
