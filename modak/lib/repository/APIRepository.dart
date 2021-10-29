@@ -7,6 +7,7 @@ import 'package:modak/rest/RequestPostGood.dart';
 import 'package:modak/rest/RequestPostUser.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 import 'package:modak/rest/ResponseGetCampingsEnvironments.dart';
+import 'package:modak/rest/ResponseGetCampingsFacilities.dart';
 import 'package:modak/rest/ResponseGetCampingsOperationTypes.dart';
 import 'package:modak/rest/ResponseGetCampingsRegions.dart';
 import 'package:modak/rest/ResponseGetUser.dart';
@@ -62,6 +63,11 @@ class APIRepository {
   Future<ResponseGetCampingsEnvironments?> getCampingsEnvironments() {
     return restClient.getCampingsEnvironments();
   }
+
+  Future<ResponseGetCampingsFacilities?> getCampingsFacilities() {
+    return restClient.getCampingsFacilities();
+  }
+
 
   Future<String> postUser(String email) {
     return restClient.postUser(RequestPostUser(email: email));
