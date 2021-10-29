@@ -95,7 +95,7 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
         var user = await fireStoreRepository.loadUser(e[e.keys.first]!.user!);
         var userEmail = user != null ? user.email : "";
         var userUid = user != null ? user.uid : "";
-        return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: userEmail, uid: userUid, matchingId: e.keys.first);
+        return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: userEmail, uid: userUid, matchingId: e.keys.first, user: user);
       }).toList();
       yield MatchingLoaded(matchings: matchings);
     } else {
@@ -116,7 +116,8 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
       if (response != null) {
         var matchings = await Stream.fromIterable(response).asyncMap((e) async {
           var campings = await apiRepository.getCampings(contentId: e[e.keys.first]!.campingId);
-          return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: email, uid: uid, matchingId: e.keys.first);
+          var user = await fireStoreRepository.loadUser(e[e.keys.first]!.user!);
+          return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: email, uid: uid, matchingId: e.keys.first, user: user);
         }).toList();
         yield MyMatchingLoaded(matchings: matchings);
       } else {
@@ -140,7 +141,8 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
       if (response != null) {
         var matchings = await Stream.fromIterable(response).asyncMap((e) async {
           var campings = await apiRepository.getCampings(contentId: e[e.keys.first]!.campingId);
-          return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: email, uid: uid, matchingId: e.keys.first);
+          var user = await fireStoreRepository.loadUser(e[e.keys.first]!.user!);
+          return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: email, uid: uid, matchingId: e.keys.first, user: user);
         }).toList();
         yield JoinMatchingLoaded(matchings: matchings);
       } else {

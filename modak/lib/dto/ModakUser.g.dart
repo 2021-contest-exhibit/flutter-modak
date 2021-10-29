@@ -12,6 +12,7 @@ _$_ModakUser _$_$_ModakUserFromJson(Map<String, dynamic> json) {
     email: json['email'] as String,
     image: json['image'] as String,
     level: json['level'] as int,
+    nickname: json['nickname'] as String,
   );
 }
 
@@ -21,4 +22,5 @@ Map<String, dynamic> _$_$_ModakUserToJson(_$_ModakUser instance) =>
       'email': instance.email,
       'image': instance.image,
       'level': instance.level,
+      'nickname': instance.nickname,
     };

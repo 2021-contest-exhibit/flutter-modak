@@ -11,7 +11,7 @@ void main() {
     home: Scaffold(
       body: Center(
         child: ProfileWidget(
-          user: ModakUser(email: "ysy3350", uid: "",image: "", level: 1),
+          user: ModakUser(email: "ysy3350", uid: "",image: "", level: 1, nickname: ""),
         ),
       ),
     ),
@@ -45,29 +45,8 @@ class ProfileWidgetState extends State<ProfileWidget> {
                   left: (_width-10) * 40 / 100, right: 5.0, top: 5.0, bottom: 5.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Visibility(
-                    visible: widget.user != null,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        InkWell(
-                          child: Container(
-                            padding: EdgeInsets.all(6.0),
-                            child: Icon(
-                              Icons.logout,
-                              size: 18,
-                            ),
-                          ),
-                          onTap: () {
-                            BlocProvider.of<UserBloc>(context).add(
-                              LogoutUserEvent(),
-                            );
-                          },
-                        )
-                      ],
-                    ),
-                  ),
                   Visibility(
                     visible: widget.user != null,
                     child: Row(
@@ -76,17 +55,15 @@ class ProfileWidgetState extends State<ProfileWidget> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const SizedBox(
-                              height: 4,
-                            ),
                             Container(
                               width: (_width-10) * 40 / 100,
                               child: AutoSizeText(
                                 (widget.user != null
-                                    ? (widget.user!.email)
+                                    ? (widget.user!.nickname != "" ? widget.user!.nickname : widget.user!.email)
                                     : ""),
-                                style: const TextStyle(fontSize: 40.0, fontFamily: 'NotoSansCJkr', fontWeight: FontWeight.bold),
-                                minFontSize: 12.0,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 28.0, fontFamily: 'NotoSansCJkr', fontWeight: FontWeight.bold),
+                                minFontSize: 8.0,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -114,9 +91,6 @@ class ProfileWidgetState extends State<ProfileWidget> {
                     visible: widget.user == null,
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 32.0,
-                        ),
                         Container(
                           width: 120.0,
                           child: OutlinedButton(
@@ -154,6 +128,32 @@ class ProfileWidgetState extends State<ProfileWidget> {
               decoration: BoxDecoration(
                 color: Color(0x20363636),
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 24.0,
+            top: 52.0,
+            child: Visibility(
+              visible: widget.user != null,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    child: Container(
+                      padding: EdgeInsets.only(top:6, right: 6),
+                      child: Icon(
+                        Icons.logout,
+                        size: 18,
+                      ),
+                    ),
+                    onTap: () {
+                      BlocProvider.of<UserBloc>(context).add(
+                        LogoutUserEvent(),
+                      );
+                    },
+                  )
+                ],
               ),
             ),
           ),

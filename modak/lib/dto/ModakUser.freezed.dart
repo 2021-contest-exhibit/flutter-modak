@@ -24,12 +24,14 @@ class _$ModakUserTearOff {
       {required String uid,
       required String email,
       required String image,
-      required int level}) {
+      required int level,
+      required String nickname}) {
     return _ModakUser(
       uid: uid,
       email: email,
       image: image,
       level: level,
+      nickname: nickname,
     );
   }
 
@@ -47,6 +49,7 @@ mixin _$ModakUser {
   String get email => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
   int get level => throw _privateConstructorUsedError;
+  String get nickname => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -58,7 +61,8 @@ mixin _$ModakUser {
 abstract class $ModakUserCopyWith<$Res> {
   factory $ModakUserCopyWith(ModakUser value, $Res Function(ModakUser) then) =
       _$ModakUserCopyWithImpl<$Res>;
-  $Res call({String uid, String email, String image, int level});
+  $Res call(
+      {String uid, String email, String image, int level, String nickname});
 }
 
 /// @nodoc
@@ -75,6 +79,7 @@ class _$ModakUserCopyWithImpl<$Res> implements $ModakUserCopyWith<$Res> {
     Object? email = freezed,
     Object? image = freezed,
     Object? level = freezed,
+    Object? nickname = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed
@@ -93,6 +98,10 @@ class _$ModakUserCopyWithImpl<$Res> implements $ModakUserCopyWith<$Res> {
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as int,
+      nickname: nickname == freezed
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -103,7 +112,8 @@ abstract class _$ModakUserCopyWith<$Res> implements $ModakUserCopyWith<$Res> {
           _ModakUser value, $Res Function(_ModakUser) then) =
       __$ModakUserCopyWithImpl<$Res>;
   @override
-  $Res call({String uid, String email, String image, int level});
+  $Res call(
+      {String uid, String email, String image, int level, String nickname});
 }
 
 /// @nodoc
@@ -121,6 +131,7 @@ class __$ModakUserCopyWithImpl<$Res> extends _$ModakUserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? image = freezed,
     Object? level = freezed,
+    Object? nickname = freezed,
   }) {
     return _then(_ModakUser(
       uid: uid == freezed
@@ -139,6 +150,10 @@ class __$ModakUserCopyWithImpl<$Res> extends _$ModakUserCopyWithImpl<$Res>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as int,
+      nickname: nickname == freezed
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -150,7 +165,8 @@ class _$_ModakUser implements _ModakUser {
       {required this.uid,
       required this.email,
       required this.image,
-      required this.level});
+      required this.level,
+      required this.nickname});
 
   factory _$_ModakUser.fromJson(Map<String, dynamic> json) =>
       _$_$_ModakUserFromJson(json);
@@ -163,10 +179,12 @@ class _$_ModakUser implements _ModakUser {
   final String image;
   @override
   final int level;
+  @override
+  final String nickname;
 
   @override
   String toString() {
-    return 'ModakUser(uid: $uid, email: $email, image: $image, level: $level)';
+    return 'ModakUser(uid: $uid, email: $email, image: $image, level: $level, nickname: $nickname)';
   }
 
   @override
@@ -180,7 +198,10 @@ class _$_ModakUser implements _ModakUser {
             (identical(other.image, image) ||
                 const DeepCollectionEquality().equals(other.image, image)) &&
             (identical(other.level, level) ||
-                const DeepCollectionEquality().equals(other.level, level)));
+                const DeepCollectionEquality().equals(other.level, level)) &&
+            (identical(other.nickname, nickname) ||
+                const DeepCollectionEquality()
+                    .equals(other.nickname, nickname)));
   }
 
   @override
@@ -189,7 +210,8 @@ class _$_ModakUser implements _ModakUser {
       const DeepCollectionEquality().hash(uid) ^
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(image) ^
-      const DeepCollectionEquality().hash(level);
+      const DeepCollectionEquality().hash(level) ^
+      const DeepCollectionEquality().hash(nickname);
 
   @JsonKey(ignore: true)
   @override
@@ -207,7 +229,8 @@ abstract class _ModakUser implements ModakUser {
       {required String uid,
       required String email,
       required String image,
-      required int level}) = _$_ModakUser;
+      required int level,
+      required String nickname}) = _$_ModakUser;
 
   factory _ModakUser.fromJson(Map<String, dynamic> json) =
       _$_ModakUser.fromJson;
@@ -220,6 +243,8 @@ abstract class _ModakUser implements ModakUser {
   String get image => throw _privateConstructorUsedError;
   @override
   int get level => throw _privateConstructorUsedError;
+  @override
+  String get nickname => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ModakUserCopyWith<_ModakUser> get copyWith =>

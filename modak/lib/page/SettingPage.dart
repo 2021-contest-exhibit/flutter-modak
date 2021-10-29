@@ -69,15 +69,13 @@ class SettingPageState extends State<SettingPage> {
     );
   }
 
-  @override
-  void initState() {
-    BlocProvider.of<UserBloc>(context).add(
-      CheckUserEvent(),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<UserBloc>(context).add(
+      CheckUserEvent(),
+    );
     return Scaffold(
       body: ListView(
         physics: BouncingScrollPhysics(),
@@ -123,11 +121,7 @@ class SettingPageState extends State<SettingPage> {
             height: 20.0,
           ),
           _menuButton(Icon(Icons.settings, color: Colors.grey, size: 28,), "설정", () {
-            ScaffoldMessenger.of(context).clearSnackBars();
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('아직 지원하지 않는 기능입니다.'),
-              duration: Duration(milliseconds: 500),
-            ));
+            Navigator.pushNamed(context, '/setting_detail');
           }),
           const SizedBox(
             height: 20.0,

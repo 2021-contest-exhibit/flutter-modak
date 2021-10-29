@@ -40,6 +40,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
               Container(
                 margin: const EdgeInsets.all(12.0),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       width: 32,
@@ -54,9 +55,9 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                       width: 24,
                     ),
                     Text(
-                      widget.modakMatching.email!,
+                      widget.modakMatching.user != null ? widget.modakMatching.user!.nickname : widget.modakMatching.email!,
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 20,
                           fontFamily: 'NotoSansKR',
                           fontWeight: FontWeight.bold),
                     ),

@@ -40,3 +40,12 @@ class CheckUserEvent extends UserEvent {
   List<Object?> get props => [];
 
 }
+
+class UpdateNicknameEvent extends UserEvent {
+  String nickname;
+
+  UpdateNicknameEvent({required this.nickname});
+
+  @override
+  List<Object?> get props => [];
+}
