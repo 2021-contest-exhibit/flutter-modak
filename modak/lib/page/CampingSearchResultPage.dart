@@ -33,13 +33,15 @@ class CampingSearchResultPageState extends State<CampingSearchResultPage> {
     Map regionMap = widget.argument['regionMap'];
     Map operationTypeMap = widget.argument['operationTypeMap'];
     Map environmentMap = widget.argument['environmentMap'];
+    Map facilityMap = widget.argument['facilityMap'];
 
     BlocProvider.of<CampingAPIBloc>(context).add(
       FindCampinsEvent(
           nameContains: searchData,
           regionMap: regionMap,
           operationTypeMap: operationTypeMap,
-          environmentMap: environmentMap),
+          environmentMap: environmentMap,
+          facilityMap: facilityMap),
     );
   }
 
