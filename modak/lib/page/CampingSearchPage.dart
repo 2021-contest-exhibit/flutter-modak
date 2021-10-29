@@ -24,8 +24,8 @@ class CampingSearchPage extends StatefulWidget {
 
 class CampingSearchPageState extends State<CampingSearchPage> {
   var toggleMap = {};
-  var maxCountMap = {"region": 100, "operationType": 5, "environment": 8};
-  var currentMap = {"region": {}, "operationType": {}, "environment": {}};
+  var maxCountMap = {"region": 100, "operationType": 5, "environment": 8, "facility": 11};
+  var currentMap = {"region": {}, "operationType": {}, "environment": {}, "facility": {}};
   var regionMore = false;
 
   Widget _filterButton(String title, String type) {
@@ -64,7 +64,8 @@ class CampingSearchPageState extends State<CampingSearchPage> {
 
             print(currentMap["region"].toString() +
                 currentMap["operationType"].toString() +
-                currentMap["environment"].toString());
+                currentMap["environment"].toString() +
+                currentMap["facility"].toString() );
           });
         },
         child: Ink(
@@ -442,6 +443,9 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   toggleMap[element] = false;
                 });
                 current.dataOperationTypes!.forEach((element) {
+                  toggleMap[element] = false;
+                });
+                current.dataFacilities!.forEach((element) {
                   toggleMap[element] = false;
                 });
               }
