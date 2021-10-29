@@ -63,11 +63,13 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                   ],
                 ),
               ),
-              Image.network(
+              widget.modakMatching.content!.thumbnailImageUrl != null &&  widget.modakMatching.content!.thumbnailImageUrl != ""? Image.network(
                 widget.modakMatching.content!.thumbnailImageUrl!,
                 width: _width,
                 fit: BoxFit.fitWidth,
-              ),
+              ): Container(
+                height: 120.0,
+                  child: Image.asset('image/logo_black.png',width: 36.0, height: 36.0,)),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
