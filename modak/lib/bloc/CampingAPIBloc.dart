@@ -53,13 +53,14 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     List<String> operationTypeEqual = [];
     List<String> regionContains = [];
     List<String> environmentEqual = [];
+    List<String> facilityEqual = [];
 
     event.regionMap.keys.forEach((element) { regionContains.add(element); });
     event.environmentMap.keys.forEach((element) { environmentEqual.add(element); });
     event.operationTypeMap.keys.forEach((element) { operationTypeEqual.add(element);});
-    
+    event.facilityMap.keys.forEach((element) { facilityEqual.add(element); });
 
-    var response = await apiRepository.findCampingsByList(nameContains: event.nameContains, operationTypeEqual: operationTypeEqual, regionContains: regionContains, environmentEqual: environmentEqual).onError((error, stackTrace) {
+    var response = await apiRepository.findCampingsByList(nameContains: event.nameContains, operationTypeEqual: operationTypeEqual, regionContains: regionContains, environmentEqual: environmentEqual, facilityEqual: facilityEqual).onError((error, stackTrace) {
       print(error.toString());
       print(stackTrace);
       return null;
