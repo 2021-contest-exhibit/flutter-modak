@@ -24,8 +24,8 @@ class CampingSearchPage extends StatefulWidget {
 
 class CampingSearchPageState extends State<CampingSearchPage> {
   var toggleMap = {};
-  var maxCountMap = {"region": 100, "operationType": 5, "environment": 8};
-  var currentMap = {"region": {}, "operationType": {}, "environment": {}};
+  var maxCountMap = {"region": 100, "operationType": 5, "environment": 8, "facility": 11};
+  var currentMap = {"region": {}, "operationType": {}, "environment": {}, "facility": {}};
   var regionMore = false;
 
   Widget _filterButton(String title, String type) {
@@ -64,7 +64,8 @@ class CampingSearchPageState extends State<CampingSearchPage> {
 
             print(currentMap["region"].toString() +
                 currentMap["operationType"].toString() +
-                currentMap["environment"].toString());
+                currentMap["environment"].toString() +
+                currentMap["facility"].toString() );
           });
         },
         child: Ink(
@@ -180,7 +181,9 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                                 "operationTypeMap":
                                     currentMap["operationType"] as Map,
                                 "environmentMap":
-                                    currentMap["environment"] as Map
+                                    currentMap["environment"] as Map,
+                                "facilityMap":
+                                    currentMap["facility"] as Map,
                               });
                         },
                       ),
@@ -365,6 +368,60 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                 ),
               ),
               SizedBox(
+                height: 24.0,
+              ),
+              Container(
+                  child: Row(children: [
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Text("이용 시설",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'NotoSansKR'))
+                  ])),
+              SizedBox(
+                height: 24.0,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: BlocBuilder<CampingAPIBloc, CampingAPIState>(
+                  builder: (_, state) {
+                    if (state is Empty) {
+                      return Container();
+                    } else if (state is CampingSearchLoading) {
+                      return Container(
+                        color: Color(0x44232323),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else if (state is Error) {
+                      return Text("Error: ");
+                    } else if (state is CampingSearchLoaded) {
+                      // return Text(state.dataOperationTypes.toString());
+                      return Row(
+                        children: [
+                          Flexible(
+                              child: Wrap(
+                                  children: List.generate(
+                                      state.dataFacilities!.length,
+                                          (i) => _filterButton(
+                                          state.dataFacilities![i],
+                                          "facility")))),
+                        ],
+                      );
+                    }
+                    return Container();
+                  },
+                  buildWhen: (previous, current) {
+                    if (current is CampingSearchLoaded || current is CampingSearchLoading) {
+                      return true;
+                    }
+                    return false;
+                  },
+                ),
+              ),
+              SizedBox(
                 height: 150.0,
               ),
             ],
@@ -388,6 +445,9 @@ class CampingSearchPageState extends State<CampingSearchPage> {
                   toggleMap[element] = false;
                 });
                 current.dataOperationTypes!.forEach((element) {
+                  toggleMap[element] = false;
+                });
+                current.dataFacilities!.forEach((element) {
                   toggleMap[element] = false;
                 });
               }

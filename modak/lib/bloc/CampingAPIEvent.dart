@@ -8,8 +8,9 @@ class FindCampinsEvent extends CampingAPIEvent {
   Map regionMap;
   Map operationTypeMap;
   Map environmentMap;
+  Map facilityMap;
 
-  FindCampinsEvent({required this.nameContains, required this.regionMap, required this.operationTypeMap, required this.environmentMap});
+  FindCampinsEvent({required this.nameContains, required this.regionMap, required this.operationTypeMap, required this.environmentMap, required this.facilityMap});
 
   @override
   List<Object?> get props => [];

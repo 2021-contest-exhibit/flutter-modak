@@ -53,13 +53,14 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
     List<String> operationTypeEqual = [];
     List<String> regionContains = [];
     List<String> environmentEqual = [];
+    List<String> facilityEqual = [];
 
     event.regionMap.keys.forEach((element) { regionContains.add(element); });
     event.environmentMap.keys.forEach((element) { environmentEqual.add(element); });
     event.operationTypeMap.keys.forEach((element) { operationTypeEqual.add(element);});
-    
+    event.facilityMap.keys.forEach((element) { facilityEqual.add(element); });
 
-    var response = await apiRepository.findCampingsByList(nameContains: event.nameContains, operationTypeEqual: operationTypeEqual, regionContains: regionContains, environmentEqual: environmentEqual).onError((error, stackTrace) {
+    var response = await apiRepository.findCampingsByList(nameContains: event.nameContains, operationTypeEqual: operationTypeEqual, regionContains: regionContains, environmentEqual: environmentEqual, facilityEqual: facilityEqual).onError((error, stackTrace) {
       print(error.toString());
       print(stackTrace);
       return null;
@@ -127,10 +128,15 @@ class CampingAPIBloc extends Bloc<CampingAPIEvent, CampingAPIState> {
       return null;
     });
 
-    if (response1 != null && response2 != null && response3 != null) {
-      print("response: ${response1.data} ${response2.data} ${response3.data}");
-      yield CampingSearchLoaded(dataEnvironments:response1.data, dataOperationTypes: response2.data, dataRegions: response3.data);
-    }else {
+    var response4 = await apiRepository.getCampingsFacilities().onError((error, stackTrace) {
+      print(error.toString());
+      print(stackTrace);
+    });
+
+    if (response1 != null && response2 != null && response3 != null && response4 != null) {
+      print("response: ${response1.data} ${response2.data} ${response3.data} ${response4.data}");
+      yield CampingSearchLoaded(dataEnvironments:response1.data, dataOperationTypes: response2.data, dataRegions: response3.data, dataFacilities: response4.data);
+    } else {
       print("error");
       yield Error();
     }

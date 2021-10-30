@@ -10,6 +10,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 
 import 'RequestPostGood.dart';
+import 'ResponseGetCampingsFacilities.dart';
 
 part 'RestClient.g.dart';
 
@@ -43,6 +44,9 @@ abstract class RestClient {
 
   @GET("/campings/operation-types")
   Future<ResponseGetCampingsOperationTypes> getCampingsOperationTypes();
+
+  @GET("/campings/facilities")
+  Future<ResponseGetCampingsFacilities> getCampingsFacilities();
 
   @POST("/user")
   Future<String> postUser(@Body() RequestPostUser user);
