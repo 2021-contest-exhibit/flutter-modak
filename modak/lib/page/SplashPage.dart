@@ -58,8 +58,8 @@ class SplashPageState extends State<SplashPage> with SingleTickerProviderStateMi
               right: 20.0,
               child: LinearProgressIndicator(
                 minHeight: 1.0,
-                backgroundColor: Colors.white,
-                color: Theme.of(context).primaryColor,
+                backgroundColor: Colors.black,
+                color: Colors.white,
                 value: widget._progress,
               )),
         ],

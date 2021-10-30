@@ -9,6 +9,7 @@ class Chat with _$Chat{
     required String userId,
     required String matchingId,
     required String message,
+    required bool isManager,
     required DateTime createDate
   }) = _Chat;
 
