@@ -10,6 +10,7 @@ class ModakUser with _$ModakUser{
     required String email,
     required String image,
     required int level,
+    required String nickname,
   }) = _ModakUser;
 
   factory ModakUser.fromJson(Map<String, dynamic> json) => _$ModakUserFromJson(json);

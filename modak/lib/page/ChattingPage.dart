@@ -108,6 +108,7 @@ class ChattingPageState extends State<ChattingPage> {
       ],
     );
   }
+
   @override
   void didChangeDependencies() {
     widget._matchingId = ModalRoute.of(context)!.settings.arguments as String;
@@ -129,14 +130,17 @@ class ChattingPageState extends State<ChattingPage> {
               .where("uid", isEqualTo: _chat.userId)
               .get()
               .then(
-                (value) {
-              var _modakChat = ModakChat(chat: _chat, modakUser: ModakUser.fromJson(value.docs[0].data()));
+            (value) {
+              var _modakChat = ModakChat(
+                  chat: _chat,
+                  modakUser: ModakUser.fromJson(value.docs[0].data()));
               if (widget._chatList.length > 0) {
-                if (widget._chatList[0].chat!.createDate.isBefore(_modakChat.chat!.createDate)) {
+                if (widget._chatList[0].chat!.createDate
+                    .isBefore(_modakChat.chat!.createDate)) {
                   widget._chatList.insert(0, _modakChat);
                   streamController.add(widget._chatList);
                 }
-              }else {
+              } else {
                 widget._chatList.insert(0, _modakChat);
                 streamController.add(widget._chatList);
               }
@@ -148,74 +152,72 @@ class ChattingPageState extends State<ChattingPage> {
     });
   }
 
-
   void requestNextPage() {
-    if (!widget.isRequest){
+    if (!widget.isRequest) {
       setState(() {
         widget.isRequest = true;
       });
       print((widget._chatList.length > 0
           ? widget._chatList[widget._chatList.length - 1].chat!.createDate
-          .toIso8601String()
+              .toIso8601String()
           : DateTime.now().toIso8601String()));
       FirebaseFirestore.instance
           .collection('chattings')
           .where("matchingId", isEqualTo: widget._matchingId)
           .orderBy("createDate", descending: true)
           .startAfter([
-        (widget._chatList.length > 0
-            ? widget._chatList[widget._chatList.length - 1].chat!.createDate
-            .toIso8601String()
-            : DateTime.now().toIso8601String())
-      ])
+            (widget._chatList.length > 0
+                ? widget._chatList[widget._chatList.length - 1].chat!.createDate
+                    .toIso8601String()
+                : DateTime.now().toIso8601String())
+          ])
           .limit(15)
           .get()
           .then(
             (value) {
-          if (value.size < 1) {
-            setState(() {
-              widget.isRequest = false;
-            });
-            return;
-          }
-          value.docs.forEach(
+              if (value.size < 1) {
+                setState(() {
+                  widget.isRequest = false;
+                });
+                return;
+              }
+              value.docs.forEach(
                 (element) async {
-              print(element.data());
-              var _chat = Chat.fromJson(element.data());
-              final _modakChat = ModakChat(chat: _chat);
-              widget._chatList.add(_modakChat);
-              await FirebaseFirestore.instance
-                  .collection("users")
-                  .where("uid", isEqualTo: _chat.userId)
-                  .get()
-                  .then(
+                  print(element.data());
+                  var _chat = Chat.fromJson(element.data());
+                  final _modakChat = ModakChat(chat: _chat);
+                  widget._chatList.add(_modakChat);
+                  await FirebaseFirestore.instance
+                      .collection("users")
+                      .where("uid", isEqualTo: _chat.userId)
+                      .get()
+                      .then(
                     (value) {
-                  var _modakUser = ModakUser.fromJson(value.docs[0].data());
-                  var index = widget._chatList.indexWhere((element) {
-                    return _modakChat.chat!.createDate ==
-                        element.chat!.createDate;
-                  });
-                  print(index);
-                  var _nModakChat =
-                  ModakChat(chat: _modakChat.chat, modakUser: _modakUser);
+                      var _modakUser = ModakUser.fromJson(value.docs[0].data());
+                      var index = widget._chatList.indexWhere((element) {
+                        return _modakChat.chat!.createDate ==
+                            element.chat!.createDate;
+                      });
+                      print(index);
+                      var _nModakChat = ModakChat(
+                          chat: _modakChat.chat, modakUser: _modakUser);
 
-                  print('user: ${_nModakChat.modakUser!.toJson()}');
-                  widget._chatList[index] = _nModakChat;
-                  print(
-                      "modified: ${widget._chatList[index].modakUser!.toJson()}");
+                      print('user: ${_nModakChat.modakUser!.toJson()}');
+                      widget._chatList[index] = _nModakChat;
+                      print(
+                          "modified: ${widget._chatList[index].modakUser!.toJson()}");
 
-                  streamController.add(widget._chatList);
-                  setState(() {
-                    widget.isRequest = false;
-                  });
+                      streamController.add(widget._chatList);
+                      setState(() {
+                        widget.isRequest = false;
+                      });
+                    },
+                  );
                 },
               );
             },
           );
-        },
-      );
     }
-
   }
 
   @override
@@ -232,7 +234,7 @@ class ChattingPageState extends State<ChattingPage> {
           children: [
             NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scrollInfo) {
-                if (scrollInfo.metrics.maxScrollExtent-20 <
+                if (scrollInfo.metrics.maxScrollExtent - 20 <
                     scrollInfo.metrics.pixels) {
                   requestNextPage();
                 }
@@ -267,11 +269,20 @@ class ChattingPageState extends State<ChattingPage> {
                                   snapshot.data![index].modakUser != null
                                       ? snapshot.data![index].modakUser!.uid
                                       : "";
+                              var chatName = snapshot.data![index].modakUser !=
+                                      null
+                                  ? (snapshot.data![index].modakUser!
+                                              .nickname !=
+                                          ""
+                                      ? snapshot
+                                          .data![index].modakUser!.nickname
+                                      : snapshot.data![index].modakUser!.email)
+                                  : "";
                               var chatEmail = mUser != null ? mUser.email : "";
                               return _ChatWidget(
                                   _width / 2 - 40,
                                   mUser != null ? chatUid == _uid : false,
-                                  chatEmail!,
+                                  chatName,
                                   snapshot.data![index].chat!.message);
                             },
                           );

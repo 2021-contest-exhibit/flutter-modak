@@ -35,3 +35,22 @@ class SignUpSuccessed extends UserState {
   @override
   List<Object?> get props => [];
 }
+
+class NicknameUpdated extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+
+class NicknameUpdating extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+
+class NicknameUpdateError extends UserState {
+  String message;
+
+  NicknameUpdateError({required this.message});
+
+  @override
+  List<Object?> get props => [];
+}

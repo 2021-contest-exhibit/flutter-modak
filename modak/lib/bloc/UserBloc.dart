@@ -31,6 +31,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       yield* _mapCheckUserEvent(event);
     } else if (event is SignUpUserEvent) {
       yield* _mapSignUpEvent(event);
+    } else if (event is UpdateNicknameEvent) {
+      yield* _mapUpdateNickname(event);
     }
   }
 
@@ -77,7 +79,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       if (user != null) {
         await this.fireStoreRepository.signUpUser(
-            ModakUser(uid: user.uid, email: user.email!, image: "", level: 1));
+            ModakUser(uid: user.uid, email: user.email!, image: "", level: 1, nickname: ""));
         await this.apiRepository.postUser(user.uid);
       } else {
         yield Error(message: "회원가입에 실패하였습니다.");
@@ -112,6 +114,35 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     } on FirebaseAuthException catch (e) {
       yield Error(message: "로그인에 실패했습니다. (${e.message!})");
+    }
+  }
+
+  Stream<UserState> _mapUpdateNickname(UpdateNicknameEvent event) async* {
+    yield NicknameUpdating();
+
+    print('_mapUpdateNickname');
+
+    String? token = userRepository.getUserToken();
+
+    if (token != null) {
+      bool nickname = await fireStoreRepository.checkNicknameDuplicate(event.nickname);
+      print('nickname: ${nickname}');
+
+      if (!nickname) {
+        String? docKey = await fireStoreRepository.getUserDocKey(token);
+        if (docKey != null) {
+          bool? isUpdated = await fireStoreRepository.updateNickname(docKey, event.nickname);
+          if (isUpdated != null && isUpdated) {
+            yield NicknameUpdated();
+          }
+        } else {
+          yield NicknameUpdateError(message: "유저정보를 받아올 수 없습니다.");
+        }
+      } else {
+        yield NicknameUpdateError(message: "중복된 닉네임 입니다.");
+      }
+    } else {
+      yield NicknameUpdateError(message: "로그인이 필요한 서비스입니다.");
     }
   }
 

@@ -167,4 +167,21 @@ class FireStoreRepository {
       return true;
     });
   }
+
+  Future<bool> checkNicknameDuplicate(String nickname) async {
+    CollectionReference users = store.collection("users");
+    return users.where("nickname", isEqualTo: nickname).get().then((value) => value.docs.length > 0);
+  }
+
+  Future<String?> getUserDocKey(String uid) async {
+    CollectionReference users = store.collection("users");
+    return users.where("uid", isEqualTo: uid).get().then((value) => value.docs.length > 0 ? value.docs[0].id : null);
+  }
+
+  Future<bool?> updateNickname(String key, String nickname) async{
+    CollectionReference users = store.collection("users");
+    return users.doc(key).update({'nickname': nickname})
+        .then((value) => true)
+        .onError((error, stackTrace) => false);
+  }
 }

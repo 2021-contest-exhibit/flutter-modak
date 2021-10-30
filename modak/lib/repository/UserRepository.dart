@@ -10,7 +10,7 @@ class UserRepository {
     final userCredential = auth.signInWithEmailAndPassword(
         email: email, password: password);
 
-    return userCredential.then((value) => ModakUser(uid: value.user!.uid, email: value.user!.email!, image: "", level: 1).toJson());
+    return userCredential.then((value) => ModakUser(uid: value.user!.uid, email: value.user!.email!, image: "", level: 1, nickname: "").toJson());
   }
 
   Future<User?> signUp(String email, String password) async {

@@ -40,6 +40,7 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
               Container(
                 margin: const EdgeInsets.all(12.0),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       width: 32,
@@ -54,20 +55,22 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                       width: 24,
                     ),
                     Text(
-                      widget.modakMatching.email!,
+                      widget.modakMatching.user != null ? widget.modakMatching.user!.nickname : widget.modakMatching.email!,
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 20,
                           fontFamily: 'NotoSansKR',
                           fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
-              Image.network(
+              widget.modakMatching.content!.thumbnailImageUrl != null &&  widget.modakMatching.content!.thumbnailImageUrl != ""? Image.network(
                 widget.modakMatching.content!.thumbnailImageUrl!,
                 width: _width,
                 fit: BoxFit.fitWidth,
-              ),
+              ): Container(
+                height: 120.0,
+                  child: Image.asset('image/logo_black.png',width: 36.0, height: 36.0,)),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
