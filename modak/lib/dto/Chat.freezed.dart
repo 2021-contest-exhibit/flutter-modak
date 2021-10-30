@@ -24,11 +24,13 @@ class _$ChatTearOff {
       {required String userId,
       required String matchingId,
       required String message,
+      required bool isManager,
       required DateTime createDate}) {
     return _Chat(
       userId: userId,
       matchingId: matchingId,
       message: message,
+      isManager: isManager,
       createDate: createDate,
     );
   }
@@ -46,6 +48,7 @@ mixin _$Chat {
   String get userId => throw _privateConstructorUsedError;
   String get matchingId => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
+  bool get isManager => throw _privateConstructorUsedError;
   DateTime get createDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,7 +61,11 @@ abstract class $ChatCopyWith<$Res> {
   factory $ChatCopyWith(Chat value, $Res Function(Chat) then) =
       _$ChatCopyWithImpl<$Res>;
   $Res call(
-      {String userId, String matchingId, String message, DateTime createDate});
+      {String userId,
+      String matchingId,
+      String message,
+      bool isManager,
+      DateTime createDate});
 }
 
 /// @nodoc
@@ -74,6 +81,7 @@ class _$ChatCopyWithImpl<$Res> implements $ChatCopyWith<$Res> {
     Object? userId = freezed,
     Object? matchingId = freezed,
     Object? message = freezed,
+    Object? isManager = freezed,
     Object? createDate = freezed,
   }) {
     return _then(_value.copyWith(
@@ -89,6 +97,10 @@ class _$ChatCopyWithImpl<$Res> implements $ChatCopyWith<$Res> {
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      isManager: isManager == freezed
+          ? _value.isManager
+          : isManager // ignore: cast_nullable_to_non_nullable
+              as bool,
       createDate: createDate == freezed
           ? _value.createDate
           : createDate // ignore: cast_nullable_to_non_nullable
@@ -103,7 +115,11 @@ abstract class _$ChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
       __$ChatCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String userId, String matchingId, String message, DateTime createDate});
+      {String userId,
+      String matchingId,
+      String message,
+      bool isManager,
+      DateTime createDate});
 }
 
 /// @nodoc
@@ -120,6 +136,7 @@ class __$ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? matchingId = freezed,
     Object? message = freezed,
+    Object? isManager = freezed,
     Object? createDate = freezed,
   }) {
     return _then(_Chat(
@@ -135,6 +152,10 @@ class __$ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      isManager: isManager == freezed
+          ? _value.isManager
+          : isManager // ignore: cast_nullable_to_non_nullable
+              as bool,
       createDate: createDate == freezed
           ? _value.createDate
           : createDate // ignore: cast_nullable_to_non_nullable
@@ -150,6 +171,7 @@ class _$_Chat implements _Chat {
       {required this.userId,
       required this.matchingId,
       required this.message,
+      required this.isManager,
       required this.createDate});
 
   factory _$_Chat.fromJson(Map<String, dynamic> json) =>
@@ -162,11 +184,13 @@ class _$_Chat implements _Chat {
   @override
   final String message;
   @override
+  final bool isManager;
+  @override
   final DateTime createDate;
 
   @override
   String toString() {
-    return 'Chat(userId: $userId, matchingId: $matchingId, message: $message, createDate: $createDate)';
+    return 'Chat(userId: $userId, matchingId: $matchingId, message: $message, isManager: $isManager, createDate: $createDate)';
   }
 
   @override
@@ -181,6 +205,9 @@ class _$_Chat implements _Chat {
             (identical(other.message, message) ||
                 const DeepCollectionEquality()
                     .equals(other.message, message)) &&
+            (identical(other.isManager, isManager) ||
+                const DeepCollectionEquality()
+                    .equals(other.isManager, isManager)) &&
             (identical(other.createDate, createDate) ||
                 const DeepCollectionEquality()
                     .equals(other.createDate, createDate)));
@@ -192,6 +219,7 @@ class _$_Chat implements _Chat {
       const DeepCollectionEquality().hash(userId) ^
       const DeepCollectionEquality().hash(matchingId) ^
       const DeepCollectionEquality().hash(message) ^
+      const DeepCollectionEquality().hash(isManager) ^
       const DeepCollectionEquality().hash(createDate);
 
   @JsonKey(ignore: true)
@@ -210,6 +238,7 @@ abstract class _Chat implements Chat {
       {required String userId,
       required String matchingId,
       required String message,
+      required bool isManager,
       required DateTime createDate}) = _$_Chat;
 
   factory _Chat.fromJson(Map<String, dynamic> json) = _$_Chat.fromJson;
@@ -220,6 +249,8 @@ abstract class _Chat implements Chat {
   String get matchingId => throw _privateConstructorUsedError;
   @override
   String get message => throw _privateConstructorUsedError;
+  @override
+  bool get isManager => throw _privateConstructorUsedError;
   @override
   DateTime get createDate => throw _privateConstructorUsedError;
   @override

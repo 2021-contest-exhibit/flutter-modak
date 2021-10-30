@@ -27,19 +27,21 @@ class ChattingPage extends StatefulWidget {
   ChattingPageState createState() => ChattingPageState();
 }
 
+enum ChatType { CHAT, MYCHAT, MANAGERCHAT }
+
 class ChattingPageState extends State<ChattingPage> {
   final StreamController<List<ModakChat>> streamController =
       new StreamController<List<ModakChat>>();
 
   Widget _ChatWidget(
-      double maxSize, bool isMyMessage, String email, String message) {
+      double maxSize, ChatType isMyMessage, String email, String message) {
     return Column(
       children: [
         SizedBox(
-          height: isMyMessage ? 12.0 : 24.0,
+          height: isMyMessage == ChatType.MYCHAT ? 12.0 : 24.0,
         ),
         Visibility(
-          visible: !isMyMessage,
+          visible: isMyMessage == ChatType.CHAT,
           child: Row(
             children: [
               Container(
@@ -59,51 +61,65 @@ class ChattingPageState extends State<ChattingPage> {
         SizedBox(
           height: 8,
         ),
-        Row(
-          mainAxisAlignment:
-              isMyMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 4.0,
-            ),
-            Container(
-              width: maxSize,
-              child: Row(
-                mainAxisAlignment: isMyMessage
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 4.0),
-                      child: AutoSizeText(
-                        message,
-                        overflow: TextOverflow.fade,
-                      ),
-                      decoration: const BoxDecoration(
-                        color: Color(0xffffffff),
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(5.0),
+        Visibility(
+          visible: isMyMessage != ChatType.MANAGERCHAT,
+          child: Row(
+            mainAxisAlignment: isMyMessage == ChatType.MYCHAT
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 4.0,
+              ),
+              Container(
+                width: maxSize,
+                child: Row(
+                  mainAxisAlignment: isMyMessage == ChatType.MYCHAT
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 4.0),
+                        child: AutoSizeText(
+                          message,
+                          overflow: TextOverflow.fade,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0x22000000),
-                            offset: Offset(2.0, 2.0),
-                            blurRadius: 2.0,
-                            spreadRadius: 0.1,
+                        decoration: const BoxDecoration(
+                          color: Color(0xffffffff),
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(5.0),
                           ),
-                        ],
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0x22000000),
+                              offset: Offset(2.0, 2.0),
+                              blurRadius: 2.0,
+                              spreadRadius: 0.1,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
+        ),
+        Visibility(
+          visible: isMyMessage == ChatType.MANAGERCHAT,
+          child: Column(
+            children: [
+              Center(child: Divider(height: 2, thickness: 1,)),
+              SizedBox(height: 4,),
+              Center(child: Text("${email}님이 입장하셨습니다.")),
+            ],
+          )
         ),
         SizedBox(
-          height: isMyMessage ? 12.0 : 24.0,
+          height: isMyMessage == ChatType.MYCHAT ? 12.0 : 24.0,
         ),
       ],
     );
@@ -265,24 +281,37 @@ class ChattingPageState extends State<ChattingPage> {
                               var mUser = FirebaseAuth.instance.currentUser;
                               var _uid = mUser != null ? mUser.uid : "";
 
+                              var modakUser = snapshot.data![index].modakUser;
+                              var modakChat = snapshot.data![index].chat;
+
                               var chatUid =
-                                  snapshot.data![index].modakUser != null
-                                      ? snapshot.data![index].modakUser!.uid
+                              modakUser != null
+                                      ? modakUser.uid
                                       : "";
-                              var chatName = snapshot.data![index].modakUser !=
+                              var chatName = modakUser !=
                                       null
-                                  ? (snapshot.data![index].modakUser!
-                                              .nickname !=
+                                  ? (modakUser.nickname !=
                                           ""
-                                      ? snapshot
-                                          .data![index].modakUser!.nickname
-                                      : snapshot.data![index].modakUser!.email)
-                                  : "";
-                              var chatEmail = mUser != null ? mUser.email : "";
+                                      ? modakUser.nickname
+                                      : modakUser.email)
+                                  : mUser!.email;
+
+                              ChatType chatType = ChatType.CHAT;
+
+                              if (modakChat!.isManager) {
+                                chatType = ChatType.MANAGERCHAT;
+                              } else {
+                                if (chatUid == _uid) {
+                                  chatType = ChatType.MYCHAT;
+                                } else {
+                                  chatType = ChatType.CHAT;
+                                }
+                              }
+
                               return _ChatWidget(
                                   _width / 2 - 40,
-                                  mUser != null ? chatUid == _uid : false,
-                                  chatName,
+                                  chatType,
+                                  chatName!,
                                   snapshot.data![index].chat!.message);
                             },
                           );
