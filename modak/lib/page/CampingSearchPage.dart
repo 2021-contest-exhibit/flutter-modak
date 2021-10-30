@@ -24,7 +24,7 @@ class CampingSearchPage extends StatefulWidget {
 
 class CampingSearchPageState extends State<CampingSearchPage> {
   var toggleMap = {};
-  var maxCountMap = {"region": 100, "operationType": 5, "environment": 8, "facility": 6};
+  var maxCountMap = {"region": 100, "operationType": 5, "environment": 8, "facility": 11};
   var currentMap = {"region": {}, "operationType": {}, "environment": {}, "facility": {}};
   var regionMore = false;
 
