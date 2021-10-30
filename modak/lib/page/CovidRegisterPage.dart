@@ -36,10 +36,10 @@ class CovidRegisterPageState extends State<CovidRegisterPage> {
   final picker = ImagePicker();
 
   Future pickImage() async {
-    var tempStore = await picker.getImage(source: ImageSource.gallery);
+    var tempStore = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      pickedImage = tempStore as File;
+      pickedImage = File(tempStore!.path);
       isImageLoaded = true;
     });
   }
