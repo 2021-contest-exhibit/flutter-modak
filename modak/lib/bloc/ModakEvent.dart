@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:modak/dto/Chat.dart';
@@ -93,4 +95,14 @@ class CampingSelectedEvent extends ModakEvent {
 
   @override
   List<Object?> get props => [];
+}
+
+class ChangeProfileImageEvent extends ModakEvent {
+  File file;
+
+  ChangeProfileImageEvent({required this.file});
+
+  @override
+  List<Object?> get props => [];
+
 }

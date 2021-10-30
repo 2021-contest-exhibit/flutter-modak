@@ -133,3 +133,22 @@ class CampingSelectedLoading extends ModakState {
   @override
   List<Object?> get props => [];
 }
+
+class ProfileUploading extends ModakState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ProfileUploaded extends ModakState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ProfileUploadError extends ModakState {
+  String message;
+
+  ProfileUploadError({required this.message});
+
+  @override
+  List<Object?> get props => [];
+}

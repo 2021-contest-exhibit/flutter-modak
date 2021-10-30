@@ -8,6 +8,7 @@ import 'package:modak/dto/ModakChat.dart';
 import 'package:modak/dto/ModakMatching.dart';
 import 'package:modak/repository/APIRepository.dart';
 import 'package:modak/repository/FireStoreRepository.dart';
+import 'package:modak/repository/FirebaseStorageRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
 import 'package:modak/rest/ResponseGetCampings.dart';
 
@@ -15,7 +16,8 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
   final FireStoreRepository fireStoreRepository;
   final UserRepository userRepository;
   final APIRepository apiRepository;
-  ModakBloc({required this.fireStoreRepository, required this.userRepository, required this.apiRepository}) : super(Empty());
+  final FirebaseStorageRepository firebaseStorageRepository;
+  ModakBloc({required this.fireStoreRepository, required this.userRepository, required this.apiRepository, required this.firebaseStorageRepository}) : super(Empty());
 
   @override
   Stream<ModakState> mapEventToState(ModakEvent event) async* {
@@ -37,6 +39,8 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
       yield* _mapJoinMatchingEvent(event);
     } else if (event is CampingSelectedEvent) {
       yield* _mapCampingSelectedEvent(event);
+    } else if (event is ChangeProfileImageEvent) {
+      yield* _mapChangeProfile(event);
     }
   }
 
@@ -95,7 +99,8 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
         var user = await fireStoreRepository.loadUser(e[e.keys.first]!.user!);
         var userEmail = user != null ? user.email : "";
         var userUid = user != null ? user.uid : "";
-        return ModakMatching(matching: e[e.keys.first], content: campings!.content[0], email: userEmail, uid: userUid, matchingId: e.keys.first, user: user);
+        print('campings: ${campings!.content}');
+        return ModakMatching(matching: e[e.keys.first], content: campings.content[0], email: userEmail, uid: userUid, matchingId: e.keys.first, user: user);
       }).toList();
       yield MatchingLoaded(matchings: matchings);
     } else {
@@ -205,6 +210,27 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
       yield Error(message: "로그인이 필요한 서비스 입니다.");
     }
 
+  }
+
+  Stream<ModakState> _mapChangeProfile(ChangeProfileImageEvent event) async* {
+    yield ProfileUploading();
+    var uid = userRepository.getUserToken();
+
+    if (uid != null) {
+      String? url = await firebaseStorageRepository.uploadImage(uid, event.file);
+
+      String? docKey = await fireStoreRepository.getUserDocKey(uid);
+      if (url != null && docKey != null) {
+        bool? isUpdated = await fireStoreRepository.updateImage(docKey, url);
+        if (isUpdated != null && isUpdated) {
+          yield ProfileUploaded();
+        }
+      } else {
+        yield ProfileUploadError(message: "이미지를 업로드를 실패하였습니다.");
+      }
+    } else {
+      yield ProfileUploadError(message: "로그인이 필요한 기능입니다.");
+    }
   }
 
 }

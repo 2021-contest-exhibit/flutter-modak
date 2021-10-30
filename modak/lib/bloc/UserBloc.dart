@@ -104,7 +104,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         await this.dbRepository.saveUser(event.user);
 
         if (user["email"] != "" && user["level"] != "") {
-          yield Loaded(user: ModakUser.fromJson(user));
+          ModakUser? modakUser = await fireStoreRepository.loadUser(user["uid"]);
+          if (modakUser != null) {
+            yield Loaded(user: modakUser);
+          } else {
+            yield Error(message: "유저정보를 받아올 수 없습니다.");
+          }
         } else {
           yield Error(message: '로그인에 실패하였습니다.');
         }

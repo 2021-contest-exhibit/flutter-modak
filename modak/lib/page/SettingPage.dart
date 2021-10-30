@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modak/bloc/ModakBloc.dart';
 import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/bloc/UserEvent.dart';
 import 'package:modak/bloc/UserState.dart';
@@ -69,8 +70,6 @@ class SettingPageState extends State<SettingPage> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<UserBloc>(context).add(
@@ -90,12 +89,13 @@ class SettingPageState extends State<SettingPage> {
                 if (state is Loading) {
                   return Center(child: CircularProgressIndicator());
                 }
-                return ProfileWidget(user: state is Loaded ? state.user : null);
+                return ProfileWidget(
+                    user: state is Loaded ? state.user : null);
               },
               buildWhen: (previous, current) {
                 if (current is Error) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(current.message)));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(current.message)));
                 }
                 return true;
               },
@@ -104,7 +104,13 @@ class SettingPageState extends State<SettingPage> {
           const SizedBox(
             height: 40.0,
           ),
-          _menuButton(Icon(Icons.campaign, color: Colors.black, size: 28,), "공지사항", () {
+          _menuButton(
+              Icon(
+                Icons.campaign,
+                color: Colors.black,
+                size: 28,
+              ),
+              "공지사항", () {
             ScaffoldMessenger.of(context).clearSnackBars();
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text('아직 지원하지 않는 기능입니다.'),
@@ -114,19 +120,36 @@ class SettingPageState extends State<SettingPage> {
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.favorite, color: Colors.red, size: 28,), "좋아요", () {
+          _menuButton(
+              Icon(
+                Icons.favorite,
+                color: Colors.red,
+                size: 28,
+              ),
+              "좋아요", () {
             Navigator.pushNamed(context, '/goods');
           }),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.settings, color: Colors.grey, size: 28,), "설정", () {
+          _menuButton(
+              Icon(
+                Icons.settings,
+                color: Colors.grey,
+                size: 28,
+              ),
+              "설정", () {
             Navigator.pushNamed(context, '/setting_detail');
           }),
           const SizedBox(
             height: 20.0,
           ),
-          _menuButton(Icon(Icons.info, size: 28,), "버전정보", () {
+          _menuButton(
+              Icon(
+                Icons.info,
+                size: 28,
+              ),
+              "버전정보", () {
             ScaffoldMessenger.of(context).clearSnackBars();
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text('V1.0.0'),
