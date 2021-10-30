@@ -180,7 +180,7 @@ class FireStoreRepository {
 
   Future<bool?> updateNickname(String key, String nickname) async{
     CollectionReference users = store.collection("users");
-    users.doc(key).update({'nickname': nickname})
+    return users.doc(key).update({'nickname': nickname})
         .then((value) => true)
         .onError((error, stackTrace) => false);
   }

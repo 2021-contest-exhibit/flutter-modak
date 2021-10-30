@@ -84,18 +84,18 @@ class SettingDetailPageState extends State<SettingDetailPage> {
           Center(
             child: BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
-                if (state is NicknameUpdateError) {
-                  Text(state.message);
-                }
                 return Container();
               },
               buildWhen: (previous, current) {
-                if (current is NicknameUpdating) {
-                  return true;
-                } else if (current is NicknameUpdateError) {
-                  print('error: ${current.message}');
+                if (current is NicknameUpdateError) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(current.message),
+                    duration: Duration(milliseconds: 1000),
+                  ));
+                }
+                if (current is NicknameUpdated) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('닉네임이 변경되었습니다.'),
                     duration: Duration(milliseconds: 1000),
                   ));
                 }

@@ -132,7 +132,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         String? docKey = await fireStoreRepository.getUserDocKey(token);
         if (docKey != null) {
           bool? isUpdated = await fireStoreRepository.updateNickname(docKey, event.nickname);
-          if (isUpdated != null && !isUpdated) {
+          if (isUpdated != null && isUpdated) {
             yield NicknameUpdated();
           }
         } else {
