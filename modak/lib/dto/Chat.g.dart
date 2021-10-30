@@ -11,6 +11,7 @@ _$_Chat _$_$_ChatFromJson(Map<String, dynamic> json) {
     userId: json['userId'] as String,
     matchingId: json['matchingId'] as String,
     message: json['message'] as String,
+    isManager: json['isManager'] as bool,
     createDate: DateTime.parse(json['createDate'] as String),
   );
 }
@@ -19,5 +20,6 @@ Map<String, dynamic> _$_$_ChatToJson(_$_Chat instance) => <String, dynamic>{
       'userId': instance.userId,
       'matchingId': instance.matchingId,
       'message': instance.message,
+      'isManager': instance.isManager,
       'createDate': instance.createDate.toIso8601String(),
     };

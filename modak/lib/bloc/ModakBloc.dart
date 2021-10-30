@@ -50,7 +50,7 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
     var uid = userRepository.getUserToken();
 
     if (uid != null) {
-      await fireStoreRepository.appendChatting(event.matchingId, uid, event.message);
+      await fireStoreRepository.appendChatting(event.matchingId, uid, event.message, false);
     } else {
       yield Error(message: "로그인 필요한 서비스입니다.");
     }
@@ -197,8 +197,10 @@ class ModakBloc extends Bloc<ModakEvent, ModakState> {
 
     if (uid != null){
       var isJoined = await fireStoreRepository.joinMatching(uid, event.matchingId);
-      print('isJoined : ${isJoined}');
-      yield MachingJoined(isJoined: isJoined);
+      if (isJoined) {
+        await fireStoreRepository.appendChatting(event.matchingId, uid, "enter", true);
+        yield MachingJoined(isJoined: isJoined);
+      }
     } else {
       yield Error(message: "로그인이 필요한 서비스 입니다.");
     }

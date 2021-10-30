@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final repo = FireStoreRepository(store: FirebaseFirestore.instance);
-  await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "xnMcnv1CcxYDHExwPBQ5Hm5D7863", "aaa11111");
+  await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "xnMcnv1CcxYDHExwPBQ5Hm5D7863", "aaa11111", false);
   // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "1");
   // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "2");
   // await repo.appendChatting("lHKC9XN6suYCNxQzFjJf", "0lN9Py0fVwUceep9DTqoQeoG7Fu1", "3");
@@ -44,9 +44,9 @@ class FireStoreRepository {
     return matchings.add(matching.toJson()).then((value) => value.id);
   }
 
-  Future<String?> appendChatting(String matchingId, String uid, String message) {
+  Future<String?> appendChatting(String matchingId, String uid, String message, bool isManager) {
     CollectionReference chattings = store.collection("chattings");
-    return chattings.add(Chat(userId: uid, matchingId: matchingId, message: message, createDate: DateTime.now()).toJson()).then((value) => "chat appended");
+    return chattings.add(Chat(userId: uid, matchingId: matchingId, message: message, createDate: DateTime.now(), isManager: isManager).toJson()).then((value) => "chat appended");
   }
 
   Future<List<Chat>> getChatting(String matchingId) {
