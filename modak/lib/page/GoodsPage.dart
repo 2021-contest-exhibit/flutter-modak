@@ -56,7 +56,7 @@ class GoodsPageState extends State<GoodsPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("좋아요", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                          Text("내가 좋아요 누른 캠핑장", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                         ],
                       )
                     ),
