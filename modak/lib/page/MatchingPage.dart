@@ -161,8 +161,13 @@ class MatchingPageState extends State<MatchingPage> {
                                 builder: (_, state) {
                                   if (state is MatchingLoaded) {
                                     if (state.matchings!.length > 0){
-                                      print('machings: ${state.matchings![0].matching!.createDate}');
-                                      newModakMatchings.addAll(state.matchings!);
+                                      if (newModakMatchings.length > 0) {
+                                        if (newModakMatchings[newModakMatchings.length - 1].matching!.createDate.isAfter(state.matchings![0].matching!.createDate)){
+                                          newModakMatchings.addAll(state.matchings!);
+                                        }
+                                      } else {
+                                        newModakMatchings.addAll(state.matchings!);
+                                      }
                                     } else {
                                       isNewModakMatchingEnd = true;
                                     }
@@ -203,7 +208,13 @@ class MatchingPageState extends State<MatchingPage> {
                                 builder: (_, state) {
                                   if (state is JoinMatchingLoaded) {
                                     if (state.matchings!.length > 0){
-                                      joinModakMatchings.addAll(state.matchings!);
+                                      if (joinModakMatchings.length > 0) {
+                                        if (joinModakMatchings[joinModakMatchings.length - 1].matching!.createDate.isAfter(state.matchings![0].matching!.createDate)){
+                                          joinModakMatchings.addAll(state.matchings!);
+                                        }
+                                      } else {
+                                        joinModakMatchings.addAll(state.matchings!);
+                                      }
                                     } else {
                                       isJoinModakMatchingEnd = true;
                                     }
@@ -246,7 +257,13 @@ class MatchingPageState extends State<MatchingPage> {
                                 builder: (_, state) {
                                   if (state is MyMatchingLoaded) {
                                     if (state.matchings!.length > 0){
-                                      myModakMatchings.addAll(state.matchings!);
+                                      if (myModakMatchings.length > 0) {
+                                        if (myModakMatchings[myModakMatchings.length - 1].matching!.createDate.isAfter(state.matchings![0].matching!.createDate)){
+                                          myModakMatchings.addAll(state.matchings!);
+                                        }
+                                      } else {
+                                        myModakMatchings.addAll(state.matchings!);
+                                      }
                                     } else {
                                       isJoinModakMatchingEnd = true;
                                     }
