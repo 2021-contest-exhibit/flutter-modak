@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/splash',
         routes: {
-          '/covid_register': (context) => CovidRegisterPage(),
+          // '/covid_register': (context) => CovidRegisterPage(),
           '/splash': (context) => SplashPage(),
           '/login': (context) => LoginPage(),
           '/login/signup': (context) => SignUpPage(),
