@@ -45,17 +45,33 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                     Container(
                       width: 32,
                       height: 32,
-                      child: Icon(Icons.person, color: Colors.white,),
+                      child: widget.modakMatching.user != null && widget.modakMatching.user!.image != ""
+                          ?
+                      ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        child: Image.network(
+                          widget.modakMatching.user!.image,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                          : Icon(
+                              Icons.person,
+                              size: 24,
+                              color: Colors.white,
+                            ),
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 18, 32, 47),
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        color: Color.fromARGB(255, 18, 32, 47),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                     ),
                     SizedBox(
                       width: 24,
                     ),
                     Text(
-                      (widget.modakMatching.user != null && widget.modakMatching.user!.nickname != "") ? widget.modakMatching.user!.nickname : widget.modakMatching.email!,
+                      (widget.modakMatching.user != null &&
+                              widget.modakMatching.user!.nickname != "")
+                          ? widget.modakMatching.user!.nickname
+                          : widget.modakMatching.email!,
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'NotoSansKR',
@@ -64,13 +80,20 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
                   ],
                 ),
               ),
-              widget.modakMatching.content!.thumbnailImageUrl != null &&  widget.modakMatching.content!.thumbnailImageUrl != ""? Image.network(
-                widget.modakMatching.content!.thumbnailImageUrl!,
-                width: _width,
-                fit: BoxFit.fitWidth,
-              ): Container(
-                height: 120.0,
-                  child: Image.asset('image/logo_black.png',width: 36.0, height: 36.0,)),
+              widget.modakMatching.content!.thumbnailImageUrl != null &&
+                      widget.modakMatching.content!.thumbnailImageUrl != ""
+                  ? Image.network(
+                      widget.modakMatching.content!.thumbnailImageUrl!,
+                      width: _width,
+                      fit: BoxFit.fitWidth,
+                    )
+                  : Container(
+                      height: 120.0,
+                      child: Image.asset(
+                        'image/logo_black.png',
+                        width: 36.0,
+                        height: 36.0,
+                      )),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),

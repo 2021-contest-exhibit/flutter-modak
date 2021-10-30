@@ -184,4 +184,12 @@ class FireStoreRepository {
         .then((value) => true)
         .onError((error, stackTrace) => false);
   }
+
+  Future<bool?> updateImage(String key, String url) async{
+    CollectionReference users = store.collection("users");
+    return users.doc(key).update({'image': url})
+        .then((value) => true)
+        .onError((error, stackTrace) => false);
+  }
+
 }

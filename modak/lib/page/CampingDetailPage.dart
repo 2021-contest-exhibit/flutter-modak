@@ -378,18 +378,18 @@ class CampingDetailPageState extends State<CampingDetailPage> {
                                 ),
                               ],
                             ),
-                          ),
-                          Text(
-                            widget.args.longDescription ?? "",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.grey),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                      Text(
+                        (widget.args.longDescription ?? ""),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.black),
+                      ),
+                      SizedBox(
+                        height: 20.0,
                       ),
                     )
                   ],
