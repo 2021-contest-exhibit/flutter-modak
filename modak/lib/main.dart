@@ -12,6 +12,7 @@ import 'package:modak/bloc/UserBloc.dart';
 import 'package:modak/page/CampingSearchResultPage.dart';
 import 'package:modak/page/CampingDetailPage.dart';
 import 'package:modak/page/ChattingPage.dart';
+import 'package:modak/page/CovidRegisterPage.dart';
 import 'package:modak/page/CreateMatchingPage.dart';
 import 'package:modak/page/DashBoardPage.dart';
 import 'package:modak/page/GoodsPage.dart';
@@ -87,6 +88,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/splash',
         routes: {
+          '/covid_register': (context) => CovidRegisterPage(),
           '/splash': (context) => SplashPage(),
           '/login': (context) => LoginPage(),
           '/login/signup': (context) => SignUpPage(),
