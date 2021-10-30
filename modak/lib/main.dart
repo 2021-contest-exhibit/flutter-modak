@@ -24,6 +24,7 @@ import 'package:modak/page/SelectCampingPage.dart';
 import 'package:modak/page/SettingDetailPage.dart';
 import 'package:modak/page/SignUpPage.dart';
 import 'package:modak/page/SplashPage.dart';
+import 'package:modak/page/UserDetailPage.dart';
 import 'package:modak/repository/APIRepository.dart';
 import 'package:modak/repository/DBRepository.dart';
 import 'package:modak/repository/FireStoreRepository.dart';
@@ -103,6 +104,7 @@ class MyApp extends StatelessWidget {
           '/import': (context) => Payment(),
           '/select_camping': (context) => SelectCampingPage(),
           '/setting_detail': (context) => SettingDetailPage(),
+          '/user_detail': (context) => UserDetailPage(),
         },
       ),
     );

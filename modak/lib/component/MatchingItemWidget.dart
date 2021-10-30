@@ -37,47 +37,52 @@ class MatchingItemWidgetState extends State<MatchingItemWidget> {
           margin: const EdgeInsets.only(bottom: 36.0, left: 20.0, right: 20.0),
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.all(12.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 32,
-                      height: 32,
-                      child: widget.modakMatching.user != null && widget.modakMatching.user!.image != ""
-                          ?
-                      ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        child: Image.network(
-                          widget.modakMatching.user!.image,
-                          fit: BoxFit.cover,
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, '/user_detail', arguments: widget.modakMatching.user);
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(12.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 32,
+                        height: 32,
+                        child: widget.modakMatching.user != null && widget.modakMatching.user!.image != ""
+                            ?
+                        ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          child: Image.network(
+                            widget.modakMatching.user!.image,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                            : Icon(
+                                Icons.person,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 18, 32, 47),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
                         ),
-                      )
-                          : Icon(
-                              Icons.person,
-                              size: 24,
-                              color: Colors.white,
-                            ),
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 18, 32, 47),
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
-                    ),
-                    SizedBox(
-                      width: 24,
-                    ),
-                    Text(
-                      (widget.modakMatching.user != null &&
-                              widget.modakMatching.user!.nickname != "")
-                          ? widget.modakMatching.user!.nickname
-                          : widget.modakMatching.email!,
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'NotoSansKR',
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                      SizedBox(
+                        width: 24,
+                      ),
+                      Text(
+                        (widget.modakMatching.user != null &&
+                            widget.modakMatching.user!.nickname != "")
+                            ? widget.modakMatching.user!.nickname
+                            : widget.modakMatching.email!,
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'NotoSansKR',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               widget.modakMatching.content!.thumbnailImageUrl != null &&
