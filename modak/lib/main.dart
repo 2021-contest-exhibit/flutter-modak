@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -25,10 +26,12 @@ import 'package:modak/page/SplashPage.dart';
 import 'package:modak/repository/APIRepository.dart';
 import 'package:modak/repository/DBRepository.dart';
 import 'package:modak/repository/FireStoreRepository.dart';
+import 'package:modak/repository/FirebaseStorageRepository.dart';
 import 'package:modak/repository/UserRepository.dart';
 import 'package:modak/rest/RestClient.dart';
 
 final logger = Logger();
+
 main() async {
   // initializeJsonMapper();
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,14 +64,20 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (_) => UserBloc(
-                userRepository: userRepository, dbRepository: DBRepository(), fireStoreRepository: fireStoreRepository, apiRepository: apiRepository)),
+                userRepository: userRepository,
+                dbRepository: DBRepository(),
+                fireStoreRepository: fireStoreRepository,
+                apiRepository: apiRepository)),
         BlocProvider(
-            create: (_) => CampingAPIBloc(apiRepository: apiRepository, userRepository: userRepository)),
+            create: (_) => CampingAPIBloc(
+                apiRepository: apiRepository, userRepository: userRepository)),
         BlocProvider(
             create: (_) => ModakBloc(
                   fireStoreRepository: fireStoreRepository,
                   userRepository: userRepository,
                   apiRepository: apiRepository,
+                  firebaseStorageRepository: FirebaseStorageRepository(
+                      firebaseStorage: FirebaseStorage.instance),
                 )),
       ],
       child: MaterialApp(
@@ -87,8 +96,7 @@ class MyApp extends StatelessWidget {
           '/create_matching': (context) => CreateMatchingPage(),
           '/goods': (context) => GoodsPage(),
           '/camping_search_result': (context) => CampingSearchResultPage(
-            argument: ModalRoute.of(context)!.settings.arguments as Map
-          ),
+              argument: ModalRoute.of(context)!.settings.arguments as Map),
           '/chatting': (context) => ChattingPage(),
           '/import': (context) => Payment(),
           '/select_camping': (context) => SelectCampingPage(),
