@@ -87,9 +87,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Color(0xff000000),
         ),
-        initialRoute: '/covid_register',
+        initialRoute: '/splash',
         routes: {
-          '/covid_register': (context) => CovidRegisterPage(),
+          // '/covid_register': (context) => CovidRegisterPage(),
           '/splash': (context) => SplashPage(),
           '/login': (context) => LoginPage(),
           '/login/signup': (context) => SignUpPage(),
