@@ -180,7 +180,13 @@ class LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('아직 지원하지 않는 기능입니다.'),
+                        duration: Duration(milliseconds: 500),
+                      ));
+                    },
                     child: Center(
                       child: Image.asset(
                         'image/kakao-talk.png',
@@ -200,7 +206,13 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('아직 지원하지 않는 기능입니다.'),
+                        duration: Duration(milliseconds: 500),
+                      ));
+                    },
                     child: Center(
                       child: Image.asset(
                         'image/google.png',
