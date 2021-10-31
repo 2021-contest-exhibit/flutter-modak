@@ -25,7 +25,6 @@ class MatchingPageState extends State<MatchingPage> {
   bool isJoinModakMatchingEnd = false;
   bool isMyModakMatchingEnd = false;
 
-
   setIndex(int index) {
     setState(() {
       widget._selectedIndex = index;
@@ -70,8 +69,10 @@ class MatchingPageState extends State<MatchingPage> {
                   height: 64,
                   padding: const EdgeInsets.only(left: 40.0, right: 40),
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 18, 32, 47),
-                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20.0), bottomRight: Radius.circular(20.0)),
+                    color: Color.fromARGB(255, 18, 32, 47),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20.0),
+                        bottomRight: Radius.circular(20.0)),
                     boxShadow: [
                       BoxShadow(
                           color: Color(0x22000000),
@@ -95,13 +96,14 @@ class MatchingPageState extends State<MatchingPage> {
                         child: Text(
                           "NEW",
                           style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.white,
-                            fontWeight: widget._selectedIndex == 0
-                                ? FontWeight.bold
-                                : null,
-                            fontFamily: widget._selectedIndex == 0 ? 'NotoSansKR' : 'NotoSansKR'
-                          ),
+                              fontSize: 20.0,
+                              color: Colors.white,
+                              fontWeight: widget._selectedIndex == 0
+                                  ? FontWeight.bold
+                                  : null,
+                              fontFamily: widget._selectedIndex == 0
+                                  ? 'NotoSansKR'
+                                  : 'NotoSansKR'),
                         ),
                       ),
                       InkWell(
@@ -111,13 +113,14 @@ class MatchingPageState extends State<MatchingPage> {
                         child: Text(
                           "JOINED",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: widget._selectedIndex == 1
-                                ? FontWeight.bold
-                                : null,
-                            fontFamily: widget._selectedIndex == 1 ? 'NotoSansKR' : 'NotoSansKR'
-                          ),
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: widget._selectedIndex == 1
+                                  ? FontWeight.bold
+                                  : null,
+                              fontFamily: widget._selectedIndex == 1
+                                  ? 'NotoSansKR'
+                                  : 'NotoSansKR'),
                         ),
                       ),
                       InkWell(
@@ -127,13 +130,14 @@ class MatchingPageState extends State<MatchingPage> {
                         child: Text(
                           "MY",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: widget._selectedIndex == 2
-                                ? FontWeight.bold
-                                : null,
-                            fontFamily: widget._selectedIndex == 2 ? 'NotoSansKR' : 'NotoSansKR'
-                          ),
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: widget._selectedIndex == 2
+                                  ? FontWeight.bold
+                                  : null,
+                              fontFamily: widget._selectedIndex == 2
+                                  ? 'NotoSansKR'
+                                  : 'NotoSansKR'),
                         ),
                       ),
                     ],
@@ -149,10 +153,20 @@ class MatchingPageState extends State<MatchingPage> {
                             height: _contentHeight,
                             child: NotificationListener<ScrollNotification>(
                               onNotification: (notification) {
-                                if (notification.metrics.maxScrollExtent < notification.metrics.pixels) {
-                                  if (newModakMatchings.length > 0 && !newModakMatchingsLoading && !isNewModakMatchingEnd){
+                                if (notification.metrics.maxScrollExtent <
+                                    notification.metrics.pixels) {
+                                  if (newModakMatchings.length > 0 &&
+                                      !newModakMatchingsLoading &&
+                                      !isNewModakMatchingEnd) {
                                     newModakMatchingsLoading = true;
-                                    BlocProvider.of<ModakBloc>(context).add(LoadMatchingEvent(lastDate: newModakMatchings[newModakMatchings.length - 1].matching!.createDate.toIso8601String()));
+                                    BlocProvider.of<ModakBloc>(context).add(
+                                        LoadMatchingEvent(
+                                            lastDate: newModakMatchings[
+                                                    newModakMatchings.length -
+                                                        1]
+                                                .matching!
+                                                .createDate
+                                                .toIso8601String()));
                                   }
                                 }
                                 return true;
@@ -160,13 +174,20 @@ class MatchingPageState extends State<MatchingPage> {
                               child: BlocBuilder<ModakBloc, ModakState>(
                                 builder: (_, state) {
                                   if (state is MatchingLoaded) {
-                                    if (state.matchings!.length > 0){
+                                    if (state.matchings!.length > 0) {
                                       if (newModakMatchings.length > 0) {
-                                        if (newModakMatchings[newModakMatchings.length - 1].matching!.createDate.isAfter(state.matchings![0].matching!.createDate)){
-                                          newModakMatchings.addAll(state.matchings!);
+                                        if (newModakMatchings[
+                                                newModakMatchings.length - 1]
+                                            .matching!
+                                            .createDate
+                                            .isAfter(state.matchings![0]
+                                                .matching!.createDate)) {
+                                          newModakMatchings
+                                              .addAll(state.matchings!);
                                         }
                                       } else {
-                                        newModakMatchings.addAll(state.matchings!);
+                                        newModakMatchings
+                                            .addAll(state.matchings!);
                                       }
                                     } else {
                                       isNewModakMatchingEnd = true;
@@ -175,7 +196,8 @@ class MatchingPageState extends State<MatchingPage> {
                                     return ListView.builder(
                                       itemBuilder: (context, index) {
                                         return MatchingItemWidget(
-                                          modakMatching: newModakMatchings[index],
+                                          modakMatching:
+                                              newModakMatchings[index],
                                         );
                                       },
                                       itemCount: newModakMatchings.length,
@@ -184,8 +206,20 @@ class MatchingPageState extends State<MatchingPage> {
                                   }
                                   return Container();
                                 },
-                                buildWhen: (previous, current) =>
-                                current is MatchingLoaded,
+                                buildWhen: (previous, current) {
+                                  if (current is MatchingLoaded) {
+                                    return true;
+                                  }
+
+                                  if (current is Loaded) {
+                                    Future.delayed(const Duration(milliseconds: 100), () {
+                                      setIndex(0);
+                                      setIndex(1);
+                                      setIndex(2);
+                                    });
+                                  }
+                                  return false;
+                                },
                               ),
                             ),
                           ),
@@ -196,10 +230,20 @@ class MatchingPageState extends State<MatchingPage> {
                             height: _contentHeight,
                             child: NotificationListener<ScrollNotification>(
                               onNotification: (notification) {
-                                if (notification.metrics.maxScrollExtent < notification.metrics.pixels) {
-                                  if (joinModakMatchings.length > 0 && !joinModakMatchingLoading && !isJoinModakMatchingEnd){
+                                if (notification.metrics.maxScrollExtent <
+                                    notification.metrics.pixels) {
+                                  if (joinModakMatchings.length > 0 &&
+                                      !joinModakMatchingLoading &&
+                                      !isJoinModakMatchingEnd) {
                                     joinModakMatchingLoading = true;
-                                    BlocProvider.of<ModakBloc>(context).add(LoadJoinMatchingEvent(lastDate: joinModakMatchings[joinModakMatchings.length - 1].matching!.createDate.toIso8601String()));
+                                    BlocProvider.of<ModakBloc>(context).add(
+                                        LoadJoinMatchingEvent(
+                                            lastDate: joinModakMatchings[
+                                                    joinModakMatchings.length -
+                                                        1]
+                                                .matching!
+                                                .createDate
+                                                .toIso8601String()));
                                   }
                                 }
                                 return true;
@@ -207,13 +251,20 @@ class MatchingPageState extends State<MatchingPage> {
                               child: BlocBuilder<ModakBloc, ModakState>(
                                 builder: (_, state) {
                                   if (state is JoinMatchingLoaded) {
-                                    if (state.matchings!.length > 0){
+                                    if (state.matchings!.length > 0) {
                                       if (joinModakMatchings.length > 0) {
-                                        if (joinModakMatchings[joinModakMatchings.length - 1].matching!.createDate.isAfter(state.matchings![0].matching!.createDate)){
-                                          joinModakMatchings.addAll(state.matchings!);
+                                        if (joinModakMatchings[
+                                                joinModakMatchings.length - 1]
+                                            .matching!
+                                            .createDate
+                                            .isAfter(state.matchings![0]
+                                                .matching!.createDate)) {
+                                          joinModakMatchings
+                                              .addAll(state.matchings!);
                                         }
                                       } else {
-                                        joinModakMatchings.addAll(state.matchings!);
+                                        joinModakMatchings
+                                            .addAll(state.matchings!);
                                       }
                                     } else {
                                       isJoinModakMatchingEnd = true;
@@ -222,19 +273,38 @@ class MatchingPageState extends State<MatchingPage> {
                                     return ListView.builder(
                                       itemBuilder: (context, index) {
                                         return MatchingItemWidget(
-                                          modakMatching: joinModakMatchings[index],
+                                          modakMatching:
+                                              joinModakMatchings[index],
                                         );
                                       },
                                       itemCount: joinModakMatchings.length,
                                       physics: BouncingScrollPhysics(),
                                     );
                                   } else if (state is Error) {
-                                    return Center(child: Text(state.message, style: TextStyle(fontWeight: FontWeight.bold),));
+                                    return Center(
+                                        child: Text(
+                                      state.message,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ));
                                   }
                                   return Container();
                                 },
-                                buildWhen: (previous, current) =>
-                                current is JoinMatchingLoaded || current is Error,
+                                buildWhen: (previous, current) {
+                                  if (current is JoinMatchingLoaded ||
+                                      current is Error) {
+                                    return true;
+                                  }
+
+                                  if (current is Loaded) {
+                                    Future.delayed(const Duration(milliseconds: 100), () {
+                                      setIndex(0);
+                                      setIndex(1);
+                                      setIndex(2);
+                                    });
+                                  }
+                                  return false;
+                                },
                               ),
                             ),
                           ),
@@ -245,10 +315,19 @@ class MatchingPageState extends State<MatchingPage> {
                             height: _contentHeight,
                             child: NotificationListener<ScrollNotification>(
                               onNotification: (notification) {
-                                if (notification.metrics.maxScrollExtent < notification.metrics.pixels) {
-                                  if (myModakMatchings.length > 0 && !myModakMatchingLoading && !isMyModakMatchingEnd){
+                                if (notification.metrics.maxScrollExtent <
+                                    notification.metrics.pixels) {
+                                  if (myModakMatchings.length > 0 &&
+                                      !myModakMatchingLoading &&
+                                      !isMyModakMatchingEnd) {
                                     myModakMatchingLoading = true;
-                                    BlocProvider.of<ModakBloc>(context).add(LoadMyMatchingEvent(lastDate: myModakMatchings[myModakMatchings.length - 1].matching!.createDate.toIso8601String()));
+                                    BlocProvider.of<ModakBloc>(context).add(
+                                        LoadMyMatchingEvent(
+                                            lastDate: myModakMatchings[
+                                                    myModakMatchings.length - 1]
+                                                .matching!
+                                                .createDate
+                                                .toIso8601String()));
                                   }
                                 }
                                 return true;
@@ -256,13 +335,20 @@ class MatchingPageState extends State<MatchingPage> {
                               child: BlocBuilder<ModakBloc, ModakState>(
                                 builder: (_, state) {
                                   if (state is MyMatchingLoaded) {
-                                    if (state.matchings!.length > 0){
+                                    if (state.matchings!.length > 0) {
                                       if (myModakMatchings.length > 0) {
-                                        if (myModakMatchings[myModakMatchings.length - 1].matching!.createDate.isAfter(state.matchings![0].matching!.createDate)){
-                                          myModakMatchings.addAll(state.matchings!);
+                                        if (myModakMatchings[
+                                                myModakMatchings.length - 1]
+                                            .matching!
+                                            .createDate
+                                            .isAfter(state.matchings![0]
+                                                .matching!.createDate)) {
+                                          myModakMatchings
+                                              .addAll(state.matchings!);
                                         }
                                       } else {
-                                        myModakMatchings.addAll(state.matchings!);
+                                        myModakMatchings
+                                            .addAll(state.matchings!);
                                       }
                                     } else {
                                       isJoinModakMatchingEnd = true;
@@ -271,19 +357,37 @@ class MatchingPageState extends State<MatchingPage> {
                                     return ListView.builder(
                                       itemBuilder: (context, index) {
                                         return MatchingItemWidget(
-                                          modakMatching: myModakMatchings[index],
+                                          modakMatching:
+                                              myModakMatchings[index],
                                         );
                                       },
                                       itemCount: myModakMatchings.length,
                                       physics: BouncingScrollPhysics(),
                                     );
                                   } else if (state is Error) {
-                                    return Center(child: Text(state.message, style: TextStyle(fontWeight: FontWeight.bold),));
+                                    return Center(
+                                        child: Text(
+                                      state.message,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ));
                                   }
                                   return Container();
                                 },
-                                buildWhen: (previous, current) =>
-                                current is MyMatchingLoaded,
+                                buildWhen: (previous, current) {
+                                  if (current is MyMatchingLoaded) {
+                                    return true;
+                                  }
+
+                                  if (current is Loaded) {
+                                    Future.delayed(const Duration(milliseconds: 100), () {
+                                      setIndex(0);
+                                      setIndex(1);
+                                      setIndex(2);
+                                    });
+                                  }
+                                  return false;
+                                },
                               ),
                             ),
                           ),
