@@ -211,7 +211,7 @@ class PaymentPageState extends State<PaymentPage> {
                               ),
                             ),
                             Text(
-                              "3900원",
+                              "500원",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -236,7 +236,7 @@ class PaymentPageState extends State<PaymentPage> {
                               ),
                             ),
                             Text(
-                              "-3900원",
+                              "0원",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -261,7 +261,7 @@ class PaymentPageState extends State<PaymentPage> {
                               ),
                             ),
                             Text(
-                              "0원",
+                              "500원",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -276,7 +276,7 @@ class PaymentPageState extends State<PaymentPage> {
                       ),
                       OutlinedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/import', arguments: [1, widget.modakMatching.matchingId]);
+                          Navigator.pushNamed(context, '/import', arguments: [500, widget.modakMatching.matchingId]);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
