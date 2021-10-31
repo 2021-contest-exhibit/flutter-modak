@@ -46,18 +46,39 @@ class PaymentPageState extends State<PaymentPage> {
                       Row(
                         children: [
                           Container(
-                            width: 32,
-                            height: 32,
+                            width: 24,
+                            height: 24,
+                            child: widget.modakMatching.user != null && widget.modakMatching.user!.image != ""
+                                ? ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              child: Image.network(
+                                widget.modakMatching.user!.image,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                                : Icon(
+                              Icons.person,
+                              size: 24,
+                              color: Colors.white,
+                            ),
                             decoration: BoxDecoration(
-                                color: Color(0xff3F3F3F),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
+                              color: Color.fromARGB(255, 18, 32, 47),
+                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Color(0x55efefef),
+                                    offset: Offset(2.0, 2.0),
+                                    blurRadius: 10.0,
+                                    spreadRadius: 5.0)
+                              ],
+                            ),
                           ),
                           SizedBox(
                             width: 24,
                           ),
                           Text(
-                            widget.modakMatching.email!,
+                            widget.modakMatching.user != null
+                                ? (widget.modakMatching.user!.email != "" ? widget.modakMatching.user!.email : widget.modakMatching.user!.nickname) : "",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18),
                           ),
