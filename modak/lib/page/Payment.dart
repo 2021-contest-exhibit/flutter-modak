@@ -68,8 +68,8 @@ class PaymentState extends State<Payment> {
       }),
       /* [필수입력] 콜백 함수 */
       callback: (Map<String, String> result) {
-        print(result["imp_success"]);
-        if (result["imp_success"] == true) {
+        print("result: ${result.toString()}");
+        if (result["imp_success"] == "true") {
           BlocProvider.of<ModakBloc>(context).add(
               JoinMatchingEvent(matchingId: matchingId)
           );

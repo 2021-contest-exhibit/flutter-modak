@@ -213,9 +213,9 @@ class MatchingPageState extends State<MatchingPage> {
 
                                   if (current is Loaded) {
                                     Future.delayed(const Duration(milliseconds: 100), () {
-                                      setIndex(0);
-                                      setIndex(1);
                                       setIndex(2);
+                                      setIndex(1);
+                                      setIndex(0);
                                     });
                                   }
                                   return false;
